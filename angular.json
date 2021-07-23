@@ -171,6 +171,7 @@
     }
   },
   "cli": {
+    "analytics": false,
     "defaultCollection": "@ionic/angular-toolkit"
   },
   "schematics": {
@@ -178,7 +179,8 @@
       "styleext": "scss"
     },
     "@ionic/angular-toolkit:page": {
-      "styleext": "scss"
+      "styleext": "scss",
+      "skipTests": true
     }
   }
 }
