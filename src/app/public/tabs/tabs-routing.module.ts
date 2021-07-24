@@ -13,6 +13,10 @@ const routes: Routes = [
         loadChildren: () => import('../tabs/home/containers/home.module').then(m=> m.HomePageModule)
       },
       {
+        path: 'profile',
+        loadChildren: () => import('../tabs/profile/containers/profile.module').then(m=> m.ProfilePageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
