@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController, IonRouterOutlet } from '@ionic/angular';
+import { EditProfileComponent } from '../components/edit-profile/edit-profile.component';
+
+
+
 
 @Component({
   selector: 'app-profile',
@@ -7,8 +12,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+  constructor(    
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet) { }
 
+    async openModal() {
+      const modal = await this.modalController.create({
+        presentingElement: this.routerOutlet.nativeEl,
+        component: EditProfileComponent,
+
+      });
+    
+  
+      await modal.present();
+    }
   ngOnInit() {
   }
 
