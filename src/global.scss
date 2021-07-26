@@ -24,3 +24,36 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+//global classes
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+  }
+//HomePage:ServiceCategoriesComponent
+app-service-categories{
+    .service-category-card{
+        height: auto;
+        ion-grid{
+            height: 100%;
+        }
+        ion-row{
+            height: 100%;
+            ion-col{
+                display: flex;
+                justify-content: center;
+                ion-avatar{
+                    height: auto;
+                    width: 40%;
+                    h6{
+                        text-align: center;
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
