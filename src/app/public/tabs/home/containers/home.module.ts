@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { ServiceCategoriesComponent } from '../components/service-categories/service-categories.component';
+import { CompaniesCarouselComponent } from '../components/companies-carousel/companies-carousel.component';
 
 
 @NgModule({
@@ -15,6 +16,6 @@ import { ServiceCategoriesComponent } from '../components/service-categories/ser
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, ServiceCategoriesComponent]
+  declarations: [HomePage, ServiceCategoriesComponent, CompaniesCarouselComponent]
 })
 export class HomePageModule {}
