@@ -3,14 +3,10 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12">
-        <ion-avatar class="center">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
-          <h6>Peluquerías</h6>
+        <ion-avatar *ngFor="let category of categories" class="center">
+          <img [src]="category.img" />
+          <h6>{{category.name}}</h6>
         </ion-avatar>
-        <ion-avatar class="center">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
-          <h6>Salones</h6>
-        </ion-avatar> 
       </ion-col>
     </ion-row>
   </ion-grid>
