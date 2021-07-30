@@ -1,0 +1,12 @@
+<div class="card" (click)="clicked.emit()">
+    <ion-img [src]="item.image"></ion-img>
+
+    <div class="card-content">
+        <h3 class="title">{{item.name}}</h3>
+        <h2 class="subtitle">{{item.rating}}
+            <ion-icon name="star"></ion-icon>
+        </h2>
+        <h2 class="subtitle1">{{item.address}} (8 km)</h2>
+
+    </div>
+</div>
