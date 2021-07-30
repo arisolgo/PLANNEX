@@ -9,6 +9,7 @@ import { ListingPageRoutingModule } from './listing-routing.module';
 import { ListingPage } from './listing.page';
 
 import { BusinessCardComponent } from '../components/business-card/business-card.component';
+import { SearchbarComponent } from '../components/searchbar/searchbar.component';
 
 
 @NgModule({
@@ -18,6 +19,6 @@ import { BusinessCardComponent } from '../components/business-card/business-card
     IonicModule,
     ListingPageRoutingModule
   ],
-  declarations: [ListingPage,BusinessCardComponent]
+  declarations: [ListingPage,BusinessCardComponent,SearchbarComponent]
 })
 export class ListingPageModule {}
