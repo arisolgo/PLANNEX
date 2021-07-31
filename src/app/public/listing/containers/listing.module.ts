@@ -9,7 +9,10 @@ import { ListingPageRoutingModule } from './listing-routing.module';
 import { ListingPage } from './listing.page';
 
 import { BusinessCardComponent } from '../components/business-card/business-card.component';
-import { SearchbarComponent } from '../components/searchbar/searchbar.component';
+
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
+
 
 
 @NgModule({
@@ -17,8 +20,9 @@ import { SearchbarComponent } from '../components/searchbar/searchbar.component'
     CommonModule,
     FormsModule,
     IonicModule,
-    ListingPageRoutingModule
+    ListingPageRoutingModule,
+    Ng2SearchPipeModule
   ],
-  declarations: [ListingPage,BusinessCardComponent,SearchbarComponent]
+  declarations: [ListingPage,BusinessCardComponent]
 })
 export class ListingPageModule {}

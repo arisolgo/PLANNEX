@@ -7,17 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./listing.page.scss'],
 })
 export class ListingPage implements OnInit {
-  
+  filterTerm: string
 
   constructor(private router: Router) { }
 
-  //id_t = 0;
+  
 
 
   
   business:any[]=[{
     id:1,
-    name:"La Barbería",
+    display_name:"La Barbería",
+    name:"la barberia",
     address:"Ave. 27 de Febrero #45, esq. Abraham Lincoln.",
     image: "https://via.placeholder.com/150 ",
     rating:4.8,
@@ -27,7 +28,8 @@ export class ListingPage implements OnInit {
     },
     {
       id:2,
-      name:"El Salón",
+      display_name:"El Salón",
+      name:"el salon",
       address:"Ave. 27 de Febrero #45, esq. Abraham Lincoln.",
       image: "https://via.placeholder.com/150",
       rating:4.8,
@@ -37,7 +39,8 @@ export class ListingPage implements OnInit {
       },
       {
         id:3,
-        name:"La Barbería #2",
+        display_name:"La Barbería #2",
+        name:"la barberia 2",
         address:"Ave. 27 de Febrero #45, esq. Abraham Lincoln.",
         image: "https://via.placeholder.com/150",
         rating:4.8,
