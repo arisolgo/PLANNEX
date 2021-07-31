@@ -66,6 +66,16 @@ ion-grid {
     height: 100%;
   }
 }
+
+ion-avatar{
+  height: auto;
+}
+
+.avatar-title{
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
 //HomePage:ServiceCategoriesComponent
 app-service-categories {
   .service-category-card {
@@ -77,11 +87,6 @@ app-service-categories {
     ion-avatar {
       height: auto;
       width: 30%;
-      h6 {
-        text-align: center;
-        margin-top: 0;
-        margin-bottom: 0;
-      }
     }
   }
 }
@@ -133,6 +138,11 @@ app-providers {
     ion-avatar {
       height: auto;
       width: 30%;
+    }
+  }
+  .providers-list{
+    ion-avatar{
+      width: 100%;
     }
   }
 }
