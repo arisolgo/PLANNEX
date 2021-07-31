@@ -15,6 +15,11 @@ const routes: Routes = [
     redirectTo: 'tabs',
     pathMatch: 'full'
   },
+  {
+    path: 'providers',
+    loadChildren: () => import('./public/providers/containers/providers.module').then( m => m.ProvidersPageModule)
+  },
+
 
 
  
