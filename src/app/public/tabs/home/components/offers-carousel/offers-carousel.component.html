@@ -1,0 +1,7 @@
+  <ion-slides [pager]="true" class="ion-margin-top" [options]="slideOps" *ngIf="offers.length">
+    <ion-slide *ngFor="let offer of offers">
+     <ion-card>
+      <img [src]="offer.img"> 
+     </ion-card>
+    </ion-slide>
+  </ion-slides>

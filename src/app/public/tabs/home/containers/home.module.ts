@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { ServiceCategoriesComponent } from '../components/service-categories/service-categories.component';
+import { CompaniesCarouselComponent } from '../components/companies-carousel/companies-carousel.component';
+import { OffersCarouselComponent } from '../components/offers-carousel/offers-carousel.component';
 
 
 @NgModule({
@@ -14,6 +17,6 @@ import { HomePageRoutingModule } from './home-routing.module';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, ServiceCategoriesComponent, CompaniesCarouselComponent, OffersCarouselComponent]
 })
 export class HomePageModule {}
