@@ -1,0 +1,13 @@
+<ion-card class="service-category-card">
+  
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-avatar *ngFor="let category of categories" class="center">
+          <img [src]="category.img" />
+          <h6>{{category.name}}</h6>
+        </ion-avatar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>
