@@ -157,5 +157,8 @@ app-providers {
 
 //Shared:Category Filter Component
 app-category-filter{
-  
+  .cancel-chips-filter{
+    display: flex;
+    justify-content: flex-end;
+  }
 }
