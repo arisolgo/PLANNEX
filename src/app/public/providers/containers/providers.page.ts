@@ -7,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProvidersPage implements OnInit {
   @Input() providers = [];
+  filteredProviders = [];
+  categories = ['Recorte', 'Uñas'];
   constructor() { }
 
   ngOnInit() {
@@ -37,6 +39,17 @@ export class ProvidersPage implements OnInit {
       img: 'https://via.placeholder.com/80x80',
       category: 'Uñas'
     }
+    this.providers[4] = {
+      rating: 4.3,
+      name: 'Julian Encarnación',
+      img: 'https://via.placeholder.com/80x80',
+      category: 'Uñas'
+    }
+    this.filteredProviders = this.providers;
+  }
+
+  setProviderByCategory(filteredProviders){
+      this.filteredProviders = filteredProviders;
   }
 
  

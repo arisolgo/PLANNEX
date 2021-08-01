@@ -1,0 +1,12 @@
+
+<div *ngIf=isFilterUsed class="cancel-chips-filter">
+  <ion-chip (click)="cancelFilter()" outline color="danger">
+    <ion-label>Eliminar filtro</ion-label>
+  </ion-chip>
+</div>
+<div class="chips-filter">
+  <ion-chip (click)="filterByCategory(category)" *ngFor="let category of categories">
+    <ion-label>{{category}}</ion-label>
+  </ion-chip>
+</div>
+
