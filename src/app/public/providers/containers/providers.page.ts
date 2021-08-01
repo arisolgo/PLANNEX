@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-providers',
@@ -6,10 +6,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./providers.page.scss'],
 })
 export class ProvidersPage implements OnInit {
-
+  @Input() providers = [];
   constructor() { }
 
   ngOnInit() {
+    this.getProviders();
   }
+  getProviders(){
+    this.providers[0] = {
+      rating: 4.3,
+      name: 'Julian Encarnación',
+      img: 'https://via.placeholder.com/80x80',
+      category: 'Recorte'
+    }
+    this.providers[1] = {
+      rating: 4.3,
+      name: 'Julian Encarnación',
+      img: 'https://via.placeholder.com/80x80',
+      category: 'Recorte'
+    }
+    this.providers[2] = {
+      rating: 4.3,
+      name: 'Julian Encarnación',
+      img: 'https://via.placeholder.com/80x80',
+      category: 'Uñas'
+    }
+    this.providers[3] = {
+      rating: 4.3,
+      name: 'Julian Encarnación',
+      img: 'https://via.placeholder.com/80x80',
+      category: 'Uñas'
+    }
+  }
+
+ 
 
 }

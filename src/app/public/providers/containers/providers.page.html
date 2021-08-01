@@ -14,7 +14,23 @@
   <div class="providers-list">
     <ion-grid>
       <ion-row>
-        <ion-col size="4">
+        <ion-col size="4" *ngFor="let provider of providers">
+          <ion-card>
+            <ion-card-content>
+              <div class="provider-rating">
+                <ion-icon slot="start" name="star"></ion-icon>
+                <span>{{provider.rating}}</span>
+              </div>
+              <div class="provider-info">
+                <ion-avatar class="center">
+                  <img src="https://via.placeholder.com/80x80" />
+                </ion-avatar>
+                <h6 class="avatar-title">{{provider.name}}</h6>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <!-- <ion-col size="4">
           <ion-card>
             <ion-card-content>
               <div class="provider-rating">
@@ -45,23 +61,7 @@
               </div>
             </ion-card-content>
           </ion-card>
-        </ion-col>
-        <ion-col size="4">
-          <ion-card>
-            <ion-card-content>
-              <div class="provider-rating">
-                <ion-icon slot="start" name="star"></ion-icon>
-                <span>4.3</span>
-              </div>
-              <div class="provider-info">
-                <ion-avatar class="center">
-                  <img src="https://via.placeholder.com/80x80" />
-                </ion-avatar>
-                <h6 class="avatar-title">Julian Encarnación</h6>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-grid>
   </div>
