@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class CategoryFilterComponent implements OnInit {
   @Input() categories = []; //categories for filter
-  @Input() elementsList = []; //sent elements 
+  @Input() elementsList = []; //given elements 
   @Output() filteredElements = new EventEmitter<Array<any>>(); //elements filtered emitter
   isFilterUsed:boolean = false;
   

@@ -15,27 +15,30 @@
     [elementsList]="providers"
     (filteredElements)="setProviderByCategory($event)">
   </app-category-filter>
-  <ion-text><h4>Proveedores</h4></ion-text>
+ 
   <div class="providers-list">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="4" *ngFor="let provider of filteredProviders">
-          <ion-card>
-            <ion-card-content>
-              <div class="provider-rating">
-                <ion-icon slot="start" name="star"></ion-icon>
-                <span>{{provider.rating}}</span>
-              </div>
-              <div class="provider-info">
-                <ion-avatar class="center">
-                  <img src="https://via.placeholder.com/80x80" />
-                </ion-avatar>
-                <h6 class="avatar-title">{{provider.name}}</h6>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ng-container *ngFor="let category of categories; let i = index">
+      <ion-text *ngIf="providersByCategory[i].length > 0"><h4>{{category}}</h4></ion-text>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" *ngFor="let provider of providersByCategory[i]">
+            <ion-card>
+              <ion-card-content>
+                <div class="provider-rating">
+                  <ion-icon slot="start" name="star"></ion-icon>
+                  <span>{{provider.rating}}</span>
+                </div>
+                <div class="provider-info">
+                  <ion-avatar class="center">
+                    <img src="https://via.placeholder.com/80x80" />
+                  </ion-avatar>
+                  <h6 class="avatar-title">{{provider.name}}</h6>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
   </div>
 </ion-content>
