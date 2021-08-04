@@ -46,6 +46,13 @@ ion-content {
   }
 }
 
+ion-chip{
+  ion-label{
+    padding-left: 0;
+  }
+}
+
+
 .centered-container {
   text-align: center;
   position: absolute;
@@ -60,28 +67,34 @@ ion-content {
   width: 60%;
   padding: 10px;
 }
+ion-grid {
+  height: 100%;
+  ion-row {
+    height: 100%;
+  }
+}
+
+ion-avatar{
+  height: auto;
+}
+
+.avatar-title{
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 //HomePage:ServiceCategoriesComponent
 app-service-categories {
   .service-category-card {
     height: auto;
-    ion-grid {
-      height: 100%;
+    ion-col {
+      display: flex;
+      justify-content: center;
     }
-    ion-row {
-      height: 100%;
-      ion-col {
-        display: flex;
-        justify-content: center;
-        ion-avatar {
-          height: auto;
-          width: 30%;
-          h6 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 0;
-          }
-        }
-      }
+    ion-avatar {
+      height: auto;
+      width: 30%;
     }
   }
 }
@@ -106,25 +119,46 @@ app-companies-carousel {
 }
 
 app-offers-carousel {
-    ion-slides{
-        height: 150px;
-        div.swiper-pagination {
-            bottom:20px;
-          
-         }
-        ion-slide{
-            ion-card{
-                width: 100%;
-                height: 160px;
-                box-shadow: none;
-                border-radius: 12px;
-                img{
-                    object-fit: cover;
-                    width: 100%;
-                    transform: scale(1.1, 1.1);
-                }
-            }
-        }
+  ion-slides {
+    height: 150px;
+    div.swiper-pagination {
+      bottom: 20px;
     }
- 
+    ion-slide {
+      ion-card {
+        width: 100%;
+        height: 160px;
+        box-shadow: none;
+        border-radius: 12px;
+        img {
+          object-fit: cover;
+          width: 100%;
+          transform: scale(1.1, 1.1);
+        }
+      }
+    }
+  }
+}
+
+app-providers {
+  .company-logo {
+    padding-top: 20px;
+    ion-avatar {
+      height: auto;
+      width: 30%;
+    }
+  }
+  .providers-list{
+    ion-avatar{
+      width: 100%;
+    }
+  }
+}
+
+//Shared:Category Filter Component
+app-category-filter{
+  .cancel-chips-filter{
+    display: flex;
+    justify-content: flex-end;
+  }
 }
