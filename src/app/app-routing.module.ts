@@ -16,9 +16,18 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+
     path: 'providers',
     loadChildren: () => import('./public/providers/containers/providers.module').then( m => m.ProvidersPageModule)
   },
+  {
+
+    path: 'listing',
+    loadChildren: () => import('./public/listing/containers/listing.module').then( m => m.ListingPageModule)
+  },
+
+ 
+
 
 
 
