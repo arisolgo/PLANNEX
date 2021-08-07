@@ -128,3 +128,11 @@ app-offers-carousel {
     }
  
 }
+
+// SchedulerPage
+app-scheduler{
+  .next-previous-btn{
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -15,6 +15,11 @@ const routes: Routes = [
     redirectTo: 'tabs',
     pathMatch: 'full'
   },
+  {
+    path: 'scheduler',
+    loadChildren: () => import('./core/shared/pages/scheduler/containers/scheduler.module').then( m => m.SchedulerPageModule)
+  },
+
 
 
  
