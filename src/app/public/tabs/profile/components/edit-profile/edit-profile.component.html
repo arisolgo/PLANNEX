@@ -1,0 +1,95 @@
+<ion-content>
+    <ion-grid class="main-header">
+        <div align="center">
+            <ion-avatar>
+                <img src="{{userList[0].profile_pic}}" />
+            </ion-avatar>
+            <ion-label>{{userList[0].name}} {{userList[0].last_name}}</ion-label>
+        </div>
+    </ion-grid>
+
+
+    <ion-list lines="full" *ngIf="userList[0].role === 'client'">
+
+
+        <ion-item>
+            <ion-label>
+                <ion-text>Nombre:</ion-text>
+            </ion-label>
+            <p>
+                <ion-textarea placeholder="{{userList[0].name}}"></ion-textarea>
+            </p>
+
+
+
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label>
+                <ion-text>Apellidos:</ion-text>
+
+            </ion-label>
+            <p>
+                <ion-textarea placeholder="{{userList[0].last_name}}"></ion-textarea>
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Teléfono:</ion-text>
+
+            </ion-label>
+            <p>
+                <ion-textarea placeholder="{{userList[0].phone}}"></ion-textarea>
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Email:</ion-text>
+
+            </ion-label>
+            <p>
+                <ion-textarea placeholder="{{userList[0].mail}}"></ion-textarea>
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Fecha de Nacimiento:</ion-text>
+
+            </ion-label>
+            <p>
+                <ion-textarea placeholder="{{userList[0].birthday}}"></ion-textarea>
+            </p>
+        </ion-item>
+
+    </ion-list>
+
+    <div *ngIf="userList[0].role === 'provider'">
+
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label>
+                    <ion-text>Rating</ion-text>
+                    <p>
+                        <ion-text color="dark">{{userList[0].rating}}</ion-text>
+                    </p>
+                </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label>
+                    <ion-text>Reviews</ion-text>
+                    <p>
+                        <ion-text color="dark">{{userList[0].reviews}}</ion-text>
+                    </p>
+                </ion-label>
+            </ion-item>
+
+        </ion-list>
+    </div>
+
+    <div>
+        <ion-button>Guardar</ion-button>
+    </div>
+
+
+</ion-content>

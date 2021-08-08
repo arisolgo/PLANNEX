@@ -15,6 +15,15 @@ const routes: Routes = [
     redirectTo: 'tabs',
     pathMatch: 'full'
   },
+  {
+    path: 'listing',
+    loadChildren: () => import('./public/listing/containers/listing.module').then( m => m.ListingPageModule)
+  },
+
+ 
+
+
+
  
 
 ];
