@@ -33,6 +33,11 @@ const routes: Routes = [
     path: 'scheduler',
     loadChildren: () => import('./core/shared/pages/scheduler/containers/scheduler.module').then( m => m.SchedulerPageModule)
   },
+  {
+    path: 'appointment-confirmation',
+    loadChildren: () => import('./public/appointment-confirmation/containers/appointment-confirmation.module').then( m => m.AppointmentConfirmationPageModule)
+  },
+
 
 
 

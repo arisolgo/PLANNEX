@@ -51,6 +51,15 @@
         }
     }
     
+    hr {
+        border: 0;
+        clear: both;
+        display: block;
+        width: 96%;
+        background-color: #000000;
+        height: 1px;
+    }
+    
     .centered-container {
         text-align: center;
         position: absolute;
@@ -82,7 +91,7 @@
         margin-top: 0;
         margin-bottom: 0;
     }
-
+    
     .company-logo {
         padding-top: 20px;
         ion-avatar {
@@ -147,34 +156,30 @@
             }
         }
     }
-
-
-app-providers {
-    .providers-list {
-        
-        ion-avatar {
-            width: 100%;
+    
+    app-providers {
+        .providers-list {
+            ion-avatar {
+                width: 100%;
+            }
+        }
+        ion-card {
+            width: 90%;
         }
     }
-
-    ion-card{
-        width: 90%;
+    
+    //Shared:Category Filter Component
+    app-category-filter {
+        .cancel-chips-filter {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .chips-filter {
+            padding-top: 12px;
+        }
     }
-}
-
-//Shared:Category Filter Component
-app-category-filter {
-    .cancel-chips-filter {
-        display: flex;
-        justify-content: flex-end;
-    }
-    .chips-filter{
-        padding-top: 12px;
-    }
-}
-
-//BusinessDetailPage: Business
-
+    
+    //BusinessDetailPage: Business
     //Shared:Category Filter Component
     app-category-filter {
         .cancel-chips-filter {
@@ -206,8 +211,8 @@ app-category-filter {
             width: 100%;
         }
         .swiper-pagination {
-           text-align: center !important;
-           bottom: 807px !important;
+            text-align: center !important;
+            bottom: 807px !important;
         }
         .swiper-container {
             height: initial;
@@ -254,61 +259,74 @@ app-category-filter {
             }
         }
     }
-        app-business-card {
-            .card {
-                width: 100%;
-                height: 1%;
-                padding: 1.6rem 2rem;
-                background: #f3f3f3;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                position: relative;
-                border-radius: 2.5rem;
-                margin-bottom: 1.5rem;
-                .card-content {
-                    text-align: center;
-                    .title {
-                        font-weight: 700;
-                        font-size: 1.3rem;
-                        margin-bottom: 0.2rem;
-                        color: #1d1d1d;
-                    }
-                    .subtitle {
-                        font-size: 1.1rem;
-                        font-weight: 700;
-                        color: #ffb800;
-                        margin-top: 0;
-                    }
-                    .subtitle1 {
-                        font-size: 0.9rem;
-                        font-weight: 700;
-                        color: #1d1d1d;
-                        margin-top: 0;
-                    }
+    
+    app-business-card {
+        .card {
+            width: 100%;
+            height: 1%;
+            padding: 1.6rem 2rem;
+            background: #f3f3f3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border-radius: 2.5rem;
+            margin-bottom: 1.5rem;
+            .card-content {
+                text-align: center;
+                .title {
+                    font-weight: 700;
+                    font-size: 1.3rem;
+                    margin-bottom: 0.2rem;
+                    color: #1d1d1d;
+                }
+                .subtitle {
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    color: #ffb800;
+                    margin-top: 0;
+                }
+                .subtitle1 {
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    color: #1d1d1d;
+                    margin-top: 0;
                 }
             }
         }
+    }
     
+    // SchedulerPage
+    //_ngcontent-cyn-c139
+    app-scheduler {
+        .next-previous-btn {
+            display: flex;
+            justify-content: space-between;
+        }
+        calendar {
+            .weekview-container {
+                height: 80% !important;
+            }
+        }
+        .bottom-btn-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+        }
+    }
     
- 
-
-
-// SchedulerPage
-//_ngcontent-cyn-c139
-app-scheduler{
-  .next-previous-btn{
-    display: flex;
-    justify-content: space-between;
-  }
-  calendar{
-    .weekview-container{
-      height: 80% !important;
-    } 
-  }
-  .bottom-btn-container{
-    display: flex; 
-    justify-content: space-around;
-    padding: 15px;
-  }
-}
+    app-order-detail {
+        position: relative;
+        .totalPrice {
+            font-weight: bold;
+        }
+    }
+    
+    app-appointment-confirmation {
+        position: relative;
+        .confirmOrder {
+            margin-top: -40%;
+            margin-left: 32%;
+            position: absolute;
+        }
+    }
