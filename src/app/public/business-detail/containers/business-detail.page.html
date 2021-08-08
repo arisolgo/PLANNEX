@@ -60,7 +60,7 @@
                     <ion-grid>
 
                         <ion-row size="4" *ngFor="let service of servicesByCategory[i]">
-                            <ion-card>
+                            <ion-card (click)="selectProvider(service)">
                                 <ion-card-content>
 
                                     <div class="service-info">

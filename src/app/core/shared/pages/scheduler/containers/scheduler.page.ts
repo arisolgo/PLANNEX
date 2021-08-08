@@ -9,7 +9,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, NavController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar';
 
 @Component({
@@ -19,12 +20,12 @@ import { CalendarComponent } from 'ionic2-calendar';
 })
 export class SchedulerPage implements OnInit {
   @Input() parentCall = false;
-  @Input() providerEvents = {
-    events: [],
-    serviceDuration: 25,
-    serviceName: 'Recorte',
-    startHour: '10:00 AM',
-    endHour: '11:00 PM',
+  @Input() providerEvents:any = {
+    // events: [],
+    // serviceDuration: 25,
+    // serviceName: 'Recorte',
+    // startHour: '10:00 AM',
+    // endHour: '11:00 PM',
   }; //events sent by parent component
   @Output() newEvents = new EventEmitter();
   collapseCard: boolean = false;
@@ -67,8 +68,8 @@ export class SchedulerPage implements OnInit {
   calendar = {
     mode: 'week',
     currentDate: new Date(),
-    startHour: 0,
-    endHour: 0,
+    // startHour: 0,
+    // endHour: 0,
   };
   isEventInserted: boolean = false;
 
@@ -76,8 +77,15 @@ export class SchedulerPage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
+    private navCtrl:NavController,
+    private router:Router,
     @Inject(LOCALE_ID) private locale: string
-  ) {}
+  ) {
+    if (router.getCurrentNavigation().extras.state) {
+      this.providerEvents = this.router.getCurrentNavigation().extras.state;
+      console.log(this.providerEvents);
+    }
+  }
 
   ngOnInit() {
     this.getTwentyFourHourTime(
@@ -135,6 +143,7 @@ export class SchedulerPage implements OnInit {
           alert("Ya hay una cita en esta hora");
           duplicate = true;
         }
+        console.log(this.providerEvents.events);
     });
     if(!duplicate){
       this.providerEvents.events.push(eventCopy);
@@ -208,10 +217,11 @@ export class SchedulerPage implements OnInit {
   }
 
   getTwentyFourHourTime(startHour, endHour) {
+    console.log("Me llame")
     let sHour = new Date('1/1/2013 ' + startHour);
     let eHour = new Date('1/1/2013 ' + endHour);
-    this.calendar.startHour = sHour.getHours();
-    this.calendar.endHour = eHour.getHours();
+    // this.calendar.startHour = sHour.getHours();
+    // this.calendar.endHour = eHour.getHours();
 
     for (let index = sHour.getHours(); index <= eHour.getHours(); index++) {
         this.hourValues.push(index);

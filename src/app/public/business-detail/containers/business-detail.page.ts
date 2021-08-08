@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-business-detail',
@@ -19,7 +20,7 @@ export class BusinessDetailPage implements OnInit {
   categories = ['Recorte', 'Uñas'];
   servicesByCategory:any = [];
   
-  constructor(private router:Router) {
+  constructor(private router:Router, private navCtrl:NavController) {
     if (router.getCurrentNavigation().extras.state) {
       this.business = this.router.getCurrentNavigation().extras.state;
       console.log(this.business);
@@ -82,6 +83,10 @@ export class BusinessDetailPage implements OnInit {
       );
       i++;
     });
+  }
+
+  selectProvider(service){
+    this.navCtrl.navigateForward('/providers', {state: service})
   }
 
 }
