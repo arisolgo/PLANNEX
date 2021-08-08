@@ -10,10 +10,6 @@ export class ListingPage implements OnInit {
   filterTerm: string
 
   constructor(private router: Router) { }
-
-  
-
-
   
   business:any[]=[{
     id:1,
