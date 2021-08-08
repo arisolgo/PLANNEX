@@ -6,15 +6,18 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./business-detail.page.scss'],
 })
 export class BusinessDetailPage implements OnInit {
+  
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400
+  };
+
   @Input() services = [];
   @Input() serviceCategory = '';
   filteredServices = [];
   categories = ['Recorte', 'Uñas'];
   servicesByCategory = [];
-  slideOpts = {
-    initialSlide: 0,
-    speed: 400
-  };
+  
   constructor() { }
 
   ngOnInit() {
@@ -68,9 +71,11 @@ export class BusinessDetailPage implements OnInit {
   setServices(servicesArray) {
     let i = 0;
     this.categories.forEach((category) => {
+      
       this.servicesByCategory[i] = servicesArray.filter(
         (e) => e.category == category
       );
+      console.log("ServicesByCategory:"+this.servicesByCategory[i])
       i++;
     });
   }
