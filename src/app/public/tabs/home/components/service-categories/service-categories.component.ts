@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-service-categories',
@@ -8,8 +9,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ServiceCategoriesComponent implements OnInit {
 
   @Input() categories = [];
-  constructor() { }
+  constructor(public navCtrl: NavController) { }
 
   ngOnInit() {}
+
+  showBusiness(category){
+    this.navCtrl.navigateForward('/listing', {state: category});
+  }
 
 }
