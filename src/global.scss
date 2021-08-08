@@ -82,6 +82,14 @@
         margin-top: 0;
         margin-bottom: 0;
     }
+
+    .company-logo {
+        padding-top: 20px;
+        ion-avatar {
+            height: auto;
+            width: 30%;
+        }
+    }
     
     //HomePage:ServiceCategoriesComponent
     app-service-categories {
@@ -142,14 +150,6 @@
 
 
 app-providers {
-   
-    .company-logo {
-        padding-top: 20px;
-        ion-avatar {
-            height: auto;
-            width: 30%;
-        }
-    }
     .providers-list {
         
         ion-avatar {
@@ -168,34 +168,13 @@ app-category-filter {
         display: flex;
         justify-content: flex-end;
     }
+    .chips-filter{
+        padding-top: 12px;
+    }
 }
 
 //BusinessDetailPage: Business
-app-business-detail {
-    app-providers{
-        width: 100%;
-        ion-content{
-            .inner-scroll .scroll-y{
-                padding: 0 !important;
-            }
-        }
-       
-      
-    }
-    div{
-        text-align: left;
-    }
-    .wrapper * {
-        height:100%;
-        width:100%;
-    }
-    .swiper-slide {
-        flex-direction: column;
-    }
-    .swiper-container { 
-        height: initial;
-      }
-    
+
     //Shared:Category Filter Component
     app-category-filter {
         .cancel-chips-filter {
@@ -213,9 +192,8 @@ app-business-detail {
             width: 100%;
         }
         .swiper-pagination {
-            bottom: 20px !important;
-            bottom: calc(env(safe-area-inset-bottom) + 20px) !important;
-            padding: auto;
+           text-align: center !important;
+           bottom: 807px !important;
         }
         .swiper-container {
             height: initial;
@@ -261,6 +239,7 @@ app-business-detail {
                 height: 100%;
             }
         }
+
         app-business-card {
             .card {
                 width: 100%;
@@ -297,4 +276,3 @@ app-business-detail {
             }
         }
     }
-}
