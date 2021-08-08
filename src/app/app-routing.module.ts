@@ -29,10 +29,10 @@ const routes: Routes = [
     path: 'business-detail',
     loadChildren: () => import('./public/business-detail/containers/business-detail.module').then( m => m.BusinessDetailPageModule)
   },
-
-
- 
-
+  {
+    path: 'scheduler',
+    loadChildren: () => import('./core/shared/pages/scheduler/containers/scheduler.module').then( m => m.SchedulerPageModule)
+  },
 
 
 

@@ -239,7 +239,7 @@ app-category-filter {
                 height: 100%;
             }
         }
-
+    }
         app-business-card {
             .card {
                 width: 100%;
@@ -275,4 +275,26 @@ app-category-filter {
                 }
             }
         }
-    }
+    
+    
+ 
+
+
+// SchedulerPage
+//_ngcontent-cyn-c139
+app-scheduler{
+  .next-previous-btn{
+    display: flex;
+    justify-content: space-between;
+  }
+  calendar{
+    .weekview-container{
+      height: 80% !important;
+    } 
+  }
+  .bottom-btn-container{
+    display: flex; 
+    justify-content: space-around;
+    padding: 15px;
+  }
+}
