@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./providers.page.scss'],
 })
 export class ProvidersPage implements OnInit {
+  @Input() isParentCalling = false;
   @Input() providers = [];
   @Input() serviceCategory = '';
   filteredProviders = [];

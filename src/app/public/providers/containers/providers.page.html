@@ -1,11 +1,11 @@
-<ion-header>
+<ion-header *ngIf="!isParentCalling">
   <ion-toolbar>
     <ion-title>providers</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <div class="company-logo">
+  <div *ngIf="!isParentCalling" class="company-logo">
     <ion-avatar class="center">
       <img src="https://via.placeholder.com/80x80" />
     </ion-avatar>

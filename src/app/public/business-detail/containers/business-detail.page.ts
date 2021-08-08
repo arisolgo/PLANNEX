@@ -16,10 +16,9 @@ export class BusinessDetailPage implements OnInit {
   @Input() serviceCategory = '';
   filteredServices = [];
   categories = ['Recorte', 'Uñas'];
-  servicesByCategory = [];
+  servicesByCategory:any = [];
   
   constructor() { }
-
   ngOnInit() {
     this.getServices();
     this.setServices(this.filteredServices);
@@ -71,11 +70,9 @@ export class BusinessDetailPage implements OnInit {
   setServices(servicesArray) {
     let i = 0;
     this.categories.forEach((category) => {
-      
       this.servicesByCategory[i] = servicesArray.filter(
         (e) => e.category == category
       );
-      console.log("ServicesByCategory:", this.servicesByCategory[i])
       i++;
     });
   }

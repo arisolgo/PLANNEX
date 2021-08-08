@@ -39,8 +39,8 @@
             </app-category-filter>
 
             <div class="services-list">
-                <ng-container *ngFor="let service of services; let i = index">
-                    <ion-text *ngIf="servicesByCategory[i]?.category != ''">
+                <ng-container *ngFor="let category of categories; let i = index">
+                    <ion-text *ngIf="servicesByCategory[i].length > 0">
                         <h4>{{category}}</h4>
                     </ion-text>
                     <ion-grid>
@@ -67,7 +67,7 @@
         </ion-slide>
 
         <ion-slide>
-            <app-providers></app-providers>
+            <app-providers [isParentCalling]="true"></app-providers>
         </ion-slide>
 
     </ion-slides>

@@ -12,7 +12,7 @@ import { CoreModule } from './core/core.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, CoreModule],
+  imports: [BrowserModule, IonicModule.forRoot({mode: 'md'}), AppRoutingModule, CoreModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

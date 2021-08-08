@@ -145,6 +145,7 @@ app-offers-carousel {
 }
 
 app-providers {
+   
     .company-logo {
         padding-top: 20px;
         ion-avatar {
@@ -153,9 +154,14 @@ app-providers {
         }
     }
     .providers-list {
+        
         ion-avatar {
             width: 100%;
         }
+    }
+
+    ion-card{
+        width: 90%;
     }
 }
 
@@ -171,6 +177,13 @@ app-category-filter {
 app-business-detail {
     app-providers{
         width: 100%;
+        ion-content{
+            .inner-scroll .scroll-y{
+                padding: 0 !important;
+            }
+        }
+       
+      
     }
     div{
         text-align: left;
