@@ -8,6 +8,7 @@ import { BusinessDetailPageRoutingModule } from './business-detail-routing.modul
 
 import { BusinessDetailPage } from './business-detail.page';
 import { SharedModule } from 'src/app/core/shared/shared.module';
+import { ProvidersPageModule } from '../../providers/containers/providers.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
     FormsModule,
     IonicModule,
     BusinessDetailPageRoutingModule,
-    SharedModule
+    SharedModule,
+    ProvidersPageModule
   ],
   declarations: [BusinessDetailPage]
 })

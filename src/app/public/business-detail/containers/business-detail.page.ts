@@ -75,7 +75,6 @@ export class BusinessDetailPage implements OnInit {
       this.servicesByCategory[i] = servicesArray.filter(
         (e) => e.category == category
       );
-      console.log("ServicesByCategory:",this.servicesByCategory[i])
       i++;
     });
   }
