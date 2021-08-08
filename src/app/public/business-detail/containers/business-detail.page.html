@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons>
+            <ion-button routerLink="">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-label class="business-name-title">La Barberia</ion-label>
+    <div class="company-logo">
+        <ion-avatar class="center">
+            <img src="https://via.placeholder.com/150x150" />
+        </ion-avatar>
+    </div>
+
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+
+            <div class="business-info">
+
+                <ion-text class="titulo">Direccion</ion-text>
+                <p>
+                    <ion-text color="dark">Ave. Ejemplo ejemplo, ejemplo ejemplo.</ion-text>
+                </p>
+
+                <ion-text class="titulo">Horario</ion-text>
+                <p>
+                    <ion-text color="dark">Lunes a Viernes | 8:00 AM - 10:00 PM </ion-text>
+                </p>
+                <ion-text class="titulo">Servicios</ion-text>
+
+            </div>
+
+            <app-category-filter [categories]="categories" [elementsList]="services" (filteredElements)="setServiceByCategory($event)">
+            </app-category-filter>
+
+            <div class="services-list">
+                <ng-container *ngFor="let service of services; let i = index">
+                    <ion-text *ngIf="servicesByCategory[i].length > 0">
+                        <h4>{{category}}</h4>
+                    </ion-text>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="12" *ngFor="let service of servicesByCategory[i]">
+                                <ion-card>
+                                    <ion-card-content>
+
+                                        <div class="service-info">
+                                            <ion-avatar class="center">
+                                                <img src="https://via.placeholder.com/80x80" />
+                                            </ion-avatar>
+                                            <h6 class="avatar-title">{{service.name}}</h6>
+                                            <h6 class="avatar-title">{{service.price}}</h6>
+                                        </div>
+                                    </ion-card-content>
+                                </ion-card>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ng-container>
+            </div>
+
+        </ion-slide>
+
+        <ion-slide>
+            <h1>Slide 2</h1>
+        </ion-slide>
+
+    </ion-slides>
+</ion-content>
