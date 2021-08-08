@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,50 +8,154 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
   serviceCategories:any = [];
-  companies:any = [];
   offers:any = [];
+  companies: any[] = [
+    {
+      display_name: 'La Barbería',
+      name: 'La barberia',
+      address: 'Ave. 27 de Febrero #45, esq. Abraham Lincoln.',
+      image: 'https://via.placeholder.com/320x180 ',
+      rating: 4.8,
+      phone: '8099900000',
+      days: 'Lunes-Viernes',
+      startTime: '8:00 AM',
+      endTime: '7:00 PM',
+      categoryId: 1,
+      services: [
+        {
+          serviceName: 'Corte Completo',
+          price: 500,
+          duration: 25,
+          description: '',
+          category: 'Recorte',
+        },
+        {
+          serviceName: 'Corte Sencillo',
+          price: 300,
+          duration: 25,
+          description: '',
+          category: 'Recorte',
+        },
+        {
+          serviceName: 'Manicure',
+          price: 150,
+          duration: 25,
+          description: '',
+          category: 'Uñas',
+        },
+        {
+          serviceName: 'Pedicure',
+          price: 200,
+          duration: 25,
+          description: '',
+          category: 'Uñas',
+        },
+      ],
+    },
+    {
+      display_name: 'La Barbería 2',
+      name: 'La barberia 2',
+      address: 'Ave. 27 de Febrero #45, esq. Abraham Lincoln.',
+      image: 'https://via.placeholder.com/320x180 ',
+      rating: 4.8,
+      phone: '8099900000',
+      days: 'Lunes-Viernes',
+      startTime: '8:00 AM',
+      endTime: '7:00 PM',
+      categoryId: 1,
+      services: [
+        {
+          serviceName: 'Corte Completo',
+          price: 500,
+          duration: 25,
+          description: '',
+          category: 'Recorte',
+        },
+        {
+          serviceName: 'Corte Sencillo',
+          price: 300,
+          duration: 25,
+          description: '',
+          category: 'Recorte',
+        },
+        {
+          serviceName: 'Manicure',
+          price: 150,
+          duration: 25,
+          description: '',
+          category: 'Uñas',
+        },
+        {
+          serviceName: 'Pedicure',
+          price: 200,
+          duration: 25,
+          description: '',
+          category: 'Uñas',
+        },
+      ],
+    },
+
+    {
+      display_name: 'La Barbería 3',
+      name: 'La barberia 3',
+      address: 'Ave. 27 de Febrero #45, esq. Abraham Lincoln.',
+      image: 'https://via.placeholder.com/320x180 ',
+      rating: 4.8,
+      phone: '8099900000',
+      days: 'Lunes-Viernes',
+      startTime: '8:00 AM',
+      endTime: '7:00 PM',
+      categoryId: 1,
+      services: [
+        {
+          serviceName: 'Corte Completo',
+          price: 500,
+          duration: 25,
+          description: '',
+          category: 'Recorte',
+        },
+        {
+          serviceName: 'Corte Sencillo',
+          price: 300,
+          duration: 25,
+          description: '',
+          category: 'Recorte',
+        },
+        {
+          serviceName: 'Manicure',
+          price: 150,
+          duration: 25,
+          description: '',
+          category: 'Uñas',
+        },
+        {
+          serviceName: 'Pedicure',
+          price: 200,
+          duration: 25,
+          description: '',
+          category: 'Uñas',
+        },
+      ],
+    },
+   
+  ];
 
   constructor() {}
 
   getCategories(){
     this.serviceCategories[0] = {
-      category: 0,
+      category: 1,
       img:'https://via.placeholder.com/80x80',
       name: 'Peluquerías'
     }
     this.serviceCategories[1] = {
-      category: 1,
+      category: 2,
       img:'https://via.placeholder.com/80x80',
       name: 'Salones'
     }
   }
 
   getCompanies(){
-    this.companies[0] = {
-      companyType:0,
-      img:'https://via.placeholder.com/320x180',
-      name: 'barber1'
-    }
-    this.companies[1] = {
-      companyType:0,
-      img:'https://via.placeholder.com/320x180',
-      name: 'barber2'
-    }
-    this.companies[2] = {
-      companyType:0,
-      img:'https://via.placeholder.com/320x180',
-      name: 'barber2'
-    }
-    this.companies[3] = {
-      companyType:0,
-      img:'https://via.placeholder.com/320x180',
-      name: 'barber2'
-    }
-    this.companies[4] = {
-      companyType:0,
-      img:'https://via.placeholder.com/320x180',
-      name: 'barber2'
-    }
   }
 
   getOffers(){
@@ -66,9 +171,10 @@ export class HomePage {
     }
   }
 
+
   ngOnInit() {
     this.getCategories();
-    this.getCompanies();
+    // this.getCompanies();
     this.getOffers();
   }
 
