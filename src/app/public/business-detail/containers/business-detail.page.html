@@ -8,7 +8,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content  fullscreen>
 
     <div class="company-logo">
         <ion-label class="business-name-title">La Barberia</ion-label>
@@ -24,7 +24,7 @@
 
                 <ion-text class="titulo">Direccion</ion-text>
                 <p>
-                    <ion-text color="dark">Ave. Ejemplo ejemplo, ejemplo ejemplo.</ion-text>
+                    <ion-text color="dark"><h6>Ave. Ejemplo ejemplo, ejemplo ejemplo.</h6></ion-text>
                 </p>
 
                 <ion-text class="titulo">Horario</ion-text>
@@ -35,12 +35,12 @@
 
             </div>
 
-            <app-category-filter [categories]="categories" [elementsList]="services" (filteredElements)="setServiceByCategory($event)">
+            <app-category-filter [categories]="categories" [elementsList]="services" (filteredElements)="setServicesByCategory($event)">
             </app-category-filter>
 
             <div class="services-list">
                 <ng-container *ngFor="let service of services; let i = index">
-                    <ion-text *ngIf="servicesByCategory[i].length > 0">
+                    <ion-text *ngIf="servicesByCategory[i]?.category != ''">
                         <h4>{{category}}</h4>
                     </ion-text>
                     <ion-grid>
@@ -67,7 +67,7 @@
         </ion-slide>
 
         <ion-slide>
-            <h1>Slide 2</h1>
+            <app-providers></app-providers>
         </ion-slide>
 
     </ion-slides>

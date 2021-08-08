@@ -17,6 +17,7 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
     ProvidersPageRoutingModule,
     SharedModule
   ],
-  declarations: [ProvidersPage]
+  declarations: [ProvidersPage],
+  exports: [ProvidersPage]
 })
 export class ProvidersPageModule {}
