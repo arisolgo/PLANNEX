@@ -169,6 +169,18 @@ app-category-filter {
 
 //BusinessDetailPage: Business
 app-business-detail {
+    div {
+        text-align: left;
+    }
+    app-category-filter {
+        width: 100%;
+    }
+    .swiper-container {
+        height: initial;
+    }
+    .swiper-slide {
+        flex-direction: column;
+    }
     .company-logo {
         padding-top: 20px;
         ion-avatar {
@@ -177,7 +189,17 @@ app-business-detail {
         }
     }
     .services-list {
+        .service-title {
+            text-align: left;
+        }
+        .service-price {
+            text-align: right;
+        }
+        width: 100%;
         ion-avatar {
+            width: 100%;
+        }
+        ion-card {
             width: 100%;
         }
     }
