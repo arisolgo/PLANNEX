@@ -8,7 +8,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content  fullscreen>
+<ion-content fullscreen>
 
     <div class="company-logo">
         <ion-label class="business-name-title">La Barberia</ion-label>
@@ -20,21 +20,29 @@
     <ion-slides pager="true" [options]="slideOpts">
         <ion-slide>
 
-            <div class="business-info">
+            <div>
 
-                <ion-text class="titulo">Direccion</ion-text>
+                <ion-text>
+                    <h4>Direccion</h4>
+                </ion-text>
                 <p>
-                    <ion-text color="dark"><h6>Ave. Ejemplo ejemplo, ejemplo ejemplo.</h6></ion-text>
+                    <ion-text color="dark">
+                        <h6>Ave. Ejemplo ejemplo, ejemplo ejemplo.</h6>
+                    </ion-text>
                 </p>
 
-                <ion-text class="titulo">Horario</ion-text>
+                <ion-text>
+                    <h4>Horario</h4>
+                </ion-text>
                 <p>
                     <ion-text color="dark">Lunes a Viernes | 8:00 AM - 10:00 PM </ion-text>
                 </p>
-                <ion-text class="titulo">Servicios</ion-text>
+
 
             </div>
-
+            <ion-text>
+                <h4>Servicios</h4>
+            </ion-text>
             <app-category-filter [categories]="categories" [elementsList]="services" (filteredElements)="setServicesByCategory($event)">
             </app-category-filter>
 
@@ -44,22 +52,21 @@
                         <h4>{{category}}</h4>
                     </ion-text>
                     <ion-grid>
-                        <ion-row>
-                            <ion-col size="4" *ngFor="let service of servicesByCategory[i]">
-                                <ion-card>
-                                    <ion-card-content>
 
-                                        <div class="service-info">
-                                            <ion-avatar class="center">
-                                                <img src="https://via.placeholder.com/80x80" />
-                                            </ion-avatar>
-                                            <h6 class="avatar-title">{{service.name}}</h6>
-                                            <h6 class="avatar-title">{{service.price}}</h6>
-                                        </div>
-                                    </ion-card-content>
-                                </ion-card>
-                            </ion-col>
+                        <ion-row size="4" *ngFor="let service of servicesByCategory[i]">
+                            <ion-card>
+                                <ion-card-content>
+
+                                    <div class="service-info">
+
+                                        <h6 class="service-title">{{service.name}}</h6>
+
+                                        <h6 class="service-price">RD${{service.price}}.00</h6>
+                                    </div>
+                                </ion-card-content>
+                            </ion-card>
                         </ion-row>
+
                     </ion-grid>
                 </ng-container>
             </div>
@@ -69,6 +76,5 @@
         <ion-slide>
             <app-providers [isParentCalling]="true"></app-providers>
         </ion-slide>
-
     </ion-slides>
 </ion-content>
