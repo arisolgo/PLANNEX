@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-companies-carousel',
@@ -13,9 +14,12 @@ export class CompaniesCarouselComponent implements OnInit {
     centeredSlides:true,
     speed: 400
   }
-
-  constructor() { }
+  constructor(public navCtrl:NavController) { }
 
   ngOnInit() {}
+  
+  goToDetailPage(business) {
+    this.navCtrl.navigateForward('/business-detail', {state: business});
+  }
 
 }

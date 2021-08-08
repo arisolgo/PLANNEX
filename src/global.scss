@@ -185,6 +185,20 @@ app-category-filter {
     
     //BusinessDetailPage: Business
     app-business-detail {
+        ion-header{
+            ion-toolbar{
+                ion-buttons{
+                    ion-button{
+                        span .button-inner{
+                            font-size: 20px !important;
+                        }
+                        ion-icon{
+                            zoom: 1.5;
+                        }
+                    }
+                }
+            }
+        }
         div {
             text-align: left;
         }
