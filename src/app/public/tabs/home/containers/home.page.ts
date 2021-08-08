@@ -96,7 +96,7 @@ export class HomePage {
     },
 
     {
-      display_name: 'La Barbería 3',
+      display_name: 'El Salón 3',
       name: 'La barberia 3',
       address: 'Ave. 27 de Febrero #45, esq. Abraham Lincoln.',
       image: 'https://via.placeholder.com/320x180 ',
@@ -105,17 +105,17 @@ export class HomePage {
       days: 'Lunes-Viernes',
       startTime: '8:00 AM',
       endTime: '7:00 PM',
-      categoryId: 1,
+      categoryId: 2,
       services: [
         {
-          serviceName: 'Corte Completo',
+          serviceName: 'Lavado Completo',
           price: 500,
           duration: 25,
           description: '',
-          category: 'Recorte',
+          category: 'Uñas',
         },
         {
-          serviceName: 'Corte Sencillo',
+          serviceName: 'Recorte Fenenino',
           price: 300,
           duration: 25,
           description: '',

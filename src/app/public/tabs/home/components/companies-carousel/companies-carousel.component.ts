@@ -19,7 +19,7 @@ export class CompaniesCarouselComponent implements OnInit {
   ngOnInit() {}
   
   goToDetailPage(business) {
-    this.navCtrl.navigateForward('/', {state: business});
+    this.navCtrl.navigateForward('/business-detail', {state: business});
   }
 
 }

@@ -1,6 +1,6 @@
 <ion-slides [options]="slideOps" *ngIf="companies.length">
   <ion-slide *ngFor="let company of companies">
-      <ion-card class="company-slide-item">
+      <ion-card (click)="goToDetailPage(company)" class="company-slide-item">
         <div class="company-image-container">
           <img [src]="company.image">
         </div>
