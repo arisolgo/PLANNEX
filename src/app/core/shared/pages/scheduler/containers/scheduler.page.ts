@@ -229,6 +229,7 @@ export class SchedulerPage implements OnInit {
   }
 
   getNewEvents(){
-      this.newEvents.emit(this.providerEvents);
+      // this.newEvents.emit(this.providerEvents);
+      this.navCtrl.navigateForward('/appointment-confirmation')
   }
 }
