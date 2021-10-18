@@ -7,8 +7,8 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  serviceCategories:any = [];
-  offers:any = [];
+  serviceCategories: any = [];
+  offers: any = [];
   companies: any[] = [
     {
       display_name: 'La Barbería',
@@ -137,46 +137,40 @@ export class HomePage {
         },
       ],
     },
-   
   ];
 
   constructor() {}
 
-  getCategories(){
+  getCategories() {
     this.serviceCategories[0] = {
       category: 1,
-      img:'https://via.placeholder.com/80x80',
-      name: 'Peluquerías'
-    }
+      img: 'https://via.placeholder.com/80x80',
+      name: 'Peluquerías',
+    };
     this.serviceCategories[1] = {
       category: 2,
-      img:'https://via.placeholder.com/80x80',
-      name: 'Salones'
-    }
+      img: 'https://via.placeholder.com/80x80',
+      name: 'Salones',
+    };
   }
 
-  getCompanies(){
-  }
+  getCompanies() {}
 
-  getOffers(){
+  getOffers() {
     this.offers[0] = {
-      img:'https://via.placeholder.com/254x120',
-
-    }
+      img: 'https://via.placeholder.com/254x120',
+    };
     this.offers[1] = {
-      img:'https://via.placeholder.com/254x120',
-    }
+      img: 'https://via.placeholder.com/254x120',
+    };
     this.offers[2] = {
-      img:'https://via.placeholder.com/254x120',
-    }
+      img: 'https://via.placeholder.com/254x120',
+    };
   }
-
 
   ngOnInit() {
     this.getCategories();
     // this.getCompanies();
     this.getOffers();
   }
-
-
 }
