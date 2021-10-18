@@ -7,4 +7,5 @@ export { ProviderServiciosService } from './services/provider-servicios.service'
 export { ScheduledServiceService } from './services/scheduled-service.service';
 export { ScheduledServiceRequiredService } from './services/scheduled-service-required.service';
 export { ServicesService } from './services/services.service';
+export { TiposService } from './services/tipos.service';
 export { UserService } from './services/user.service';

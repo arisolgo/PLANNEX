@@ -12,6 +12,7 @@ import { ProviderServiciosService } from './services/provider-servicios.service'
 import { ScheduledServiceService } from './services/scheduled-service.service';
 import { ScheduledServiceRequiredService } from './services/scheduled-service-required.service';
 import { ServicesService } from './services/services.service';
+import { TiposService } from './services/tipos.service';
 import { UserService } from './services/user.service';
 
 /**
@@ -36,6 +37,7 @@ import { UserService } from './services/user.service';
     ScheduledServiceService,
     ScheduledServiceRequiredService,
     ServicesService,
+    TiposService,
     UserService
   ],
 })
