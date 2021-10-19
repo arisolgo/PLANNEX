@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ProveedorTiposService } from 'src/app/core/services/api/services/proveedor-tipos.service';
+import { TiposService } from 'src/app/core/services/api/services';
 
 @Component({
   selector: 'app-listing',
@@ -8,20 +10,34 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./listing.page.scss'],
 })
 export class ListingPage implements OnInit {
-  categoryId = null;
+  tipoId = null;
   filterTerm;
-  constructor(private router: Router, public navCtrl: NavController) {
+  constructor(private router: Router, public navCtrl: NavController, private proveedorTipoService: ProveedorTiposService, private tipoService: TiposService) {
     if (router.getCurrentNavigation().extras.state) {
-      this.categoryId =
+      this.tipoId =
         this.router.getCurrentNavigation().extras.state.category;
     }
   }
 
   ngOnInit() {
-    this.filterBusiness(this.categoryId);
+    this.filterBusiness(this.tipoId);
   }
 
-  business: any[] = [
+  getCategoryName(tipoId){
+    
+  this.tipoService.getApiTiposId(tipoId).subscribe((result)=> {
+    console.log(result);
+    
+  });
+  if(this.tipoService.getApiTiposId(tipoId)){
+    var tipo_name = this.tipoService.getApiTiposId(tipoId)
+    return tipo_name;
+  }
+  return false;
+  }
+  
+  business = this.proveedorTipoService.getApiProveedorTipos();
+  tipos: any[] = [
     {
       display_name: 'La Barbería',
       name: 'La barberia',
@@ -151,16 +167,17 @@ export class ListingPage implements OnInit {
     },
    
   ];
+  
 
-  filterBusiness(categoryId) {
-    if (categoryId) {
-      this.business = this.business.filter((e) => e.categoryId == categoryId);
+  filterBusiness(tipoId) {
+    if (tipoId) {
+      this.tipos = this.tipos.filter((e) => e.tipoId == tipoId);
     }
   }
 
   //item: any = this.business.find(x => x.id === this.id_t);
 
-  goToDetailPage(business) {
-    this.navCtrl.navigateForward('/business-detail', { state: business });
+  goToDetailPage(proveedor) {
+    this.navCtrl.navigateForward('/business-detail', { state: proveedor });
   }
 }

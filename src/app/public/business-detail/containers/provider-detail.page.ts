@@ -8,12 +8,13 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./business-detail.page.scss'],
 })
 export class BusinessDetailPage implements OnInit {
-  business:any = {}
+  provider:any = {}
   slideOpts = {
     initialSlide: 0,
     speed: 400
   };
 
+  
   services = [];
   serviceCategory = '';
   filteredServices = [];

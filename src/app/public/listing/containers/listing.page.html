@@ -7,6 +7,6 @@
 <ion-content>
     <!--<h1 class="list-header">Empresas</h1> -->
     <div class="business-list">
-        <app-business-card (click)="goToDetailPage(x)" *ngFor="let x of business | filter:filterTerm" [item]="x"></app-business-card>
+        <app-business-card (click)="goToDetailPage(x)" *ngFor="let x of proveedores | filter:filterTerm" [item]="x"></app-business-card>
     </div>
 </ion-content>
