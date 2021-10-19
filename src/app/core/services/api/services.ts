@@ -3,6 +3,7 @@ export { ComentariosService } from './services/comentarios.service';
 export { ProveedorDisponibilidadesService } from './services/proveedor-disponibilidades.service';
 export { ProveedoresService } from './services/proveedores.service';
 export { ProveedorReviewsService } from './services/proveedor-reviews.service';
+export { ProveedorTiposService } from './services/proveedor-tipos.service';
 export { ProviderServiciosService } from './services/provider-servicios.service';
 export { ScheduledServiceService } from './services/scheduled-service.service';
 export { ScheduledServiceRequiredService } from './services/scheduled-service-required.service';

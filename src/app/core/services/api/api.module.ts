@@ -8,6 +8,7 @@ import { ComentariosService } from './services/comentarios.service';
 import { ProveedorDisponibilidadesService } from './services/proveedor-disponibilidades.service';
 import { ProveedoresService } from './services/proveedores.service';
 import { ProveedorReviewsService } from './services/proveedor-reviews.service';
+import { ProveedorTiposService } from './services/proveedor-tipos.service';
 import { ProviderServiciosService } from './services/provider-servicios.service';
 import { ScheduledServiceService } from './services/scheduled-service.service';
 import { ScheduledServiceRequiredService } from './services/scheduled-service-required.service';
@@ -33,6 +34,7 @@ import { UserService } from './services/user.service';
     ProveedorDisponibilidadesService,
     ProveedoresService,
     ProveedorReviewsService,
+    ProveedorTiposService,
     ProviderServiciosService,
     ScheduledServiceService,
     ScheduledServiceRequiredService,
