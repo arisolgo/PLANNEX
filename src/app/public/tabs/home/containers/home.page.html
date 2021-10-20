@@ -1,14 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+    <ion-title> Home </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <app-service-categories [categories]="serviceCategories"> </app-service-categories>
-    <app-offers-carousel [offers]="offers"> </app-offers-carousel>
-    <ion-text><h3>Negocios</h3></ion-text>
-    <app-companies-carousel [companies]="companies"></app-companies-carousel>
+  <app-service-categories [categories]="serviceCategories">
+  </app-service-categories>
+  <app-offers-carousel [offers]="offers"> </app-offers-carousel>
+  <ion-text><h3>Negocios</h3></ion-text>
+  <app-providers-carousel [providers]="providers"></app-providers-carousel>
 </ion-content>

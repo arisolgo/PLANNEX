@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import {
+  ProveedoresService,
+  TiposService,
+} from 'src/app/core/services/api/services';
 
 @Component({
   selector: 'app-home',
@@ -138,8 +142,27 @@ export class HomePage {
       ],
     },
   ];
+  providers: any[] = [];
 
-  constructor() {}
+  constructor(
+    private tiposService: TiposService,
+    private providerService: ProveedoresService
+  ) {}
+
+  ngOnInit() {
+    this.getOffers();
+    this.getAllTypes();
+    this.getProviders();
+  }
+
+  getAllTypes() {
+    this.tiposService.getApiTipos().subscribe((response: any) => {
+      this.serviceCategories = response.result;
+      this.serviceCategories.forEach((element) => {
+        element['img'] = 'https://via.placeholder.com/80x80';
+      });
+    });
+  }
 
   getCategories() {
     this.serviceCategories[0] = {
@@ -154,8 +177,6 @@ export class HomePage {
     };
   }
 
-  getCompanies() {}
-
   getOffers() {
     this.offers[0] = {
       img: 'https://via.placeholder.com/254x120',
@@ -168,9 +189,12 @@ export class HomePage {
     };
   }
 
-  ngOnInit() {
-    this.getCategories();
-    // this.getCompanies();
-    this.getOffers();
+  getProviders() {
+    this.providerService.getApiProveedores().subscribe((response: any) => {
+      this.providers = response.result;
+      this.providers.forEach((element) => {
+        element['image'] = 'https://via.placeholder.com/320x180';
+      });
+    });
   }
 }
