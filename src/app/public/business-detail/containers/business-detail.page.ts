@@ -8,7 +8,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./business-detail.page.scss'],
 })
 export class BusinessDetailPage implements OnInit {
-  provider:any = {}
+  business:any = {}
   slideOpts = {
     initialSlide: 0,
     speed: 400

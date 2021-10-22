@@ -8,13 +8,13 @@ import { NavController } from '@ionic/angular';
 })
 export class ServiceCategoriesComponent implements OnInit {
 
-  @Input() categories = [];
+  @Input() tipos = [];
   constructor(public navCtrl: NavController) { }
 
   ngOnInit() {}
 
-  showBusiness(category){
-    this.navCtrl.navigateForward('/listing', {state: category});
+  showProvider(tipo){
+    this.navCtrl.navigateForward('/listing', {state: tipo});
   }
 
 }
