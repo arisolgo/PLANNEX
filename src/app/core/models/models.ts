@@ -1,105 +1,105 @@
 export interface User {
-  UserName: string;
-  Password: string;
+  userName: string;
+  password: string;
 }
 
 export interface Client {
-  Id: number;
-  Nombres: string;
-  Apellidos: string;
-  Direccion1: string;
-  Direccion2: string;
-  Ciudad: string;
-  Pais: number;
-  Latitud: number;
-  Longitud: number;
-  Telefono: string;
-  Celular: string;
-  Sexo: string;
-  Status: number;
+  id: number;
+  nombres: string;
+  apellidos: string;
+  direccion1: string;
+  direccion2: string;
+  ciudad: string;
+  pais: number;
+  latitud: number;
+  longitud: number;
+  telefono: string;
+  celular: string;
+  sexo: string;
+  status: number;
 }
 
 export interface Provider {
-  Id: number;
-  Email: string;
-  Nombres: string;
-  Apellidos: string;
-  Direccion1: string;
-  Direccion2: string;
-  Ciudad: string;
-  Pais: number;
-  Latitud: number;
-  Longitud: number;
-  Telefono: string;
-  Celular: string;
-  Sexo: string;
-  Status: number;
-  Rating: number;
-  ProviderReviews: ProviderReview[];
+  id: number;
+  email: string;
+  nombres: string;
+  apellidos: string;
+  direccion1: string;
+  direccion2: string;
+  ciudad: string;
+  pais: number;
+  latitud: number;
+  longitud: number;
+  telefono: string;
+  celular: string;
+  sexo: string;
+  status: number;
+  rating: number;
+  providerReviews: ProviderReview[];
 }
 
 export interface ProviderReview {
-  Id: number;
-  ProveedorId: number;
-  ClienteId: number;
-  ComentarioId: number;
-  ServiceRating: number;
+  id: number;
+  proveedorId: number;
+  clienteId: number;
+  comentarioId: number;
+  serviceRating: number;
 }
 
 export interface ProviderService {
-  Id: number;
-  Price: number;
-  ProveedorId: number;
-  ServiceId: number;
-  CreatorUserId: number;
+  id: number;
+  price: number;
+  proveedorId: number;
+  serviceId: number;
+  creatorUserId: number;
 }
 
 export interface Comment {
-  Id: number;
-  Comment: string;
-  CreationTime: Date;
+  id: number;
+  comment: string;
+  creationTime: Date;
 }
 
 export interface ProviderAvailability {
-  Id: number;
-  ProvideedorId: number;
-  Dia: number;
-  HoraDesde: Date;
-  HoraHaste: Date;
+  id: number;
+  provideedorId: number;
+  dia: number;
+  horaDesde: Date;
+  horaHaste: Date;
 }
 
 export interface ScheduledService {
-  Id: number;
-  RegisterTime: Date;
-  ScheduledTime: Date;
-  ProviderId: number;
-  ClientId: number;
-  ProviderServiceId: number;
-  Status: number;
-  Rating: number;
+  id: number;
+  registerTime: Date;
+  scheduledTime: Date;
+  providerId: number;
+  clientId: number;
+  providerServiceId: number;
+  status: number;
+  rating: number;
 }
 
 export interface ServiceDto {
-  Id: number;
-  Description: string;
+  id: number;
+  description: string;
 }
 
 export interface ScheduledServiceRequired {
-  Id: number;
-  ScheduledServiceId: number;
+  id: number;
+  scheduledServiceId: number;
   paymentId: number;
 }
 
 export interface Tipo {
-  Id: number;
-  Nombre: string;
+  id: number;
+  nombre: string;
 }
 
 export interface Response {
-  IsSuccess: boolean;
-  Result: any;
-  DisplayMessage: string;
-  ErrorMessages: string[];
+  isSuccess: boolean;
+  result: any;
+  displayMessage: string;
+  errorMessages: string[];
 }
 
 export interface ServiceItem {
