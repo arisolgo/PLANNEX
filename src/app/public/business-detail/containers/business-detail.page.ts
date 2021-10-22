@@ -8,30 +8,30 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./business-detail.page.scss'],
 })
 export class BusinessDetailPage implements OnInit {
-  business:any = {}
+  business: any = {};
   slideOpts = {
     initialSlide: 0,
-    speed: 400
+    speed: 400,
   };
 
   services = [];
   serviceCategory = '';
   filteredServices = [];
   categories = ['Recorte', 'Uñas'];
-  servicesByCategory:any = [];
-  
-  constructor(private router:Router, private navCtrl:NavController) {
+  servicesByCategory: any = [];
+
+  constructor(private router: Router, private navCtrl: NavController) {
     if (router.getCurrentNavigation().extras.state) {
       this.business = this.router.getCurrentNavigation().extras.state;
       console.log(this.business);
     }
-   }
+  }
   ngOnInit() {
     this.getServices();
     this.setServices(this.filteredServices);
   }
   getServices() {
-    this.services = this.business.services
+    this.services = this.business.services;
     // this.services[0] = {
     //   name: 'Corte sencillo',
     //   img: 'https://via.placeholder.com/80x80',
@@ -85,8 +85,7 @@ export class BusinessDetailPage implements OnInit {
     });
   }
 
-  selectProvider(service){
-    this.navCtrl.navigateForward('/providers', {state: service})
+  selectProvider(service) {
+    this.navCtrl.navigateForward('/scheduler', { state: service });
   }
-
 }

@@ -12,6 +12,7 @@ import {
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar';
+import { ScheduledServiceService } from 'src/app/core/services/api/services';
 
 @Component({
   selector: 'app-scheduler',
@@ -20,7 +21,7 @@ import { CalendarComponent } from 'ionic2-calendar';
 })
 export class SchedulerPage implements OnInit {
   @Input() parentCall = false;
-  @Input() providerEvents:any = {
+  @Input() providerEvents: any = {
     // events: [],
     // serviceDuration: 25,
     // serviceName: 'Recorte',
@@ -77,17 +78,18 @@ export class SchedulerPage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
-    private navCtrl:NavController,
-    private router:Router,
+    private navCtrl: NavController,
+    private router: Router,
+    private scheduledServices: ScheduledServiceService,
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
-      this.providerEvents = this.router.getCurrentNavigation().extras.state;
-      console.log(this.providerEvents);
+      console.log(router.getCurrentNavigation().extras.state);
     }
   }
 
   ngOnInit() {
+    this.getScheduledServices();
     this.getTwentyFourHourTime(
       this.providerEvents.startHour,
       this.providerEvents.endHour
@@ -132,27 +134,37 @@ export class SchedulerPage implements OnInit {
     }
 
     let duplicate = false;
-    this.providerEvents.events.forEach(element => {
-       let formatElement = element.startTime.getUTCDate().toString() + element.startTime.getUTCMonth().toString() + element.startTime.getUTCFullYear().toString(); 
-       formatElement += element.startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    this.providerEvents.events.forEach((element) => {
+      let formatElement =
+        element.startTime.getUTCDate().toString() +
+        element.startTime.getUTCMonth().toString() +
+        element.startTime.getUTCFullYear().toString();
+      formatElement += element.startTime.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
 
-       let formatCurrentElement = eventCopy.startTime.getUTCDate().toString() + eventCopy.startTime.getUTCMonth().toString() + eventCopy.startTime.getUTCFullYear().toString(); 
-       formatCurrentElement += eventCopy.startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      let formatCurrentElement =
+        eventCopy.startTime.getUTCDate().toString() +
+        eventCopy.startTime.getUTCMonth().toString() +
+        eventCopy.startTime.getUTCFullYear().toString();
+      formatCurrentElement += eventCopy.startTime.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
 
-        if(formatElement == formatCurrentElement){
-          alert("Ya hay una cita en esta hora");
-          duplicate = true;
-        }
-        console.log(this.providerEvents.events);
+      if (formatElement == formatCurrentElement) {
+        alert('Ya hay una cita en esta hora');
+        duplicate = true;
+      }
+      console.log(this.providerEvents.events);
     });
-    if(!duplicate){
+    if (!duplicate) {
       this.providerEvents.events.push(eventCopy);
-      this.isEventInserted = true
+      this.isEventInserted = true;
       this.myCal.loadEvents();
       this.resetEvent();
     }
-    
-
   }
 
   next() {
@@ -217,19 +229,25 @@ export class SchedulerPage implements OnInit {
   }
 
   getTwentyFourHourTime(startHour, endHour) {
-    console.log("Me llame")
+    console.log('Me llame');
     let sHour = new Date('1/1/2013 ' + startHour);
     let eHour = new Date('1/1/2013 ' + endHour);
     // this.calendar.startHour = sHour.getHours();
     // this.calendar.endHour = eHour.getHours();
 
     for (let index = sHour.getHours(); index <= eHour.getHours(); index++) {
-        this.hourValues.push(index);
+      this.hourValues.push(index);
     }
   }
 
-  getNewEvents(){
-      // this.newEvents.emit(this.providerEvents);
-      this.navCtrl.navigateForward('/appointment-confirmation')
+  getScheduledServices() {
+    this.scheduledServices
+      .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(1)
+      .subscribe((response) => console.log(response));
+  }
+
+  getNewEvents() {
+    // this.newEvents.emit(this.providerEvents);
+    this.navCtrl.navigateForward('/appointment-confirmation');
   }
 }
