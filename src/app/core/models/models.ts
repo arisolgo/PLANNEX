@@ -95,6 +95,13 @@ export interface Tipo {
   Nombre: string;
 }
 
+export interface Response {
+  IsSuccess: boolean;
+  Result: any;
+  DisplayMessage: string;
+  ErrorMessages: string[];
+}
+
 export interface ServiceItem {
   serviceName: '';
   provider: { name: ''; events: [] };
