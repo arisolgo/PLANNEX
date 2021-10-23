@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ProviderAvailability, ProviderService, Response } from 'src/app/core/models/models';
+import { ProveedoresService, ServicesService } from 'src/app/core/services/api/services';
+import { ProviderServiciosService } from 'src/app/core/services/api/services';
 
 @Component({
   selector: 'app-business-detail',
@@ -8,7 +11,10 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./business-detail.page.scss'],
 })
 export class BusinessDetailPage implements OnInit {
-  business:any = {}
+  provider:Provider;
+  provider_aux:any;
+  providerDisponibilidad : ProviderAvailability;
+  providerServices:any[]=[];
   slideOpts = {
     initialSlide: 0,
     speed: 400
@@ -16,23 +22,38 @@ export class BusinessDetailPage implements OnInit {
 
   
   services = [];
-  serviceCategory = '';
-  filteredServices = [];
-  categories = ['Recorte', 'Uñas'];
-  servicesByCategory:any = [];
+  servicesNames = [];
   
-  constructor(private router:Router, private navCtrl:NavController) {
+  constructor(private router:Router, private navCtrl:NavController, private providerService: ProveedoresService, private providerServiciosService: ProviderServiciosService, private servicioService: ServicesService) {
     if (router.getCurrentNavigation().extras.state) {
-      this.business = this.router.getCurrentNavigation().extras.state;
-      console.log(this.business);
+      this.provider_aux = this.router.getCurrentNavigation().extras.state;
+      console.log("PROVIDER:",this.provider_aux);
     }
    }
   ngOnInit() {
-    this.getServices();
-    this.setServices(this.filteredServices);
+    this.getServices(this.provider_aux.id);
+  
+    
   }
-  getServices() {
-    this.services = this.business.services
+ 
+  getServices(providerId:number) {
+    console.log("PROVIDER ID:",providerId)
+    this.providerServiciosService.getApiProviderServiciosProviderIdGetProviderServiceByProviderId(providerId).subscribe((response:Response) => {
+      this.setServices(response.result)
+      console.log("Services",response.result)
+      });
+    }
+
+    setServices(providerServices:any[]){
+      providerServices.forEach((element:any) => {
+        this.servicioService.getApiServicesId(element.serviceId).subscribe((response:Response)=>{
+          element["serviceName"] = response.result.description;
+          this.providerServices.push(element);
+          console.log("TEST4554:",this.providerServices)
+        })
+        
+      });
+    }
     // this.services[0] = {
     //   name: 'Corte sencillo',
     //   img: 'https://via.placeholder.com/80x80',
@@ -68,26 +89,7 @@ export class BusinessDetailPage implements OnInit {
     //   price: 1500.00,
     //   description:"Corte y esmaltado de uñas de las manos y pies.",
     // };
-    this.filteredServices = this.services;
-  }
+  
 
-  setServicesByCategory(filteredServices) {
-    this.filteredServices = filteredServices;
-    this.setServices(filteredServices);
-  }
-
-  setServices(servicesArray) {
-    let i = 0;
-    this.categories.forEach((category) => {
-      this.servicesByCategory[i] = servicesArray.filter(
-        (e) => e.category == category
-      );
-      i++;
-    });
-  }
-
-  selectProvider(service){
-    this.navCtrl.navigateForward('/providers', {state: service})
-  }
 
 }

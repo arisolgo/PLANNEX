@@ -10,77 +10,69 @@
                 <ion-icon name="cart-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
-       
+
     </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
 
     <div class="company-logo">
-        <ion-label class="business-name-title">{{business.name}}</ion-label>
+        <ion-label class="business-name-title">{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label>
         <ion-avatar class="center">
-            <img src="https://via.placeholder.com/150x150" />
+            <img [src]="provider_aux.profilePicture" />
         </ion-avatar>
+        <h2 class="subtitle">{{provider_aux.rating}}</h2>
+        <ion-icon name="star"></ion-icon>
     </div>
 
-    <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide>
 
-            <div>
+    <div>
 
-                <ion-text>
-                    <h4>Direccion</h4>
-                </ion-text>
-                <p>
-                    <ion-text color="dark">
-                        <h6>{{business.address}}</h6>
-                    </ion-text>
-                </p>
-
-                <ion-text>
-                    <h4>Horario</h4>
-                </ion-text>
-                <p>
-                    <ion-text color="dark">{{business.days}} | {{business.startTime}} - {{business.endTime}} </ion-text>
-                </p>
-
-
-            </div>
-            <ion-text>
-                <h4>Servicios</h4>
+        <ion-text>
+            <h4>Direccion</h4>
+        </ion-text>
+        <p>
+            <ion-text color="dark">
+                <h6>{{provider_aux.direccion1}}</h6>
+                <h6>{{provider_aux.direccion2}}</h6>
             </ion-text>
-            <app-category-filter [categories]="categories" [elementsList]="services" (filteredElements)="setServicesByCategory($event)">
-            </app-category-filter>
+        </p>
 
-            <div class="services-list">
-                <ng-container *ngFor="let category of categories; let i = index">
-                    <ion-text *ngIf="servicesByCategory[i].length > 0">
-                        <h4>{{category}}</h4>
-                    </ion-text>
-                    <ion-grid>
+        <ion-text>
+            <h4>Horario</h4>
+        </ion-text>
+        <p>
+            <!-- <ion-text color="dark">{{business.days}} | {{business.startTime}} - {{business.endTime}} </ion-text> -->
+        </p>
 
-                        <ion-row size="4" *ngFor="let service of servicesByCategory[i]">
-                            <ion-card (click)="selectProvider(service)">
-                                <ion-card-content>
 
-                                    <div class="service-info">
+    </div>
+    <ion-text>
+        <h4>Servicios</h4>
+    </ion-text>
 
-                                        <h6 class="service-title">{{service.serviceName}}</h6>
 
-                                        <h6 class="service-price">RD${{service.price}}.00</h6>
-                                    </div>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-row>
+    <div class="services-list">
+        <ng-container>
 
-                    </ion-grid>
-                </ng-container>
-            </div>
+            <ion-grid>
 
-        </ion-slide>
+                <ion-row size="4" *ngFor="let service of providerServices">
+                    <ion-card>
+                        <ion-card-content>
 
-        <ion-slide>
-            <app-providers [isParentCalling]="true"></app-providers>
-        </ion-slide>
-    </ion-slides>
+                            <div class="service-info">
+
+                                <h6 class="service-title">{{service.serviceName}}</h6>
+
+                                <h6 class="service-price">RD${{service.price}}.00</h6>
+                            </div>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-row>
+
+            </ion-grid>
+        </ng-container>
+    </div>
+
 </ion-content>
