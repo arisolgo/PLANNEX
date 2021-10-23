@@ -45,6 +45,7 @@ export class ListingPage implements OnInit {
       this.tipos = response.result;
     });
   }
+
   getProvidersByType() {
     this.proveedorTipoService
       .getApiProveedorTiposTipoIdGetProveedorTipoByTipoId(this.tipoId)
