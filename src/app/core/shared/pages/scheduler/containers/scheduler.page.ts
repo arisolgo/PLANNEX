@@ -12,7 +12,11 @@ import {
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar';
-import { ScheduledServiceService } from 'src/app/core/services/api/services';
+import { Response } from 'src/app/core/models/models';
+import {
+  ProveedorDisponibilidadesService,
+  ScheduledServiceService,
+} from 'src/app/core/services/api/services';
 
 @Component({
   selector: 'app-scheduler',
@@ -81,6 +85,7 @@ export class SchedulerPage implements OnInit {
     private navCtrl: NavController,
     private router: Router,
     private scheduledServices: ScheduledServiceService,
+    private providerAvailabilityService: ProveedorDisponibilidadesService,
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
@@ -90,6 +95,7 @@ export class SchedulerPage implements OnInit {
 
   ngOnInit() {
     this.getScheduledServices();
+    this.getProviderAvailability();
     this.getTwentyFourHourTime(
       this.providerEvents.startHour,
       this.providerEvents.endHour
@@ -240,14 +246,26 @@ export class SchedulerPage implements OnInit {
     }
   }
 
-  getScheduledServices() {
-    this.scheduledServices
-      .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(1)
-      .subscribe((response) => console.log(response));
-  }
-
   getNewEvents() {
     // this.newEvents.emit(this.providerEvents);
     this.navCtrl.navigateForward('/appointment-confirmation');
+  }
+
+  getScheduledServices() {
+    this.scheduledServices
+      .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(1)
+      .subscribe((response: Response) => {
+        console.log(response.result);
+      });
+  }
+
+  getProviderAvailability() {
+    this.providerAvailabilityService
+      .getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
+        1
+      )
+      .subscribe((response: Response) => {
+        console.log(response.result);
+      });
   }
 }
