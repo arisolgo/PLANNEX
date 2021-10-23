@@ -17,7 +17,7 @@ export class BusinessDetailPage implements OnInit {
   providerServices:any[]=[];
   slideOpts = {
     initialSlide: 0,
-    speed: 400
+    speed: 400,
   };
 
   
@@ -29,7 +29,7 @@ export class BusinessDetailPage implements OnInit {
       this.provider_aux = this.router.getCurrentNavigation().extras.state;
       console.log("PROVIDER:",this.provider_aux);
     }
-   }
+  }
   ngOnInit() {
     this.getServices(this.provider_aux.id);
   
@@ -90,6 +90,5 @@ export class BusinessDetailPage implements OnInit {
     //   description:"Corte y esmaltado de uñas de las manos y pies.",
     // };
   
-
 
 }

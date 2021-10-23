@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Response } from 'src/app/core/models/models';
 import {
   ProveedoresService,
   TiposService,
@@ -190,7 +191,7 @@ export class HomePage {
   }
 
   getProviders() {
-    this.providerService.getApiProveedores().subscribe((response: any) => {
+    this.providerService.getApiProveedores().subscribe((response: Response) => {
       this.providers = response.result;
       this.providers.forEach((element) => {
         element['image'] = 'https://via.placeholder.com/320x180';

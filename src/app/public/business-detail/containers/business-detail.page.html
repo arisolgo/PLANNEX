@@ -76,3 +76,75 @@
     </div>
 
 </ion-content>
+
+<!-- <ion-toolbar>
+    <ion-buttons>
+      <ion-button routerLink="">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="company-logo">
+    <ion-label class="business-name-title">{{business.name}}</ion-label>
+    <ion-avatar class="center">
+      <img src="https://via.placeholder.com/150x150" />
+    </ion-avatar>
+  </div>
+
+  <div>
+    <ion-text>
+      <h4>Direccion</h4>
+    </ion-text>
+    <p>
+      <ion-text color="dark">
+        <h6>{{business.address}}</h6>
+      </ion-text>
+    </p>
+
+    <ion-text>
+      <h4>Horario</h4>
+    </ion-text>
+    <p>
+      <ion-text color="dark"
+        >{{business.days}} | {{business.startTime}} - {{business.endTime}}
+      </ion-text>
+    </p>
+  </div>
+  <ion-text>
+    <h4>Servicios</h4>
+  </ion-text>
+  <app-category-filter
+    [categories]="categories"
+    [elementsList]="services"
+    (filteredElements)="setServicesByCategory($event)"
+  >
+  </app-category-filter>
+
+  <div class="services-list">
+    <ng-container *ngFor="let category of categories; let i = index">
+      <ion-text *ngIf="servicesByCategory[i].length > 0">
+        <h4>{{category}}</h4>
+      </ion-text>
+      <ion-grid>
+        <ion-row size="4" *ngFor="let service of servicesByCategory[i]">
+          <ion-card class="service-card" (click)="selectProvider(service)">
+            <ion-card-content>
+              <div class="service-info">
+                <h6 class="service-title">{{service.serviceName}}</h6>
+                <h6 class="service-price">RD${{service.price}}.00</h6>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </div>
+</ion-content> -->
