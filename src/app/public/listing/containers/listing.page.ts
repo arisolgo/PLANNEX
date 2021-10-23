@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ProveedorTiposService } from 'src/app/core/services/api/services/proveedor-tipos.service';
+import { TiposService } from 'src/app/core/services/api/services';
+import { ProveedoresService } from 'src/app/core/services/api/services'; 
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-listing',
@@ -8,25 +12,78 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./listing.page.scss'],
 })
 export class ListingPage implements OnInit {
-  categoryId = null;
+  providers: any = [];
+  tipos: any [];
+  tipoId = null;
+  providersIds :any [];
   filterTerm;
-  constructor(private router: Router, public navCtrl: NavController) {
+  constructor(
+    private router: Router, 
+    public navCtrl: NavController, 
+    private proveedorTipoService: ProveedorTiposService, 
+    private tipoService: TiposService,
+    private providerService: ProveedoresService) {
+      console.log(router.getCurrentNavigation().extras.state);
     if (router.getCurrentNavigation().extras.state) {
-      this.categoryId =
-        this.router.getCurrentNavigation().extras.state.category;
+      
+      this.tipoId =
+        this.router.getCurrentNavigation().extras.state.id;
     }
   }
 
   ngOnInit() {
-    this.filterBusiness(this.categoryId);
+    this.getProvidersByType();
+    this.getTipos();
+    
+    //this.filterProvider(this.tipoId);
   }
 
-  business: any[] = [
+  getTipos(){
+    
+  this.tipoService.getApiTipos().subscribe((response:any)=> {
+    console.log(response.result);
+    this.tipos = response.result;
+    
+  });
+  }
+  getProvidersByType(){
+    console.log("REST1:",this.tipoId);
+    this.proveedorTipoService.getApiProveedorTiposTipoIdGetProveedorTipoByTipoId(this.tipoId)
+    .pipe(
+      
+      switchMap((proveedorTipos: any) => proveedorTipos.result.forEach(element => {
+        
+        this.providerService.getApiProveedoresId(element.proveedorId).subscribe((response:any) =>{
+          this.providers.push(response.result)
+        })
+        //console.log("TEST",this.providerService.getApiProveedoresId(element.proveedorId))
+       //this.providersIds.push(element.proveedorId)
+       //console.log("PROVEEDOR:", this.getProvider(element.proveedorId))
+      }))).subscribe(response=>console.log("RESPONSE:",response))
+      
+      //this.getProviders()
+     // this.proveedorTipoService.getApiProveedorTiposTipoIdGetProveedorTipoByTipoId(this.tipoId).subscribe(response => console.log(response))
+  }
+
+
+  getProviders() {
+    this.providersIds.forEach(element => {
+      this.providerService.getApiProveedoresId(element).subscribe((response:any) =>{
+        this.providers.push(response.result)
+      })
+    })
+  }
+
+
+  
+  
+  
+  proveedoresTest: any[] = [
     {
       display_name: 'La Barbería',
       name: 'La barberia',
       address: 'Ave. 27 de Febrero #45, esq. Abraham Lincoln.',
-      image: 'https://via.placeholder.com/320x180 ',
+      profilePicture: 'https://via.placeholder.com/320x180 ',
       rating: 4.8,
       phone: '8099900000',
       days: 'Lunes-Viernes',
@@ -151,16 +208,17 @@ export class ListingPage implements OnInit {
     },
    
   ];
+  
 
-  filterBusiness(categoryId) {
-    if (categoryId) {
-      this.business = this.business.filter((e) => e.categoryId == categoryId);
+  filterProvider(tipoId) {
+    if (tipoId) {
+      this.tipos = this.tipos.filter((e) => e.tipoId == tipoId);
     }
   }
 
   //item: any = this.business.find(x => x.id === this.id_t);
 
-  goToDetailPage(business) {
-    this.navCtrl.navigateForward('/business-detail', { state: business });
+  goToDetailPage(proveedor) {
+    this.navCtrl.navigateForward('/business-detail', { state: proveedor });
   }
 }
