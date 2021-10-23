@@ -14,6 +14,7 @@ export class BusinessDetailPage implements OnInit {
     speed: 400
   };
 
+  
   services = [];
   serviceCategory = '';
   filteredServices = [];

@@ -1,16 +1,12 @@
 <ion-card class="service-category-card">
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col size="12">
-        <ion-avatar
-          (click)="showBusiness(category)"
-          *ngFor="let category of categories"
-          class="center"
-        >
-          <img [src]="category.img" />
-          <h6 class="avatar-title">{{ category.nombre }}</h6>
-        </ion-avatar>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="12">
+                <ion-avatar (click)="showProvider(x)" *ngFor="let x of tipos" class="center">
+                    <img [src]="x.img" />
+                    <h6 class="avatar-title">{{ x.nombre }}</h6>
+                </ion-avatar>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-card>
