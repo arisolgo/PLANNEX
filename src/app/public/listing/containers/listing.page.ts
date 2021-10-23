@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ProveedorTiposService } from 'src/app/core/services/api/services/proveedor-tipos.service';
 import { TiposService } from 'src/app/core/services/api/services';
-import { ProveedoresService } from 'src/app/core/services/api/services'; 
+import { ProveedoresService } from 'src/app/core/services/api/services';
 import { switchMap } from 'rxjs/operators';
+import { Provider, ProviderTipo, Response } from 'src/app/core/models/models';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-listing',
@@ -12,72 +14,51 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./listing.page.scss'],
 })
 export class ListingPage implements OnInit {
-  providers: any = [];
-  tipos: any [];
+  providers: Provider[] = [];
+  tipos: any[];
   tipoId = null;
-  providersIds :any [];
+  providersIds: number[] = [];
   filterTerm;
   constructor(
-    private router: Router, 
-    public navCtrl: NavController, 
-    private proveedorTipoService: ProveedorTiposService, 
+    private router: Router,
+    public navCtrl: NavController,
+    private proveedorTipoService: ProveedorTiposService,
     private tipoService: TiposService,
-    private providerService: ProveedoresService) {
-      console.log(router.getCurrentNavigation().extras.state);
+    private providerService: ProveedoresService
+  ) {
+    console.log(router.getCurrentNavigation().extras.state);
     if (router.getCurrentNavigation().extras.state) {
-      
-      this.tipoId =
-        this.router.getCurrentNavigation().extras.state.id;
+      this.tipoId = this.router.getCurrentNavigation().extras.state.id;
     }
   }
 
   ngOnInit() {
     this.getProvidersByType();
     this.getTipos();
-    
+
     //this.filterProvider(this.tipoId);
   }
 
-  getTipos(){
-    
-  this.tipoService.getApiTipos().subscribe((response:any)=> {
-    console.log(response.result);
-    this.tipos = response.result;
-    
-  });
+  getTipos() {
+    this.tipoService.getApiTipos().subscribe((response: any) => {
+      console.log(response.result);
+      this.tipos = response.result;
+    });
   }
-  getProvidersByType(){
-    console.log("REST1:",this.tipoId);
-    this.proveedorTipoService.getApiProveedorTiposTipoIdGetProveedorTipoByTipoId(this.tipoId)
-    .pipe(
-      
-      switchMap((proveedorTipos: any) => proveedorTipos.result.forEach(element => {
-        
-        this.providerService.getApiProveedoresId(element.proveedorId).subscribe((response:any) =>{
-          this.providers.push(response.result)
-        })
-        //console.log("TEST",this.providerService.getApiProveedoresId(element.proveedorId))
-       //this.providersIds.push(element.proveedorId)
-       //console.log("PROVEEDOR:", this.getProvider(element.proveedorId))
-      }))).subscribe(response=>console.log("RESPONSE:",response))
-      
-      //this.getProviders()
-     // this.proveedorTipoService.getApiProveedorTiposTipoIdGetProveedorTipoByTipoId(this.tipoId).subscribe(response => console.log(response))
+  getProvidersByType() {
+    this.proveedorTipoService
+      .getApiProveedorTiposTipoIdGetProveedorTipoByTipoId(this.tipoId)
+      .subscribe((response: Response) => {
+        response.result.forEach((element: ProviderTipo) => {
+          this.providerService
+            .getApiProveedoresId(element.id)
+            .subscribe((response: Response) => {
+              this.providers.push(response.result);
+            });
+        });
+      });
   }
 
-
-  getProviders() {
-    this.providersIds.forEach(element => {
-      this.providerService.getApiProveedoresId(element).subscribe((response:any) =>{
-        this.providers.push(response.result)
-      })
-    })
-  }
-
-
-  
-  
-  
   proveedoresTest: any[] = [
     {
       display_name: 'La Barbería',
@@ -206,9 +187,7 @@ export class ListingPage implements OnInit {
         },
       ],
     },
-   
   ];
-  
 
   filterProvider(tipoId) {
     if (tipoId) {

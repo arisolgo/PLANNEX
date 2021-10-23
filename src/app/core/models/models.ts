@@ -90,6 +90,12 @@ export interface ScheduledServiceRequired {
   paymentId: number;
 }
 
+export interface ProviderTipo {
+  id: number;
+  proveedorId: number;
+  tipoId: number;
+  creatorUserId: number;
+}
 export interface Tipo {
   id: number;
   nombre: string;
