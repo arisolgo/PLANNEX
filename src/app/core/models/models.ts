@@ -65,7 +65,7 @@ export interface ProviderAvailability {
   provideedorId: number;
   dia: number;
   horaDesde: Date;
-  horaHaste: Date;
+  horaHasta: Date;
 }
 
 export interface ScheduledService {
@@ -79,7 +79,7 @@ export interface ScheduledService {
   rating: number;
 }
 
-export interface ServiceDto {
+export interface Service {
   id: number;
   description: string;
 }

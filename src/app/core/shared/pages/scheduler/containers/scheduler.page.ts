@@ -12,7 +12,13 @@ import {
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar';
-import { Response } from 'src/app/core/models/models';
+import { BehaviorSubject, zip } from 'rxjs';
+import {
+  Provider,
+  ProviderAvailability,
+  ProviderService,
+  Response,
+} from 'src/app/core/models/models';
 import {
   ProveedorDisponibilidadesService,
   ScheduledServiceService,
@@ -63,6 +69,7 @@ export class SchedulerPage implements OnInit {
   minuteValues = [0, 30];
   //hoursValues
   hourValues = [];
+
   tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
   minDate = new Date(Date.now() - this.tzoffset).toISOString().slice(0, -1);
   selectedTime: any;
@@ -71,12 +78,19 @@ export class SchedulerPage implements OnInit {
   viewTitle;
 
   calendar = {
-    mode: 'week',
+    mode: 'day',
     currentDate: new Date(),
+    locale: 'en_GB',
     // startHour: 0,
     // endHour: 0,
   };
   isEventInserted: boolean = false;
+  currentProvider: Provider;
+  currentService: any = {};
+  selectedHours = { startService: '', endService: '' };
+  //providerAvailabilities: ProviderAvailability[];
+  providerAvailabilities: BehaviorSubject<ProviderAvailability[]> =
+    new BehaviorSubject([]);
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
@@ -89,17 +103,19 @@ export class SchedulerPage implements OnInit {
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
-      console.log(router.getCurrentNavigation().extras.state);
+      let state = router.getCurrentNavigation().extras.state;
+      this.currentProvider = state.provider;
+      this.currentService = state.service;
     }
   }
 
   ngOnInit() {
-    this.getScheduledServices();
-    this.getProviderAvailability();
-    this.getTwentyFourHourTime(
-      this.providerEvents.startHour,
-      this.providerEvents.endHour
-    );
+    this.getAvailabityAndServices();
+    // this.getTwentyFourHourTime(
+    //   this.providerEvents.startHour,
+    //   this.providerEvents.endHour
+    // );
+    this.setDayAvailability(this.today());
     this.resetEvent();
   }
 
@@ -111,6 +127,27 @@ export class SchedulerPage implements OnInit {
       endTime: null,
       allDay: false,
     };
+  }
+
+  setEndTime(startTime) {
+    let endTime = new Date(startTime);
+    endTime.setMinutes(endTime.getMinutes() + 30);
+    this.selectedHours.endService = endTime.toISOString();
+  }
+  //Obtener dia
+  //verificar la disponibilidad del dia que esta en calendario
+  setDayAvailability(currentDate: Date) {
+    //domingo = 0, y asi
+    this.providerAvailabilities.subscribe(
+      (availabilities: ProviderAvailability[]) => {
+        availabilities.forEach((element: ProviderAvailability) => {
+          if (element.dia === currentDate.getDay()) {
+            this.getTwentyFourHourTime(element.horaDesde, element.horaHasta);
+            console.log('ejejeje');
+          }
+        });
+      }
+    );
   }
 
   // Create the right event format and reload source
@@ -174,13 +211,11 @@ export class SchedulerPage implements OnInit {
   }
 
   next() {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    swiper.slideNext();
+    this.myCal.slideNext();
   }
 
   back() {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    swiper.slidePrev();
+    this.myCal.slidePrev();
   }
 
   // Change between month/week/day
@@ -191,6 +226,7 @@ export class SchedulerPage implements OnInit {
   // Focus today
   today() {
     this.calendar.currentDate = new Date();
+    return this.calendar.currentDate;
   }
 
   // Selected date reange and hence title changed
@@ -226,24 +262,24 @@ export class SchedulerPage implements OnInit {
     console.log(element);
   }
 
-  setEndTime(startTime) {
-    let endTime = new Date(startTime);
-    endTime.setMinutes(
-      endTime.getMinutes() + this.providerEvents.serviceDuration
-    );
-    this.event.endTime = endTime.toISOString();
-  }
-
   getTwentyFourHourTime(startHour, endHour) {
-    console.log('Me llame');
-    let sHour = new Date('1/1/2013 ' + startHour);
-    let eHour = new Date('1/1/2013 ' + endHour);
-    // this.calendar.startHour = sHour.getHours();
-    // this.calendar.endHour = eHour.getHours();
-
+    // let sHour = new Date(startHour);
+    // let eHour = new Date(endHour);
+    let sHour = new Date(startHour);
+    let eHour = new Date(endHour);
+    // sHour = Number(formatDate(startHour, 'hh', 'en-US', '+0530'));
+    // eHour = Number(formatDate(endHour, 'hh', 'en-US', '+0530'));
+    console.log(sHour, eHour);
     for (let index = sHour.getHours(); index <= eHour.getHours(); index++) {
-      this.hourValues.push(index);
+      if (index > 12) {
+        this.hourValues.push(index - 12);
+      } else {
+        this.hourValues.push(index);
+      }
+      //this.hourValues.push(index);
     }
+    console.log(this.hourValues);
+    // this.hourValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   }
 
   getNewEvents() {
@@ -251,21 +287,18 @@ export class SchedulerPage implements OnInit {
     this.navCtrl.navigateForward('/appointment-confirmation');
   }
 
-  getScheduledServices() {
-    this.scheduledServices
-      .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(1)
-      .subscribe((response: Response) => {
-        console.log(response.result);
-      });
-  }
-
-  getProviderAvailability() {
-    this.providerAvailabilityService
-      .getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
-        1
+  getAvailabityAndServices() {
+    zip(
+      this.scheduledServices.getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
+        this.currentProvider.id
+      ),
+      this.providerAvailabilityService.getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
+        this.currentProvider.id
       )
-      .subscribe((response: Response) => {
-        console.log(response.result);
-      });
+    ).subscribe((response: Response[]) => {
+      this.providerAvailabilities.next(response[1].result);
+    });
   }
 }
+
+// dayShortNames = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];

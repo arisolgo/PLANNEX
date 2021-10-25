@@ -38,10 +38,10 @@
           [dayShortNames]="dayShortNames"
           [hourValues]="hourValues"
           [minuteValues]="minuteValues"
-          displayFormat="MM/DD/YYYY HH:mm"
-          pickerFormat="MMM D:HH:mm"
-          [(ngModel)]="event.startTime"
-          (ngModelChange)="setEndTime(event.startTime)"
+          displayFormat="DD/MM/YYYY hh:mm A"
+          pickerFormat="MMM D:DDD:hh:mm A"
+          [(ngModel)]="selectedHours.startService"
+          (ngModelChange)="setEndTime(selectedHours.startService)"
           [min]="minDate"
         ></ion-datetime>
       </ion-item>
@@ -50,9 +50,9 @@
         <ion-datetime
           placeholder="Tiempo Límite"
           readonly
-          displayFormat="MM/DD/YYYY HH:mm"
-          pickerFormat="MMM D:HH:mm"
-          [(ngModel)]="event.endTime"
+          displayFormat="DD/MM/YYYY hh:mm A"
+          pickerFormat="MMM D:DDD:hh:mm"
+          [(ngModel)]="selectedHours.endService"
           [min]="minDate"
         ></ion-datetime>
       </ion-item>
@@ -100,10 +100,10 @@
   <!-- </ion-col> -->
   <!-- </ion-row> -->
 
-
   <calendar
     [eventSource]="providerEvents.events"
     [calendarMode]="calendar.mode"
+    [locale]="calendar.locale"
     [currentDate]="calendar.currentDate"
     (onEventSelected)="onEventSelected($event)"
     (onTitleChanged)="onViewTitleChanged($event)"
@@ -113,20 +113,16 @@
     [startingDayWeek]="1"
   >
   </calendar>
-  
-  <div class="bottom-btn-container">
-  <ion-button
-  fill="outline"
-  expand="block"
-  >Cancelar
-  </ion-button>
 
-  <ion-button
-  fill="outline"
-  expand="block"
-  (click)="getNewEvents()"
-  [disabled]="!isEventInserted"
-  >Finalizar
-  </ion-button>
-</div>
+  <div class="bottom-btn-container">
+    <ion-button fill="outline" expand="block">Cancelar </ion-button>
+
+    <ion-button
+      fill="outline"
+      expand="block"
+      (click)="getNewEvents()"
+      [disabled]="!isEventInserted"
+      >Finalizar
+    </ion-button>
+  </div>
 </ion-content>
