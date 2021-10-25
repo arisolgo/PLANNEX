@@ -52,7 +52,7 @@ export class ListingPage implements OnInit {
       .subscribe((response: Response) => {
         response.result.forEach((element: ProviderTipo) => {
           this.providerService
-            .getApiProveedoresId(element.id)
+            .getApiProveedoresId(element.proveedorId)
             .subscribe((response: Response) => {
               this.providers.push(response.result);
             });
