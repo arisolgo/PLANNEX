@@ -1,6 +1,9 @@
 <ion-header *ngIf="!parentCall">
   <ion-toolbar>
-    <ion-title> {{ viewTitle }} </ion-title>
+    <ion-title> Agendar Servicio </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <!-- <ion-button (click)="today()">Today</ion-button> -->
     </ion-buttons>
@@ -8,6 +11,14 @@
 </ion-header>
 
 <ion-content>
+  <div class="availability">
+    <ion-title> Disponibilidad de hoy: </ion-title>
+    <ion-title>
+      {{enabledHours.start | date:"shortTime"}} - {{enabledHours.end |
+      date:"shortTime"}}
+    </ion-title>
+  </div>
+
   <!-- Card for adding a new event -->
   <ion-card>
     <ion-card-header tappable (click)="collapseCard = !collapseCard">
@@ -19,7 +30,7 @@
           readonly
           type="text"
           placeholder="Title"
-          [(ngModel)]="event.title"
+          [(ngModel)]="currentService.serviceName"
         ></ion-input>
       </ion-item>
       <ion-item>
@@ -35,7 +46,6 @@
         <ion-datetime
           placeholder="Calendarizar Servicio"
           [monthShortNames]="monthShortNames"
-          [dayShortNames]="dayShortNames"
           [hourValues]="hourValues"
           [minuteValues]="minuteValues"
           displayFormat="DD/MM/YYYY hh:mm A"
@@ -64,7 +74,7 @@
         fill="outline"
         expand="block"
         (click)="addEvent()"
-        [disabled]="!event.startTime"
+        [disabled]="!selectedHours.startService"
         >Añadir Servicio</ion-button
       >
     </ion-card-content>
@@ -107,8 +117,10 @@
     [currentDate]="calendar.currentDate"
     (onEventSelected)="onEventSelected($event)"
     (onTitleChanged)="onViewTitleChanged($event)"
-    [startHour]="10"
-    [endHour]="23"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)"
+    [startHour]="5"
+    [hidden]="hide"
+    [endHour]="10"
     [step]="30"
     [startingDayWeek]="1"
   >

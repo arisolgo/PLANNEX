@@ -48,7 +48,6 @@ export class SchedulerPage implements OnInit {
     allDay: false,
   };
   // eventSource = []
-  //month-short-names:
   monthShortNames = [
     'Ene',
     'Feb',
@@ -63,19 +62,18 @@ export class SchedulerPage implements OnInit {
     'Nov',
     'Dic',
   ];
-  //day-short-names:
-  dayShortNames = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
-  //minute-values:
+  s = 10;
+  e = 13;
   minuteValues = [0, 30];
-  //hoursValues
-  hourValues = [];
-
-  tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+  hourValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  tzoffset = new Date().getTimezoneOffset() * 240000; //offset in milliseconds
   minDate = new Date(Date.now() - this.tzoffset).toISOString().slice(0, -1);
   selectedTime: any;
   selectedDate: any;
-
+  enabledHours: any = {};
+  // calendarSchedule = { startHour: 0, endHour: 0 };
   viewTitle;
+  hide: boolean = false;
 
   calendar = {
     mode: 'day',
@@ -86,12 +84,16 @@ export class SchedulerPage implements OnInit {
   };
   isEventInserted: boolean = false;
   currentProvider: Provider;
-  currentService: any = {};
+  currentService: ProviderService;
   selectedHours = { startService: '', endService: '' };
+  title: '';
   //providerAvailabilities: ProviderAvailability[];
   providerAvailabilities: BehaviorSubject<ProviderAvailability[]> =
     new BehaviorSubject([]);
-
+  calendarSchedule: BehaviorSubject<{ startHour: number; endHour: number }> =
+    new BehaviorSubject({ startHour: 0, endHour: 0 });
+  calS: BehaviorSubject<number> = new BehaviorSubject(0);
+  calE: BehaviorSubject<number> = new BehaviorSubject(0);
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
@@ -105,7 +107,7 @@ export class SchedulerPage implements OnInit {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
       this.currentProvider = state.provider;
-      this.currentService = state.service;
+      this.currentService = state.selectedService;
     }
   }
 
@@ -115,8 +117,36 @@ export class SchedulerPage implements OnInit {
     //   this.providerEvents.startHour,
     //   this.providerEvents.endHour
     // );
-    this.setDayAvailability(this.today());
     this.resetEvent();
+  }
+
+  getDayAvailability(date: Date) {
+    this.providerAvailabilities.subscribe(
+      (availabilities: ProviderAvailability[]) => {
+        availabilities.forEach((element) => {
+          if (date.getDay() === element.dia) {
+            console.log(element);
+            this.enabledHours = {
+              start: element.horaDesde,
+              end: element.horaHasta,
+            };
+            let objectSchedule = {
+              startHour: new Date(this.enabledHours.start).getHours(),
+              endHour: new Date(this.enabledHours.end).getHours(),
+            };
+            this.calS.next(objectSchedule.startHour);
+            this.calE.next(objectSchedule.endHour);
+            this.calendarSchedule.next(objectSchedule);
+            // this.calendarSchedule.startHour = new Date(
+            //   this.enabledHours.start
+            // ).getHours();
+            // this.calendarSchedule.endHour = new Date(
+            //   this.enabledHours.end
+            // ).getHours();
+          }
+        });
+      }
+    );
   }
 
   resetEvent() {
@@ -136,19 +166,6 @@ export class SchedulerPage implements OnInit {
   }
   //Obtener dia
   //verificar la disponibilidad del dia que esta en calendario
-  setDayAvailability(currentDate: Date) {
-    //domingo = 0, y asi
-    this.providerAvailabilities.subscribe(
-      (availabilities: ProviderAvailability[]) => {
-        availabilities.forEach((element: ProviderAvailability) => {
-          if (element.dia === currentDate.getDay()) {
-            this.getTwentyFourHourTime(element.horaDesde, element.horaHasta);
-            console.log('ejejeje');
-          }
-        });
-      }
-    );
-  }
 
   // Create the right event format and reload source
   addEvent() {
@@ -211,11 +228,26 @@ export class SchedulerPage implements OnInit {
   }
 
   next() {
-    this.myCal.slideNext();
+    // let result = new Date();
+    // result.setDate(this.myCal.currentDate.getDate() + 1);
+    // this.getDayAvailability(result);
+    // this.calendarSchedule.endHour = 13;
+    // this.myCal.update();
+    this.hide = true;
+    this.myCal.endHour = 15;
+    // this.myCal.slideNext();
+    // this.myCal.update();
+    // this.hide = false;
+    this.backToNormal();
+  }
+  backToNormal() {
+    this.hide = false;
   }
 
   back() {
+    let result = new Date();
     this.myCal.slidePrev();
+    result.setDate(this.myCal.currentDate.getDate() - 1);
   }
 
   // Change between month/week/day
@@ -232,7 +264,13 @@ export class SchedulerPage implements OnInit {
   // Selected date reange and hence title changed
   onViewTitleChanged(title) {
     this.viewTitle = title;
+    // let result = new Date();
+    // result.setDate(this.myCal.currentDate.getDate() + 1);
+    // this.getDayAvailability(result);
   }
+  onCurrentDateChanged = (ev: Date) => {
+    // this.getDayAvailability(ev);
+  };
 
   // Calendar event was clicked
   async onEventSelected(event) {
@@ -262,26 +300,6 @@ export class SchedulerPage implements OnInit {
     console.log(element);
   }
 
-  getTwentyFourHourTime(startHour, endHour) {
-    // let sHour = new Date(startHour);
-    // let eHour = new Date(endHour);
-    let sHour = new Date(startHour);
-    let eHour = new Date(endHour);
-    // sHour = Number(formatDate(startHour, 'hh', 'en-US', '+0530'));
-    // eHour = Number(formatDate(endHour, 'hh', 'en-US', '+0530'));
-    console.log(sHour, eHour);
-    for (let index = sHour.getHours(); index <= eHour.getHours(); index++) {
-      if (index > 12) {
-        this.hourValues.push(index - 12);
-      } else {
-        this.hourValues.push(index);
-      }
-      //this.hourValues.push(index);
-    }
-    console.log(this.hourValues);
-    // this.hourValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  }
-
   getNewEvents() {
     // this.newEvents.emit(this.providerEvents);
     this.navCtrl.navigateForward('/appointment-confirmation');
@@ -297,6 +315,7 @@ export class SchedulerPage implements OnInit {
       )
     ).subscribe((response: Response[]) => {
       this.providerAvailabilities.next(response[1].result);
+      this.getDayAvailability(new Date());
     });
   }
 }

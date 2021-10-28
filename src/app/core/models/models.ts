@@ -52,6 +52,7 @@ export interface ProviderService {
   proveedorId: number;
   serviceId: number;
   creatorUserId: number;
+  serviceName?: string;
 }
 
 export interface Comment {
@@ -115,4 +116,9 @@ export interface ServiceItem {
   startDate: '';
   endDate: '';
   serviceDuration: 0; //minutes
+}
+
+export interface enabledHours {
+  start: Date;
+  end: Date;
 }

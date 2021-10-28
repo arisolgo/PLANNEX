@@ -7,6 +7,7 @@ import {
   Response,
 } from 'src/app/core/models/models';
 import {
+  ComentariosService,
   ProveedoresService,
   ServicesService,
 } from 'src/app/core/services/api/services';
@@ -35,7 +36,8 @@ export class BusinessDetailPage implements OnInit {
     private navCtrl: NavController,
     private providerService: ProveedoresService,
     private providerServiciosService: ProviderServiciosService,
-    private servicioService: ServicesService
+    private servicioService: ServicesService,
+    private comentarioService: ComentariosService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       this.provider_aux = this.router.getCurrentNavigation().extras.state;
@@ -58,14 +60,13 @@ export class BusinessDetailPage implements OnInit {
       });
   }
 
-  setServices(providerServices: any[]) {
-    providerServices.forEach((element: any) => {
+  setServices(providerServices: ProviderService[]) {
+    providerServices.forEach((element: ProviderService) => {
       this.servicioService
         .getApiServicesId(element.serviceId)
         .subscribe((response: Response) => {
-          element['serviceName'] = response.result.description;
+          element.serviceName = response.result.description;
           this.providerServices.push(element);
-          console.log('TEST4554:', this.providerServices);
         });
     });
   }
