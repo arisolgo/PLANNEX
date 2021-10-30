@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 import { CalendarMode } from 'ionic2-calendar/calendar';
 import { ScheduledService } from 'src/app/core/models/models';
 import { stringify } from 'querystring';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, zip } from 'rxjs';
 import * as moment from 'moment';
 
 @Component({
@@ -179,35 +179,35 @@ export class CalendarPage implements OnInit {
           this.getScheduledServiceName(element.providerServiceId);
           //this.title = name;
           // console.log('Event Name:', this.title);
-
-          this.title.subscribe((title: string) => {
-            console.log('Event Name:', title.valueOf());
+          zip(this.title, this.minutesToAdd).subscribe((responses) => {
+            this.event.title = responses[0];
+            this.event.startTime = new Date(this.startTime).toString();
+            this.event.endTime = moment(this.startTime)
+              .add(responses[1], 'm')
+              .toDate()
+              .toString();
+            this.providerEvents.events.push(this.event);
+            console.log(this.providerEvents);
           });
 
-          this.startTime = element.scheduledDate;
-          console.log('START TIME:', this.startTime);
-          // this.event.startTime = this.startTime.toDateString();
-          let minutes = new Date(this.startTime).getMinutes();
-          console.log('Minutes:', minutes);
-          this.event.startTime = new Date(this.startTime).toString();
-          let endTime = new Date(this.startTime);
-          endTime = new Date(endTime.getTime() + element.duration);
-          console.log('end time pre sum:', endTime);
-          // endTime.setMinutes(minutes + element.duration);
-          // console.log('MID SUM:', endTime.getMinutes());
-          // console.log('eNDtIME:', endTime);
+          // this.title.subscribe((title: string) => {});
 
-          this.minutesToAdd.subscribe((minutesToAdd: number) => {
-            console.log('Duration: ', minutesToAdd);
-          });
+          // this.startTime = element.scheduledDate;
 
-          this.event.endTime = moment(this.startTime)
-            .add(25, 'm')
-            .toDate()
-            .toString();
-          console.log('End TIME:', this.endTime);
-          this.providerEvents.events.push(this.event);
-          console.log('AFTER EVENT PUSH:', this.providerEvents);
+          // this.event.startTime = new Date(this.startTime).toString();
+          // let endTime = new Date(this.startTime);
+          // endTime = new Date(endTime.getTime() + element.duration);
+          // this.minutesToAdd.subscribe((minutesToAdd) => {
+          //   console.log('Duration: ', minutesToAdd);
+          //   this.event.endTime = moment(this.startTime)
+          //     .add(minutesToAdd, 'm')
+          //     .toDate()
+          //     .toString();
+          //   console.log('End TIME:', this.endTime);
+
+          //   console.log('AFTER EVENT PUSH:', this.providerEvents);
+          // });
+
           // console.log('PUSH ATTEMPT:', this.event);
         });
       });
