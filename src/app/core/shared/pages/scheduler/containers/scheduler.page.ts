@@ -10,7 +10,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import {
+  AlertController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
+import {
+  CalendarModal,
+  CalendarModalOptions,
+  CalendarResult,
+} from 'ion2-calendar';
 import { CalendarComponent } from 'ionic2-calendar';
 import { BehaviorSubject, zip } from 'rxjs';
 import {
@@ -71,7 +80,7 @@ export class SchedulerPage implements OnInit {
   selectedTime: any;
   selectedDate: any;
   enabledHours: any = {};
-  // calendarSchedule = { startHour: 0, endHour: 0 };
+  calendarSchedule = { startHour: 0, endHour: 0 };
   viewTitle;
   hide: boolean = false;
 
@@ -90,17 +99,13 @@ export class SchedulerPage implements OnInit {
   //providerAvailabilities: ProviderAvailability[];
   providerAvailabilities: BehaviorSubject<ProviderAvailability[]> =
     new BehaviorSubject([]);
-  calendarSchedule: BehaviorSubject<{ startHour: number; endHour: number }> =
-    new BehaviorSubject({ startHour: 0, endHour: 0 });
-  calS: BehaviorSubject<number> = new BehaviorSubject(0);
-  calE: BehaviorSubject<number> = new BehaviorSubject(0);
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
-
   constructor(
     private alertCtrl: AlertController,
     private navCtrl: NavController,
     private router: Router,
     private scheduledServices: ScheduledServiceService,
+    public modalCtrl: ModalController,
     private providerAvailabilityService: ProveedorDisponibilidadesService,
     @Inject(LOCALE_ID) private locale: string
   ) {
@@ -112,12 +117,13 @@ export class SchedulerPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getAvailabityAndServices();
+    this.openCalendar();
+    // this.getAvailabityAndServices();
     // this.getTwentyFourHourTime(
     //   this.providerEvents.startHour,
     //   this.providerEvents.endHour
     // );
-    this.resetEvent();
+    // this.resetEvent();
   }
 
   getDayAvailability(date: Date) {
@@ -134,15 +140,7 @@ export class SchedulerPage implements OnInit {
               startHour: new Date(this.enabledHours.start).getHours(),
               endHour: new Date(this.enabledHours.end).getHours(),
             };
-            this.calS.next(objectSchedule.startHour);
-            this.calE.next(objectSchedule.endHour);
-            this.calendarSchedule.next(objectSchedule);
-            // this.calendarSchedule.startHour = new Date(
-            //   this.enabledHours.start
-            // ).getHours();
-            // this.calendarSchedule.endHour = new Date(
-            //   this.enabledHours.end
-            // ).getHours();
+            this.calendarSchedule = objectSchedule;
           }
         });
       }
@@ -228,26 +226,20 @@ export class SchedulerPage implements OnInit {
   }
 
   next() {
-    // let result = new Date();
-    // result.setDate(this.myCal.currentDate.getDate() + 1);
-    // this.getDayAvailability(result);
-    // this.calendarSchedule.endHour = 13;
-    // this.myCal.update();
-    this.hide = true;
-    this.myCal.endHour = 15;
-    // this.myCal.slideNext();
+    let result = new Date();
+    result.setDate(this.myCal.currentDate.getDate() + 1);
+    this.getDayAvailability(result);
+    this.myCal.slideNext();
+    this.myCal.ngOnInit();
     // this.myCal.update();
     // this.hide = false;
-    this.backToNormal();
-  }
-  backToNormal() {
-    this.hide = false;
   }
 
   back() {
     let result = new Date();
-    this.myCal.slidePrev();
     result.setDate(this.myCal.currentDate.getDate() - 1);
+    this.getDayAvailability(result);
+    this.myCal.slidePrev();
   }
 
   // Change between month/week/day
@@ -270,6 +262,8 @@ export class SchedulerPage implements OnInit {
   }
   onCurrentDateChanged = (ev: Date) => {
     // this.getDayAvailability(ev);
+    // this.myCal.startHour = this.calendarSchedule.startHour;
+    // this.myCal.endHour = this.calendarSchedule.endHour;
   };
 
   // Calendar event was clicked
@@ -317,6 +311,24 @@ export class SchedulerPage implements OnInit {
       this.providerAvailabilities.next(response[1].result);
       this.getDayAvailability(new Date());
     });
+  }
+
+  async openCalendar() {
+    const options: CalendarModalOptions = {
+      title: 'BASIC',
+      weekdays: ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'],
+    };
+
+    const myCalendar = await this.modalCtrl.create({
+      component: CalendarModal,
+      componentProps: { options },
+    });
+
+    myCalendar.present();
+
+    const event: any = await myCalendar.onDidDismiss();
+    const date: CalendarResult = event.data;
+    console.log(date);
   }
 }
 

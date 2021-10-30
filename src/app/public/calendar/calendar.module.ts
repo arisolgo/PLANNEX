@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { SchedulerPageRoutingModule } from './scheduler-routing.module';
-import { SchedulerPage } from './scheduler.page';
-import { NgCalendarModule } from 'ionic2-calendar';
+
+import { CalendarPageRoutingModule } from './calendar-routing.module';
+
+import { CalendarPage } from './calendar.page';
 import { CalendarModule } from 'ion2-calendar';
 
 @NgModule({
@@ -12,10 +14,9 @@ import { CalendarModule } from 'ion2-calendar';
     CommonModule,
     FormsModule,
     IonicModule,
-    SchedulerPageRoutingModule,
-    NgCalendarModule,
+    CalendarPageRoutingModule,
     CalendarModule,
   ],
-  declarations: [SchedulerPage],
+  declarations: [CalendarPage],
 })
-export class SchedulerPageModule {}
+export class CalendarPageModule {}

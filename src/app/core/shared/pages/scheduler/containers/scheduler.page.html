@@ -118,9 +118,8 @@
     (onEventSelected)="onEventSelected($event)"
     (onTitleChanged)="onViewTitleChanged($event)"
     (onCurrentDateChanged)="onCurrentDateChanged($event)"
-    [startHour]="5"
-    [hidden]="hide"
-    [endHour]="10"
+    [startHour]="calendarSchedule.startHour"
+    [endHour]="calendarSchedule.endHour"
     [step]="30"
     [startingDayWeek]="1"
   >
