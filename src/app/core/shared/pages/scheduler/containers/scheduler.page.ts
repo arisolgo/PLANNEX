@@ -193,7 +193,7 @@ export class SchedulerPage implements OnInit {
     this.calendar.currentDate = new Date();
   }
 
-  // Selected date reange and hence title changed
+  // Selected date range and hence title changed
   onViewTitleChanged(title) {
     this.viewTitle = title;
   }

@@ -71,12 +71,13 @@ export interface ProviderAvailability {
 export interface ScheduledService {
   id: number;
   registerTime: Date;
-  scheduledTime: Date;
+  scheduledDate: Date;
   providerId: number;
   clientId: number;
   providerServiceId: number;
   status: number;
   rating: number;
+  duration: number;
 }
 
 export interface ServiceDto {

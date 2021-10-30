@@ -2910,6 +2910,10 @@
                     "creatorUserId": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "duration": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2938,6 +2942,10 @@
                         "format": "int32"
                     },
                     "creatorUserId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "duration": {
                         "type": "integer",
                         "format": "int32"
                     }

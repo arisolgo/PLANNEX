@@ -1,0 +1,10 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>calendar</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<calendar [eventSource]="providerEvents" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onEventSelected)="onEventSelected($event)" (onTitleChanged)="onViewTitleChanged($event)" [startHour]="10" [endHour]="23" [step]="30" [startingDayWeek]="1">
+</calendar>
+
+<ion-content> </ion-content>
