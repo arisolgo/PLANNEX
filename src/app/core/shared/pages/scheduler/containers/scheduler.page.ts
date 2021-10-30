@@ -39,15 +39,13 @@ import {
   styleUrls: ['./scheduler.page.scss'],
 })
 export class SchedulerPage implements OnInit {
-  @Input() parentCall = false;
   @Input() providerEvents: any = {
-    // events: [],
+    events: [],
     // serviceDuration: 25,
     // serviceName: 'Recorte',
     // startHour: '10:00 AM',
     // endHour: '11:00 PM',
   }; //events sent by parent component
-  @Output() newEvents = new EventEmitter();
   collapseCard: boolean = false;
   event = {
     title: '',
@@ -96,6 +94,7 @@ export class SchedulerPage implements OnInit {
   currentService: ProviderService;
   selectedHours = { startService: '', endService: '' };
   title: '';
+  selectedDay: CalendarResult;
   //providerAvailabilities: ProviderAvailability[];
   providerAvailabilities: BehaviorSubject<ProviderAvailability[]> =
     new BehaviorSubject([]);
@@ -140,7 +139,13 @@ export class SchedulerPage implements OnInit {
               startHour: new Date(this.enabledHours.start).getHours(),
               endHour: new Date(this.enabledHours.end).getHours(),
             };
+            // this.calendar.startHour = new Date(
+            //   this.enabledHours.start
+            // ).getHours();
+            // this.calendar.endHour = new Date(this.enabledHours.end).getHours();
+            this.myCal.update();
             this.calendarSchedule = objectSchedule;
+            console.log(this.calendarSchedule);
           }
         });
       }
@@ -225,23 +230,6 @@ export class SchedulerPage implements OnInit {
     }
   }
 
-  next() {
-    let result = new Date();
-    result.setDate(this.myCal.currentDate.getDate() + 1);
-    this.getDayAvailability(result);
-    this.myCal.slideNext();
-    this.myCal.ngOnInit();
-    // this.myCal.update();
-    // this.hide = false;
-  }
-
-  back() {
-    let result = new Date();
-    result.setDate(this.myCal.currentDate.getDate() - 1);
-    this.getDayAvailability(result);
-    this.myCal.slidePrev();
-  }
-
   // Change between month/week/day
   changeMode(mode) {
     this.calendar.mode = mode;
@@ -299,7 +287,7 @@ export class SchedulerPage implements OnInit {
     this.navCtrl.navigateForward('/appointment-confirmation');
   }
 
-  getAvailabityAndServices() {
+  getAvailabityAndServices(date: Date) {
     zip(
       this.scheduledServices.getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
         this.currentProvider.id
@@ -309,7 +297,7 @@ export class SchedulerPage implements OnInit {
       )
     ).subscribe((response: Response[]) => {
       this.providerAvailabilities.next(response[1].result);
-      this.getDayAvailability(new Date());
+      this.getDayAvailability(date);
     });
   }
 
@@ -328,7 +316,14 @@ export class SchedulerPage implements OnInit {
 
     const event: any = await myCalendar.onDidDismiss();
     const date: CalendarResult = event.data;
-    console.log(date);
+    if (!date) {
+      this.navCtrl.back();
+    } else {
+      this.selectedDay = date;
+      console.log(this.selectedDay);
+      this.calendar.currentDate = date.dateObj;
+      this.getAvailabityAndServices(date.dateObj);
+    }
   }
 }
 
