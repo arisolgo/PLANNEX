@@ -24,6 +24,7 @@ import { ScheduledService } from 'src/app/core/models/models';
 import { stringify } from 'querystring';
 import { BehaviorSubject, zip } from 'rxjs';
 import * as moment from 'moment';
+import { TabsService } from '../services/tabs.service';
 
 @Component({
   selector: 'app-calendar',
@@ -31,8 +32,10 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.page.scss'],
 })
 export class CalendarPage implements OnInit {
+  @ViewChild(CalendarComponent, null) myCalendar: CalendarComponent;
+
   @Input() parentCall = false;
-  @Input() providerEvents: any = {
+  providerEvents: any = {
     events: [],
     // serviceDuration: 25,
     // serviceName: 'Recorte',
@@ -45,8 +48,8 @@ export class CalendarPage implements OnInit {
   event = {
     title: '',
     desc: '',
-    startTime: '',
-    endTime: '',
+    startTime: new Date(),
+    endTime: new Date(),
     allDay: false,
   };
 
@@ -102,6 +105,7 @@ export class CalendarPage implements OnInit {
     private servicesService: ServicesService,
     private scheduledServices: ScheduledServiceService,
     private providerServicesService: ProviderServiciosService,
+    private tabsService: TabsService,
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
@@ -110,7 +114,9 @@ export class CalendarPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getScheduledServices();
+    this.tabsService.getUserScheduledServices(this.eventSource);
+    // this.getScheduledServices();
+    // this.myCal.loadEvents();
   }
 
   // Create the right event format and reload source
@@ -181,13 +187,14 @@ export class CalendarPage implements OnInit {
           // console.log('Event Name:', this.title);
           zip(this.title, this.minutesToAdd).subscribe((responses) => {
             this.event.title = responses[0];
-            this.event.startTime = new Date(this.startTime).toString();
+            this.event.startTime = new Date(this.startTime);
             this.event.endTime = moment(this.startTime)
               .add(responses[1], 'm')
-              .toDate()
-              .toString();
+              .toDate();
+
             this.providerEvents.events.push(this.event);
             console.log(this.providerEvents);
+            // this.myCalendar.loadEvents();
           });
 
           // this.title.subscribe((title: string) => {});
@@ -211,6 +218,10 @@ export class CalendarPage implements OnInit {
           // console.log('PUSH ATTEMPT:', this.event);
         });
       });
+  }
+
+  loadEvents() {
+    this.eventSource.push(this.providerEvents);
   }
 
   getScheduledServiceName(id: number) {
