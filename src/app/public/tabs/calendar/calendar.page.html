@@ -4,7 +4,7 @@
     </ion-toolbar>
 </ion-header>
 
-<calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onEventSelected)="onEventSelected($event)" [startHour]="10" [endHour]="23" (onTitleChanged)="onViewTitleChanged($event)" [step]="30" [startingDayWeek]="1">
+<calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onEventSelected)="onEventSelected($event)" (onTitleChanged)="onViewTitleChanged($event)" [step]="30" [startingDayWeek]="1">
 </calendar>
 
 <ion-content> </ion-content>

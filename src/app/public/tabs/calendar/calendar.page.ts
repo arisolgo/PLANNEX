@@ -116,9 +116,12 @@ export class CalendarPage implements OnInit {
   ngOnInit() {
     // this.tabsService.getUserScheduledServices(this.eventSource);
     // this.getScheduledServices();
-    // this.myCal.loadEvents();
   }
 
+  ionViewDidLoad() {
+    this.eventSource = this.tabsService.userEvents.value;
+    this.loadEvents();
+  }
   getEventSource() {}
 
   // Create the right event format and reload source
@@ -222,8 +225,9 @@ export class CalendarPage implements OnInit {
       });
   }
 
-  loadEvents() {
-    this.eventSource.push(this.providerEvents);
+  loadEvents(): void {
+    // this.eventSource = this.tabsService.userEvents.value;
+    this.myCal.loadEvents();
   }
 
   getScheduledServiceName(id: number) {
