@@ -53,6 +53,7 @@ export interface ProviderService {
   serviceId: number;
   creatorUserId: number;
   serviceName?: string;
+  duration: number;
 }
 
 export interface Comment {
@@ -72,7 +73,8 @@ export interface ProviderAvailability {
 export interface ScheduledService {
   id: number;
   registerTime: Date;
-  scheduledTime: Date;
+  scheduledDate: Date;
+  scheduledEndDate: Date;
   providerId: number;
   clientId: number;
   providerServiceId: number;

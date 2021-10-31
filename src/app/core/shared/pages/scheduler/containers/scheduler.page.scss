@@ -5,3 +5,14 @@
 .selected-day {
   margin-bottom: 20px;
 }
+.available-spaces {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.available-hours {
+  height: 55px;
+  margin-bottom: 15px;
+  width: 70%;
+}

@@ -29,14 +29,21 @@
   <div class="availability" *ngIf="date">
     <ion-title class="selected-day"> {{date | date:'fullDate'}}</ion-title>
     <ion-title
-      >Disponible: {{isAvailable.from | date:'h:mm a'}} - {{isAvailable.to |
-      date:'h:mm a'}}</ion-title
+      >Disponible: {{isAvailableHourRange.from | date:'h:mm a'}} -
+      {{isAvailableHourRange.to | date:'h:mm a'}}</ion-title
     >
     <ion-title>Horas disponibles:</ion-title>
-
-    <ion-button *ngFor="let availability of providerAvailabilities | async">
-      Hola
-    </ion-button>
-    <ion-card class="available-hours"> </ion-card>
+    <div class="available-spaces">
+      <ion-button
+        *ngFor="let availability of availableSpaces"
+        #hourButton
+        (click)="selectHour(hourButton, availability)"
+        fill="outline"
+        class="available-hours"
+        expand="block"
+        >{{availability.start | date:'h:mm a'}} - {{availability.end |
+        date:'h:mm a'}}</ion-button
+      >
+    </div>
   </div>
 </ion-content>
