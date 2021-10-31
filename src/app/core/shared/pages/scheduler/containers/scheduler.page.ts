@@ -59,7 +59,6 @@ export class SchedulerPage implements OnInit {
   public hoursAvailable: ProviderAvailability[];
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
   constructor(
-    private alertCtrl: AlertController,
     private navCtrl: NavController,
     private router: Router,
     private scheduledServices: ScheduledServiceService,
@@ -117,29 +116,5 @@ export class SchedulerPage implements OnInit {
     let momentTodate = new Date($event.format());
     console.log(momentTodate);
     this.getAvailabityAndServices(momentTodate);
-  }
-
-  async openCalendar() {
-    const options: CalendarModalOptions = {
-      title: 'BASIC',
-      weekdays: ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'],
-    };
-
-    const myCalendar = await this.modalCtrl.create({
-      component: CalendarModal,
-      componentProps: { options },
-    });
-
-    myCalendar.present();
-
-    const event: any = await myCalendar.onDidDismiss();
-    const date: CalendarResult = event.data;
-    if (!date) {
-      this.navCtrl.back();
-    } else {
-      this.selectedDay = date;
-      console.log(this.selectedDay);
-      this.getAvailabityAndServices(date.dateObj);
-    }
   }
 }

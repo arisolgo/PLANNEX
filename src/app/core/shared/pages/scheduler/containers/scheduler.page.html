@@ -34,11 +34,9 @@
     >
     <ion-title>Horas disponibles:</ion-title>
 
-    <ion-card
-      *ngFor="let availability of providerAvailabilities |async"
-      class="available-hours"
-    >
-      <ion-card-content> <h1>Hola</h1> </ion-card-content>
-    </ion-card>
+    <ion-button *ngFor="let availability of providerAvailabilities | async">
+      Hola
+    </ion-button>
+    <ion-card class="available-hours"> </ion-card>
   </div>
 </ion-content>

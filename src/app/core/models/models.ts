@@ -117,7 +117,6 @@ export interface ServiceItem {
   endDate: '';
   serviceDuration: 0; //minutes
 }
-
 export interface enabledHours {
   start: Date;
   end: Date;
