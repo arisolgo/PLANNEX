@@ -31,7 +31,7 @@ import { TabsService } from '../services/tabs.service';
   templateUrl: './calendar.page.html',
   styleUrls: ['./calendar.page.scss'],
 })
-export class CalendarPage implements OnInit {
+export class CalendarPage {
   @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
 
   @Input() parentCall = false;
@@ -43,7 +43,7 @@ export class CalendarPage implements OnInit {
     // endHour: '11:00 PM',
   }; //events sent by parent component
   @Output() newEvents = new EventEmitter();
-  eventSource;
+  eventSource = [];
   collapseCard: boolean = false;
   event = {
     title: '',
@@ -113,16 +113,17 @@ export class CalendarPage implements OnInit {
     }
   }
 
-  ngOnInit() {
-    // this.tabsService.getUserScheduledServices(this.eventSource);
-    // this.getScheduledServices();
+  ionViewDidEnter() {
+    this.eventSource = this.tabsService.userEvents.value;
+    this.myCal.update();
   }
 
-  ionViewDidLoad() {
-    this.eventSource = this.tabsService.userEvents.value;
-    this.loadEvents();
+  getEventSource() {
+    this.tabsService.getUserEventsValue().subscribe((result) => {
+      this.eventSource = result;
+      this.myCalendar.update();
+    });
   }
-  getEventSource() {}
 
   // Create the right event format and reload source
 
@@ -227,7 +228,9 @@ export class CalendarPage implements OnInit {
 
   loadEvents(): void {
     // this.eventSource = this.tabsService.userEvents.value;
-    this.myCal.loadEvents();
+    console.log('me ejecute');
+
+    this.myCalendar.loadEvents();
   }
 
   getScheduledServiceName(id: number) {
