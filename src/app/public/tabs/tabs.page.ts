@@ -20,13 +20,6 @@ import { TabsService } from './services/tabs.service';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
-  scheduledService;
-  providerService;
-  service;
-  userEvents: BehaviorSubject<ServiceEvent[]> = new BehaviorSubject([]);
-  title: BehaviorSubject<string> = new BehaviorSubject('');
-
-  minutesToAdd: BehaviorSubject<number> = new BehaviorSubject(0);
   constructor(
     private servicesService: ServicesService,
     private scheduledServices: ScheduledServiceService,
