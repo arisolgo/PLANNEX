@@ -117,3 +117,11 @@ export interface ServiceItem {
   endDate: '';
   serviceDuration: 0; //minutes
 }
+
+export interface ServiceEvent {
+  title: string;
+  desc: string;
+  startTime: Date;
+  endTime: Date;
+  allDay: boolean;
+}

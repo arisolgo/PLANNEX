@@ -32,7 +32,7 @@ import { TabsService } from '../services/tabs.service';
   styleUrls: ['./calendar.page.scss'],
 })
 export class CalendarPage implements OnInit {
-  @ViewChild(CalendarComponent, null) myCalendar: CalendarComponent;
+  @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
 
   @Input() parentCall = false;
   providerEvents: any = {
@@ -114,10 +114,12 @@ export class CalendarPage implements OnInit {
   }
 
   ngOnInit() {
-    this.tabsService.getUserScheduledServices(this.eventSource);
+    // this.tabsService.getUserScheduledServices(this.eventSource);
     // this.getScheduledServices();
     // this.myCal.loadEvents();
   }
+
+  getEventSource() {}
 
   // Create the right event format and reload source
 
