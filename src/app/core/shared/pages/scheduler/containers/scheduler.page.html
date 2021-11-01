@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollEvents]="true">
   <ion-card>
     <ion-card-header>
       <ion-card-title>Seleccione un dia:</ion-card-title>
@@ -26,6 +26,7 @@
       </ion-calendar>
     </ion-card-content>
   </ion-card>
+
   <div class="availability" *ngIf="date">
     <ion-title class="selected-day"> {{date | date:'fullDate'}}</ion-title>
     <ion-title
@@ -33,17 +34,38 @@
       {{isAvailableHourRange.to | date:'h:mm a'}}</ion-title
     >
     <ion-title>Horas disponibles:</ion-title>
-    <div class="available-spaces">
-      <ion-button
-        *ngFor="let availability of availableSpaces"
-        #hourButton
-        (click)="selectHour(hourButton, availability)"
-        fill="outline"
-        class="available-hours"
-        expand="block"
-        >{{availability.start | date:'h:mm a'}} - {{availability.end |
-        date:'h:mm a'}}</ion-button
-      >
-    </div>
+  </div>
+
+  <div id="timeSlots" class="available-spaces">
+    <ion-grid fixed *ngIf="date">
+      <ion-row>
+        <ion-col *ngFor="let availability of availableSpaces" size="4">
+          <ion-button
+            #hourButton
+            [ngClass]="{
+                'available-hours-btn': availability.selected == false,
+                'available-hours-btn-pressed': availability.selected == true
+              }"
+            (click)="selectHour(availability)"
+            expand="block"
+            >{{availability.value | date: 'h:mm a'}}</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title slot="start">$0.00</ion-title>
+    <ion-button
+      slot="end"
+      #hourButton
+      [disabled]="!selectedTimeSlot"
+      (click)="goToCheckout()"
+      class="available-hours-btn continue-btn"
+      >Continuar</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>

@@ -1,13 +1,16 @@
 <ion-header>
-    <ion-toolbar>
-
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <app-order-detail></app-order-detail>
-    <div>
-        <ion-button class="confirmOrder" slot="primary" (click)="goHome()">Agendar Cita</ion-button>
-
-    </div>
+  <app-order-detail></app-order-detail>
+  <div>
+    <ion-button class="confirmOrder" slot="primary" (click)="goHome()"
+      >Agendar Cita</ion-button
+    >
+  </div>
 </ion-content>

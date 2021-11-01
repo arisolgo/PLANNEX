@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import {
   AlertController,
   IonButton,
+  IonContent,
   ModalController,
   NavController,
 } from '@ionic/angular';
@@ -32,6 +33,7 @@ import {
   ProviderService,
   Response,
   ScheduledService,
+  TimeSlot,
 } from 'src/app/core/models/models';
 import {
   ProveedorDisponibilidadesService,
@@ -48,7 +50,7 @@ export class SchedulerPage implements OnInit {
   currentService: ProviderService;
   calendarOptions: any = {
     showMonthPicker: false,
-    weekdays: ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'],
+    weekdays: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
   };
   selectedHours = { startService: '', endService: '' };
   title: '';
@@ -57,7 +59,7 @@ export class SchedulerPage implements OnInit {
   selectedDay: CalendarResult;
   isAvailableHourRange = { from: new Date(), to: new Date() };
   isAvailable = true;
-  availableSpaces = [];
+  availableSpaces: TimeSlot[] = [];
 
   //providerAvailabilities: ProviderAvailability[];
   providerAvailabilities: BehaviorSubject<ProviderAvailability[]> =
@@ -65,8 +67,10 @@ export class SchedulerPage implements OnInit {
   providerScheduledServices: BehaviorSubject<ScheduledService[]> =
     new BehaviorSubject([]);
   public hoursAvailable: ProviderAvailability[];
-  @ViewChild('hourButton') hourButton: IonButton;
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  selectedTimeSlot: Partial<TimeSlot> = null;
+
   constructor(
     private navCtrl: NavController,
     private router: Router,
@@ -93,137 +97,63 @@ export class SchedulerPage implements OnInit {
   }
 
   getDayAvailability(date: Date) {
-    this.providerAvailabilities.subscribe(
-      (availabilities: ProviderAvailability[]) => {
-        this.hoursAvailable = availabilities;
-        let hasDay = false;
-        availabilities.forEach((element) => {
-          if (date.getDay() === element.dia) {
-            hasDay = true;
-            this.isAvailableHourRange.from = new Date(element.horaDesde);
-            this.isAvailableHourRange.to = new Date(element.horaHasta);
-            this.getAvailableRequestHours(element);
-          }
-          if (hasDay === false) {
-            this.isAvailable = false;
-            console.log('No labora');
-          }
-        });
+    this.availableSpaces = [];
+    let todayAvailability: ProviderAvailability;
+    this.hoursAvailable = this.providerAvailabilities.value;
+    this.providerAvailabilities.value.forEach((element) => {
+      if (date.getDay() === element.dia) {
+        todayAvailability = element;
       }
-    );
+    });
+    if (todayAvailability) {
+      this.isAvailableHourRange.from = new Date(todayAvailability.horaDesde);
+      this.isAvailableHourRange.to = new Date(todayAvailability.horaHasta);
+      this.getAvailableRequestHours(todayAvailability);
+    } else {
+      this.isAvailable = false;
+      console.log('No labora');
+    }
   }
 
   getAvailableRequestHours(availability: ProviderAvailability) {
-    let dispStartHour = availability.horaDesde;
-    let dispEndHour = availability.horaHasta;
-    let duration = this.currentService.duration;
-    let scheduled = false;
-    let defaultOption = {
-      start: new Date(availability.horaDesde),
-      end: moment(availability.horaDesde).add(duration, 'm').toDate(),
+    let startTime = {
+      hours: new Date(availability.horaDesde).getHours(),
+      minutes: new Date(availability.horaDesde).getMinutes(),
     };
-    let providerServices = this.providerScheduledServices.value;
-    providerServices.sort(
-      (a, b) =>
-        new Date(a.scheduledDate).getTime() -
-        new Date(b.scheduledDate).getTime()
-    );
+    let endTime = {
+      hours: new Date(availability.horaHasta).getHours(),
+      minutes: new Date(availability.horaHasta).getMinutes(),
+    };
+    const now = moment()
+      .startOf('day')
+      .hour(startTime.hours)
+      .minute(startTime.minutes);
+    const deadLine = moment()
+      .startOf('day')
+      .hour(endTime.hours)
+      .minute(endTime.minutes);
 
-    let tempStartTime = availability.horaDesde;
-    providerServices.forEach((cita: ScheduledService) => {
-      while (new Date(tempStartTime) < new Date(availability.horaHasta)) {
-        let serviceEndTime = moment(cita.scheduledDate)
-          .add(duration, 'm')
-          .toDate();
-        let rangeStartTime = dispStartHour;
-        let rangeEndTime = serviceEndTime;
-        let citaStart = new Date(cita.scheduledDate);
-        let citaEnd = new Date(cita.scheduledEndDate);
-        if (citaStart.getDay() === availability.dia) {
-          scheduled = true;
-          if (defaultOption.end < citaEnd && defaultOption.end > citaStart) {
-            defaultOption.start = citaEnd;
-            defaultOption.end = moment(defaultOption.start)
-              .add(duration, 'm')
-              .toDate();
-            this.availableSpaces.push(defaultOption);
-          } else if (
-            defaultOption.start > citaStart &&
-            defaultOption.start < citaEnd
-          ) {
-            defaultOption.start = citaEnd;
-            defaultOption.end = moment(defaultOption.start)
-              .add(duration, 'm')
-              .toDate();
-            this.availableSpaces.push(defaultOption);
-          }
-        } else {
-          let obj = {
-            start: new Date(tempStartTime),
-            end: moment(tempStartTime).add(duration, 'm').toDate(),
-          };
-          this.availableSpaces.push(obj);
-          tempStartTime = obj.end;
-        }
+    while (now.diff(deadLine) < 0) {
+      if (now >= moment(now).hour(startTime.hours)) {
+        this.availableSpaces.push({ value: now.toDate(), selected: false });
       }
-    });
-
-    if (!scheduled) {
-      while (new Date(tempStartTime) < new Date(availability.horaHasta)) {
-        let obj = {
-          start: new Date(tempStartTime),
-          end: moment(tempStartTime).add(duration, 'm').toDate(),
-        };
-        let tempEndTime = obj.end;
-        if (tempEndTime < new Date(availability.horaHasta)) {
-          this.availableSpaces.push(obj);
-          tempStartTime = moment(tempStartTime).add(duration, 'm').toDate();
-        }
-      }
+      now.add(this.currentService.duration, 'minutes');
     }
-    console.log(this.availableSpaces);
-    this.filterSpaces(providerServices);
+    this.setServicesSpaces();
   }
 
-  filterSpaces(scheduledServices) {
-    scheduledServices.forEach((scheduledService) => {
-      this.availableSpaces.forEach((space) => {
-        console.log('espacio->', space, 'scheduledService->', scheduledService);
+  setServicesSpaces() {
+    this.providerScheduledServices.value.forEach((service) => {
+      for (let i = 0; i < this.availableSpaces.length; i++) {
         if (
-          (new Date(space.start) > new Date(scheduledService.scheduledDate) &&
-            new Date(space.start) <
-              new Date(scheduledService.scheduledEndDate)) ||
-          (new Date(space.end) > new Date(scheduledService.scheduledDate) &&
-            new Date(space.end) < new Date(scheduledService.scheduledEndDate))
+          new Date(service.scheduledDate) <= this.availableSpaces[i].value &&
+          this.availableSpaces[i].value <= new Date(service.scheduledEndDate)
         ) {
-          console.log('vamo a borra gente');
-          let index = this.availableSpaces.indexOf(space);
-          if (index != undefined) {
-            this.availableSpaces.splice(index);
-          }
+          this.availableSpaces.splice(i - 1, 2);
         }
-      });
+      }
     });
-    console.log(this.availableSpaces);
   }
-
-  /**
-   * 
-   *  providerServices.forEach((scheduledService) => {
-        this.availableSpaces.forEach((space) => {
-          if (
-            (space.start > scheduledService.scheduledDate &&
-              space.start < scheduledService.scheduledEndDate) ||
-            (space.end > scheduledService.scheduledDate &&
-              space.end < scheduledService.scheduledEndDate)
-          ) {
-            let index = this.availableSpaces.indexOf(space);
-            if(index != undefined){
-              this.availableSpaces.splice(index)
-            }
-          }
-   * 
-   */
 
   getAvailabityAndServices(date: Date) {
     zip(
@@ -241,13 +171,32 @@ export class SchedulerPage implements OnInit {
   }
 
   pickDay($event) {
+    this.selectedTimeSlot = null;
     let momentToDate = new Date($event.format());
     this.getAvailabityAndServices(momentToDate);
+    this.scrollTo('timeSlots');
   }
 
-  selectHour(el: IonButton, hour) {
-    console.log(el);
-    el.fill = 'solid';
-    console.log(hour);
+  selectHour(availability: TimeSlot) {
+    this.availableSpaces.forEach((element) => {
+      element.selected = false;
+    });
+    availability.selected = true;
+    this.selectedTimeSlot = availability;
+  }
+
+  scrollTo(elementId: string) {
+    let y = document.getElementById(elementId).offsetTop;
+    this.content.scrollToPoint(0, y, 1500);
+  }
+
+  goToCheckout() {
+    this.navCtrl.navigateForward('/appointment-confirmation', {
+      state: {
+        provider: this.currentProvider,
+        service: this.currentService,
+        timeSlot: this.selectedTimeSlot,
+      },
+    });
   }
 }

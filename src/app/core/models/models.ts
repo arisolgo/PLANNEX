@@ -123,3 +123,8 @@ export interface enabledHours {
   start: Date;
   end: Date;
 }
+
+export interface TimeSlot {
+  value: Date;
+  selected: boolean;
+}
