@@ -31,7 +31,7 @@ import { TabsService } from '../services/tabs.service';
   templateUrl: './calendar.page.html',
   styleUrls: ['./calendar.page.scss'],
 })
-export class CalendarPage implements OnInit {
+export class CalendarPage {
   @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
 
   @Input() parentCall = false;
@@ -43,7 +43,7 @@ export class CalendarPage implements OnInit {
     // endHour: '11:00 PM',
   }; //events sent by parent component
   @Output() newEvents = new EventEmitter();
-  eventSource;
+  eventSource = [];
   collapseCard: boolean = false;
   event = {
     title: '',
