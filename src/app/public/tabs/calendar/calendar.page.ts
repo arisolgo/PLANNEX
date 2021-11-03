@@ -83,6 +83,8 @@ export class CalendarPage implements OnInit {
   hourValues = [];
   tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
   minDate = new Date(Date.now() - this.tzoffset).toISOString().slice(0, -1);
+  month = new Date();
+  monthDisplay = this.monthShortNames[this.month.getMonth()];
   selectedTime: any;
   selectedDate: any;
 
@@ -116,12 +118,19 @@ export class CalendarPage implements OnInit {
   ngOnInit() {
     // this.tabsService.getUserScheduledServices(this.eventSource);
     // this.getScheduledServices();
+    this.eventSource = this.tabsService.userEvents.value;
   }
 
   ionViewDidLoad() {
     this.eventSource = this.tabsService.userEvents.value;
+    this.myCal.update();
+  }
+
+  ngAfterViewInit() {
+    this.eventSource = this.tabsService.userEvents.value;
     this.loadEvents();
   }
+
   getEventSource() {}
 
   // Create the right event format and reload source
@@ -144,6 +153,7 @@ export class CalendarPage implements OnInit {
   // Focus today
   today() {
     this.calendar.currentDate = new Date();
+    this.loadEvents();
   }
 
   // Selected date range and hence title changed
@@ -226,7 +236,7 @@ export class CalendarPage implements OnInit {
   }
 
   loadEvents(): void {
-    // this.eventSource = this.tabsService.userEvents.value;
+    this.eventSource = this.tabsService.userEvents.value;
     this.myCal.loadEvents();
   }
 
