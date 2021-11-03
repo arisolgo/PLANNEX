@@ -8,7 +8,7 @@ import {
   Response,
 } from 'src/app/core/models/models';
 import {
-  ProveedorDisponibilidadesService,
+  ComentariosService,
   ProveedoresService,
   ServicesService,
 } from 'src/app/core/services/api/services';
@@ -22,17 +22,7 @@ import { ProviderServiciosService } from 'src/app/core/services/api/services';
 export class BusinessDetailPage implements OnInit {
   provider: Provider;
   provider_aux: any;
-  providerDisponibilidad: ProviderAvailability[] = [];
-  days = [
-    'Lunes',
-    'Martes',
-    'Miércoles',
-    'Jueves',
-    'Viernes',
-    'Sábado',
-    'Domingo',
-  ];
-
+  providerDisponibilidad: ProviderAvailability;
   providerServices: any[] = [];
   slideOpts = {
     initialSlide: 0,
@@ -48,7 +38,7 @@ export class BusinessDetailPage implements OnInit {
     private providerService: ProveedoresService,
     private providerServiciosService: ProviderServiciosService,
     private servicioService: ServicesService,
-    private providerAvailability: ProveedorDisponibilidadesService
+    private comentarioService: ComentariosService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       this.provider_aux = this.router.getCurrentNavigation().extras.state;
@@ -57,7 +47,6 @@ export class BusinessDetailPage implements OnInit {
   }
   ngOnInit() {
     this.getServices(this.provider_aux.id);
-    this.getProviderAvailability(this.provider_aux.id);
   }
 
   getServices(providerId: number) {
@@ -72,68 +61,19 @@ export class BusinessDetailPage implements OnInit {
       });
   }
 
-  setServices(providerServices: any[]) {
-    providerServices.forEach((element: any) => {
+  setServices(providerServices: ProviderService[]) {
+    providerServices.forEach((element: ProviderService) => {
       this.servicioService
         .getApiServicesId(element.serviceId)
         .subscribe((response: Response) => {
-          element['serviceName'] = response.result.description;
-          this.services.push(element);
-          console.log('TEST4554:', this.services);
+          element.serviceName = response.result.description;
+          this.providerServices.push(element);
         });
     });
   }
-  getProviderAvailability(providerId: number) {
-    this.providerAvailability
-      .getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
-        providerId
-      )
-      .subscribe((response: Response) => {
-        console.log('GET PROVIDER AVAILABILITY:', response.result);
-        this.setProviderAvailability(response.result);
-      });
-  }
-
-  setProviderAvailability(providerAvailability: any[]) {
-    providerAvailability.forEach((element: any) => {
-      switch (element.dia) {
-        case 0:
-          element['diaNombre'] = 'Domingo';
-          break;
-        case 1:
-          element['diaNombre'] = 'Lunes';
-          break;
-        case 2:
-          element['diaNombre'] = 'Martes';
-          break;
-        case 3:
-          element['diaNombre'] = 'Miércoles';
-          break;
-        case 4:
-          element['diaNombre'] = 'Jueves';
-          break;
-        case 5:
-          element['diaNombre'] = 'Viernes';
-          break;
-        case 6:
-          element['diaNombre'] = 'Sábado';
-        default:
-          break;
-      }
-      console.log('ELEMENT HORAS', element['horaDesde']);
-      element['horaDesdeF12'] = formatDate(
-        element['horaDesde'],
-        'hh:MM a',
-        'en-US',
-        '+0530'
-      );
-      element['horaHastaF12'] = formatDate(
-        element['horaHasta'],
-        'hh:MM a',
-        'en-US',
-        '+0530'
-      );
-      this.providerDisponibilidad.push(element);
+  goToSchedule(service) {
+    this.navCtrl.navigateForward('/scheduler', {
+      state: { provider: this.provider_aux, selectedService: service },
     });
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-appointment-confirmation',
@@ -6,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./appointment-confirmation.page.scss'],
 })
 export class AppointmentConfirmationPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private router: Router) {
+    if (router.getCurrentNavigation().extras.state) {
+      let state = router.getCurrentNavigation().extras.state;
+      console.log(state);
+    }
   }
-  goHome(){}
 
+  ngOnInit() {}
+  goHome() {}
 }

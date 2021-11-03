@@ -1,0 +1,35 @@
+.availability {
+  padding: 15px;
+  text-align: center;
+}
+.selected-day {
+  margin-bottom: 20px;
+}
+.available-spaces {
+  margin-top: 20px;
+}
+.available-hours-btn {
+  height: 55px;
+  margin-bottom: 15px;
+  --background: white;
+  --color: black;
+  --border-radius: 10px;
+  --box-shadow: 0px 3px 6px 3px #dfdfdf;
+}
+
+.available-hours-btn-pressed {
+  --background: rgb(73, 176, 207);
+  height: 55px;
+  margin-bottom: 15px;
+  --border-radius: 10px;
+  --box-shadow: 0px 3px 6px 3px #dfdfdf;
+}
+
+.continue-btn {
+  margin-bottom: 0;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  height: 40px;
+  --background: rgb(73, 176, 207);
+  --color: white;
+}

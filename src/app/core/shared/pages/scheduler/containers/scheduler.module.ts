@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SchedulerPageRoutingModule } from './scheduler-routing.module';
 import { SchedulerPage } from './scheduler.page';
-import { NgCalendarModule  } from 'ionic2-calendar';
+import { NgCalendarModule } from 'ionic2-calendar';
+import { CalendarModule } from 'ion2-calendar';
 
 @NgModule({
   imports: [
@@ -12,8 +13,9 @@ import { NgCalendarModule  } from 'ionic2-calendar';
     FormsModule,
     IonicModule,
     SchedulerPageRoutingModule,
-    NgCalendarModule
+    NgCalendarModule,
+    CalendarModule,
   ],
-  declarations: [SchedulerPage]
+  declarations: [SchedulerPage],
 })
 export class SchedulerPageModule {}

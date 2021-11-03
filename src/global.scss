@@ -330,3 +330,24 @@ app-appointment-confirmation {
     position: absolute;
   }
 }
+
+ion-calendar {
+  padding: 0 !important;
+
+  .title {
+    .switch-btn {
+      font-size: large !important;
+    }
+    ion-button {
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    :nth-child(2n) {
+      background-image: url(../src/assets/icon/arrow-back-outline.svg) !important;
+    }
+    :nth-child(3n) {
+      background-image: url(../src/assets/icon/arrow-forward-outline.svg) !important;
+    }
+  }
+}

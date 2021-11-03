@@ -160,7 +160,7 @@ export class HomePage {
     this.tiposService.getApiTipos().subscribe((response: any) => {
       this.serviceCategories = response.result;
       this.serviceCategories.forEach((element) => {
-        element['img'] = 'https://via.placeholder.com/80x80';
+        element['img'] = '../../../assets/test-images/barber.png';
       });
     });
   }
@@ -173,7 +173,7 @@ export class HomePage {
     };
     this.serviceCategories[1] = {
       category: 2,
-      img: 'https://via.placeholder.com/80x80',
+      img: '../../../assets/test-images/saloneras.png',
       name: 'Salones',
     };
   }
@@ -194,7 +194,8 @@ export class HomePage {
     this.providerService.getApiProveedores().subscribe((response: Response) => {
       this.providers = response.result;
       this.providers.forEach((element) => {
-        element['image'] = 'https://via.placeholder.com/320x180';
+        element['image'] =
+          'https://cursosdeinfotep.com/wp-content/uploads/Curso-de-Barberia-Barbero-en-Infotep-Gratis.jpg';
       });
     });
   }

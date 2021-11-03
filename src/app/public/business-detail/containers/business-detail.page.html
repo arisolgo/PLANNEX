@@ -1,83 +1,69 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons>
-            <ion-button routerLink="">
-                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-buttons slot="primary">
-            <ion-button>
-                <ion-icon name="cart-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button routerLink="">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-    <div class="company-logo">
-        <ion-label class="business-name-title">{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label>
-        <ion-avatar class="center">
-            <img [src]="provider_aux.profilePicture" />
-        </ion-avatar>
-        <h2 class="subtitle">{{provider_aux.rating}}</h2>
-        <ion-icon name="star"></ion-icon>
-    </div>
+  <div class="company-logo">
+    <ion-label class="business-name-title"
+      >{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label
+    >
+    <ion-avatar class="center">
+      <img [src]="provider_aux.profilePicture" />
+    </ion-avatar>
+    <h2 class="subtitle">{{provider_aux.rating}}</h2>
+    <ion-icon name="star"></ion-icon>
+  </div>
 
-    <div>
-        <ion-text>
-            <h4>Direccion</h4>
-        </ion-text>
-        <p>
-            <ion-text color="dark">
-                <h6>{{provider_aux.direccion1}}</h6>
-                <h6>{{provider_aux.direccion2}}</h6>
-            </ion-text>
-        </p>
-
-        <ion-text>
-            <h4>Horario</h4>
-        </ion-text>
-
-        <div class="working-hours-list">
-            <ng-container>
-                <ion-grid>
-                    <ion-row size="4" *ngFor="let day of providerDisponibilidad">
-                        <div class="day-info">
-                            <h6 class="day">
-                                <strong>{{day.diaNombre}}</strong> ({{day.horaDesdeF12}} - {{day.horaHastaF12}})
-                            </h6>
-                        </div>
-                    </ion-row>
-                </ion-grid>
-            </ng-container>
-        </div>
-    </div>
-
-    <!-- <p> -->
-    <!-- <ion-text color="dark">{{business.days}} | {{business.startTime}} - {{business.endTime}} </ion-text> -->
-    <!-- </p> -->
+  <div>
+    <ion-text>
+      <h4>Direccion</h4>
+    </ion-text>
+    <p>
+      <ion-text color="dark">
+        <h6>{{provider_aux.direccion1}}</h6>
+        <h6>{{provider_aux.direccion2}}</h6>
+      </ion-text>
+    </p>
 
     <ion-text>
-        <h4>Servicios</h4>
+      <h4>Horario</h4>
     </ion-text>
+    <p>
+      <!-- <ion-text color="dark">{{business.days}} | {{business.startTime}} - {{business.endTime}} </ion-text> -->
+    </p>
+  </div>
+  <ion-text>
+    <h4>Servicios</h4>
+  </ion-text>
 
-    <div class="services-list">
-        <ng-container>
-            <ion-grid>
-                <ion-row size="4" *ngFor="let service of services">
-                    <ion-card>
-                        <ion-card-content>
-                            <div class="service-info">
-                                <h6 class="service-title">{{service.serviceName}}</h6>
+  <div class="services-list">
+    <ng-container>
+      <ion-grid>
+        <ion-row size="4" *ngFor="let service of providerServices">
+          <ion-card (click)="goToSchedule(service)">
+            <ion-card-content>
+              <div class="service-info">
+                <h6 class="service-title">{{service.serviceName}}</h6>
 
-                                <h6 class="service-price">RD${{service.price}}.00</h6>
-                            </div>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-row>
-            </ion-grid>
-        </ng-container>
-    </div>
+                <h6 class="service-price">RD${{service.price}}.00</h6>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </div>
 </ion-content>
 
 <!-- <ion-toolbar>

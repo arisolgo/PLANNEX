@@ -52,6 +52,8 @@ export interface ProviderService {
   proveedorId: number;
   serviceId: number;
   creatorUserId: number;
+  serviceName?: string;
+  duration: number;
 }
 
 export interface Comment {
@@ -65,13 +67,14 @@ export interface ProviderAvailability {
   provideedorId: number;
   dia: number;
   horaDesde: Date;
-  horaHaste: Date;
+  horaHasta: Date;
 }
 
 export interface ScheduledService {
   id: number;
   registerTime: Date;
-  scheduledTime: Date;
+  scheduledDate: Date;
+  scheduledEndDate: Date;
   providerId: number;
   clientId: number;
   providerServiceId: number;
@@ -79,7 +82,7 @@ export interface ScheduledService {
   rating: number;
 }
 
-export interface ServiceDto {
+export interface Service {
   id: number;
   description: string;
 }
@@ -115,4 +118,13 @@ export interface ServiceItem {
   startDate: '';
   endDate: '';
   serviceDuration: 0; //minutes
+}
+export interface enabledHours {
+  start: Date;
+  end: Date;
+}
+
+export interface TimeSlot {
+  value: Date;
+  selected: boolean;
 }
