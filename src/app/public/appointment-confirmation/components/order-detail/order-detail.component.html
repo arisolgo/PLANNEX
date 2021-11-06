@@ -1,0 +1,88 @@
+<ion-content>
+
+    <ion-text>
+        <h4>Confirmación de cita:</h4>
+    </ion-text>
+
+    <ion-list lines="none">
+        <ion-item>
+            <ion-label>
+                <ion-text>Proveedor</ion-text>
+                <p>
+                    <ion-text color="dark">{{order.provider_name}}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>{{order.business_category}}</ion-text>
+                <p>
+                    <ion-text color="dark">{{order.business_name}}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Fecha</ion-text>
+                <p>
+                    <ion-text color="dark">{{order.date}}</ion-text>
+                </p>
+            </ion-label>
+            <ion-label>
+                <ion-text>Hora</ion-text>
+                <p>
+                    <ion-text color="dark">{{order.start_time}}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+
+    </ion-list>
+
+    <ion-list lines="none" *ngFor="let service of order.services ">
+        <ion-item>
+            <ion-label>
+                <ion-text>{{service.name}}</ion-text>
+
+            </ion-label>
+
+            <ion-text class="price">RD${{service.price}}.00</ion-text>
+
+        </ion-item>
+
+    </ion-list>
+
+    <ion-list lines="none">
+        <ion-item>
+            <ion-label>
+                <ion-text>Sub-Total</ion-text>
+
+            </ion-label>
+
+            <ion-text class="price ">RD${{subTotal()}}.00</ion-text>
+
+        </ion-item>
+
+        <ion-item>
+            <ion-label>
+                <ion-text>ITBS</ion-text>
+
+            </ion-label>
+
+            <ion-text class="price ">RD${{itbs()}}.00</ion-text>
+
+        </ion-item>
+        <hr>
+        <ion-item>
+
+            <ion-label>
+                <ion-text class="totalPrice">Total</ion-text>
+
+            </ion-label>
+
+            <ion-text class="totalPrice">RD${{Total()}}.00</ion-text>
+        </ion-item>
+
+    </ion-list>
+
+
+</ion-content>

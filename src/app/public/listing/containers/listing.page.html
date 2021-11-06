@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-searchbar placeholder="Search..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!--<h1 class="list-header">Empresas</h1> -->
+    <div class="providers-list">
+        <app-business-card (click)="goToDetailPage(x)" *ngFor="let x of providers | filter:filterTerm" [item]="x"></app-business-card>
+    </div>
+</ion-content>

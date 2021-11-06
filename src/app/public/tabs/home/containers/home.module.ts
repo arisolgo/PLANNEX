@@ -6,17 +6,16 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { ServiceCategoriesComponent } from '../components/service-categories/service-categories.component';
-import { CompaniesCarouselComponent } from '../components/companies-carousel/companies-carousel.component';
+import { ProvidersCarouselComponent } from '../components/companies-carousel/providers-carousel.component';
 import { OffersCarouselComponent } from '../components/offers-carousel/offers-carousel.component';
 
-
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
+  declarations: [
+    HomePage,
+    ServiceCategoriesComponent,
+    ProvidersCarouselComponent,
+    OffersCarouselComponent,
   ],
-  declarations: [HomePage, ServiceCategoriesComponent, CompaniesCarouselComponent, OffersCarouselComponent]
 })
 export class HomePageModule {}
