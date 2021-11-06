@@ -54,6 +54,7 @@ export interface ProviderService {
   creatorUserId: number;
   serviceName?: string;
   duration: number;
+  selected?: boolean;
 }
 
 export interface Comment {

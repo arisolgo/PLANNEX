@@ -1,7 +1,12 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, Provider } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import {
+  IonRouterOutlet,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 import {
   ProviderAvailability,
   ProviderService,
@@ -13,6 +18,8 @@ import {
   ServicesService,
 } from 'src/app/core/services/api/services';
 import { ProviderServiciosService } from 'src/app/core/services/api/services';
+import { CartService } from 'src/app/core/services/cart.service';
+import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-business-detail',
@@ -31,6 +38,7 @@ export class BusinessDetailPage implements OnInit {
 
   services = [];
   servicesNames = [];
+  cartCount = new BehaviorSubject<number>(0);
 
   constructor(
     private router: Router,
@@ -38,7 +46,10 @@ export class BusinessDetailPage implements OnInit {
     private providerService: ProveedoresService,
     private providerServiciosService: ProviderServiciosService,
     private servicioService: ServicesService,
-    private comentarioService: ComentariosService
+    private comentarioService: ComentariosService,
+    private cartService: CartService,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet
   ) {
     if (router.getCurrentNavigation().extras.state) {
       this.provider_aux = this.router.getCurrentNavigation().extras.state;
@@ -46,6 +57,7 @@ export class BusinessDetailPage implements OnInit {
     }
   }
   ngOnInit() {
+    this.cartCount = this.cartService.getCartItemCount();
     this.getServices(this.provider_aux.id);
   }
 
@@ -75,6 +87,24 @@ export class BusinessDetailPage implements OnInit {
     this.navCtrl.navigateForward('/scheduler', {
       state: { provider: this.provider_aux, selectedService: service },
     });
+  }
+
+  addToCart(service: ProviderService) {
+    service.selected = !service.selected;
+    if (service.selected) {
+      this.cartService.addCartItem(service);
+    } else {
+      this.cartService.removeCartItem(service);
+    }
+  }
+
+  async openCart() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: ShoppingCartComponent,
+    });
+
+    await modal.present();
   }
 
   // this.services[0] = {

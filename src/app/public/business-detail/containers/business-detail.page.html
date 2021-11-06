@@ -6,8 +6,9 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button>
-        <ion-icon name="cart-outline"></ion-icon>
+      <ion-button (click)="openCart()" icon-only>
+        <ion-badge>{{cartCount | async}}</ion-badge>
+        <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -48,21 +49,18 @@
   </ion-text>
 
   <div class="services-list">
-    <ng-container>
-      <ion-grid>
-        <ion-row size="4" *ngFor="let service of providerServices">
-          <ion-card (click)="goToSchedule(service)">
-            <ion-card-content>
-              <div class="service-info">
-                <h6 class="service-title">{{service.serviceName}}</h6>
-
-                <h6 class="service-price">RD${{service.price}}.00</h6>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-row>
-      </ion-grid>
-    </ng-container>
+    <div class="service-list-item" *ngFor="let service of providerServices">
+      <!-- <ion-card (click)="goToSchedule(service)"> -->
+      <ion-card>
+        <ion-card-content>
+          <div class="service-info">
+            <h6 class="service-title">{{service.serviceName}}</h6>
+            <h6 class="service-price">RD${{service.price}}.00</h6>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-checkbox (click)="addToCart(service)" slot="end"> </ion-checkbox>
+    </div>
   </div>
 </ion-content>
 
