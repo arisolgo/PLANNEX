@@ -19,7 +19,7 @@ import {
 } from 'src/app/core/services/api/services';
 import { ProviderServiciosService } from 'src/app/core/services/api/services';
 import { CartService } from 'src/app/core/services/cart.service';
-import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
+import { PaymentSelectionComponent } from 'src/app/core/shared/components/payment-selection/payment-selection.component';
 
 @Component({
   selector: 'app-business-detail',
@@ -115,7 +115,7 @@ export class BusinessDetailPage implements OnInit {
   async openCart() {
     const modal = await this.modalController.create({
       presentingElement: this.routerOutlet.nativeEl,
-      component: ShoppingCartComponent,
+      component: PaymentSelectionComponent,
     });
 
     await modal.present();

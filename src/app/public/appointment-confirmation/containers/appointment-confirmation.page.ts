@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import {
   Provider,
   ProviderService,
@@ -13,6 +13,7 @@ import {
   ScheduledProviderServiceService,
   ScheduledServiceService,
 } from 'src/app/core/services/api/services';
+import { PaymentSelectionComponent } from 'src/app/core/shared/components/payment-selection/payment-selection.component';
 
 @Component({
   selector: 'app-appointment-confirmation',
@@ -23,11 +24,14 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedServices: ProviderService[] = [];
   currentProvider: Provider;
   selectedTimeSlot: TimeSlot;
+  selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
   constructor(
     private router: Router,
     private scheduledServiceService: ScheduledServiceService,
-    private scheduledProviderServiceService: ScheduledProviderServiceService
+    private scheduledProviderServiceService: ScheduledProviderServiceService,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet
   ) {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
@@ -88,5 +92,20 @@ export class AppointmentConfirmationPage implements OnInit {
   }
   goToCheckout() {
     console.log('hola');
+  }
+
+  async openPayTypeModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: PaymentSelectionComponent,
+    });
+
+    await modal.present();
+
+    modal.onDidDismiss().then((modal) => {
+      if (modal.data) {
+        this.selectedPayment = Number(modal.data);
+      }
+    });
   }
 }

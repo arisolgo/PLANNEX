@@ -69,7 +69,14 @@
     </ion-item>
   </ion-list>
 
-  <ion-button slot="primary" (click)="checkout()">Agendar Cita</ion-button>
+  <ion-item (click)="openPayTypeModal()">
+    <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+    <ion-label *ngIf="selectedPayment==0"
+      >Seleccione un método de pago</ion-label
+    >
+    <ion-label *ngIf="selectedPayment==1">Método de pago: Efectivo</ion-label>
+    <ion-label *ngIf="selectedPayment==2">Método de pago: Tarjeta</ion-label>
+  </ion-item>
 </ion-content>
 
 <ion-footer>

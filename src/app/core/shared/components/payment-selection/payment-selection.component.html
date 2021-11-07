@@ -1,0 +1,46 @@
+<div class="cart-header">
+  <ion-button (click)="close()" slot="end">
+    <ion-icon fill="clear" slot="icon-only" name="close-outline"></ion-icon>
+  </ion-button>
+</div>
+<ion-content>
+  <h3 class="content-title">Seleccione un método de pago</h3>
+  <ion-list>
+    <ion-radio-group (ionChange)="showSelected($event)">
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>Tarjeta de Crédito</p>
+            <div class="selection-radio">
+              <ion-icon slot="end" color="primary" name="card"></ion-icon>
+              <ion-radio value="2" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>Efectivo</p>
+            <div class="selection-radio">
+              <ion-icon slot="end" color="dollar" name="cash"></ion-icon>
+              <ion-radio value="1" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+  <div class="selection-btn-container">
+    <ion-button
+      expand="block"
+      [disabled]="!paymentSelected.length"
+      fill="solid"
+      (click)="close(paymentSelected)"
+      shape="round"
+    >
+      Seleccionar
+    </ion-button>
+  </div>
+</ion-content>
