@@ -8,6 +8,7 @@ import { AppointmentConfirmationPageRoutingModule } from './appointment-confirma
 
 import { AppointmentConfirmationPage } from './appointment-confirmation.page';
 import { DominicanCurrencyPipe } from 'src/app/core/pipes/dominican-currency.pipe';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,8 @@ import { DominicanCurrencyPipe } from 'src/app/core/pipes/dominican-currency.pip
     FormsModule,
     IonicModule,
     AppointmentConfirmationPageRoutingModule,
+    SharedModule,
   ],
-  providers: [DominicanCurrencyPipe],
-  declarations: [AppointmentConfirmationPage, DominicanCurrencyPipe],
+  declarations: [AppointmentConfirmationPage],
 })
 export class AppointmentConfirmationPageModule {}

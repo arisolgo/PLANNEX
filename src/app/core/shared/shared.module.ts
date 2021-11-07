@@ -5,10 +5,19 @@ import { IonicModule } from '@ionic/angular';
 import { SchedulerPageModule } from './pages/scheduler/containers/scheduler.module';
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { DominicanCurrencyPipe } from '../pipes/dominican-currency.pipe';
 
 @NgModule({
-  declarations: [CategoryFilterComponent, ShoppingCartComponent],
+  declarations: [
+    CategoryFilterComponent,
+    ShoppingCartComponent,
+    DominicanCurrencyPipe,
+  ],
   imports: [CommonModule, HttpClientModule, IonicModule, SchedulerPageModule],
-  exports: [CategoryFilterComponent, ShoppingCartComponent],
+  exports: [
+    CategoryFilterComponent,
+    ShoppingCartComponent,
+    DominicanCurrencyPipe,
+  ],
 })
 export class SharedModule {}
