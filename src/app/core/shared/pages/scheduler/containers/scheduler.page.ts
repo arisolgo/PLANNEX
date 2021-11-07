@@ -56,7 +56,7 @@ export class SchedulerPage implements OnInit {
   title: '';
   date: Date;
   type: 'moment';
-  selectedDay: CalendarResult;
+  selectedDay: Date;
   isAvailableHourRange = { from: new Date(), to: new Date() };
   isAvailable = true;
   availableSpaces: TimeSlot[] = [];
@@ -177,7 +177,10 @@ export class SchedulerPage implements OnInit {
 
   pickDay($event) {
     this.selectedTimeSlot = null;
+    console.log($event);
     let momentToDate = new Date($event.format());
+    this.selectedDay = momentToDate;
+    console.log(this.selectedDay);
     this.getAvailabityAndServices(momentToDate);
     this.scrollTo('timeSlots');
   }
@@ -187,6 +190,14 @@ export class SchedulerPage implements OnInit {
       element.selected = false;
     });
     availability.selected = true;
+    availability.value = new Date(
+      this.selectedDay.getFullYear(),
+      this.selectedDay.getMonth(),
+      this.selectedDay.getDate(),
+      availability.value.getHours(),
+      availability.value.getMinutes()
+    );
+
     this.selectedTimeSlot = availability;
   }
 
