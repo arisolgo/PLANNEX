@@ -35,3 +35,13 @@ ion-card {
 .service-price {
   text-align: end;
 }
+
+.continue-btn {
+  margin-bottom: 0;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  height: 40px;
+  --border-radius: 10px;
+  --background: rgb(73, 176, 207);
+  --color: white;
+}

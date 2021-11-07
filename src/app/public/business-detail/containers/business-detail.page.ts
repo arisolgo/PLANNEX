@@ -36,9 +36,8 @@ export class BusinessDetailPage implements OnInit {
     speed: 400,
   };
 
-  services = [];
+  selectedServices: ProviderService[] = [];
   servicesNames = [];
-  cartCount = new BehaviorSubject<number>(0);
 
   constructor(
     private router: Router,
@@ -57,7 +56,7 @@ export class BusinessDetailPage implements OnInit {
     }
   }
   ngOnInit() {
-    this.cartCount = this.cartService.getCartItemCount();
+    // this.cartCount = this.cartService.getCartItemCount();
     this.getServices(this.provider_aux.id);
   }
 
@@ -83,19 +82,34 @@ export class BusinessDetailPage implements OnInit {
         });
     });
   }
-  goToSchedule(service) {
+  goToSchedule() {
     this.navCtrl.navigateForward('/scheduler', {
-      state: { provider: this.provider_aux, selectedService: service },
+      state: {
+        provider: this.provider_aux,
+        selectedServices: this.selectedServices,
+      },
     });
   }
 
-  addToCart(service: ProviderService) {
+  getAmmount() {
+    let ammount = 0;
+    this.selectedServices.forEach((element) => {
+      ammount += element.price;
+    });
+    return ammount;
+  }
+
+  addService(service: ProviderService) {
     service.selected = !service.selected;
     if (service.selected) {
-      this.cartService.addCartItem(service);
+      this.selectedServices.push(service);
     } else {
-      this.cartService.removeCartItem(service);
+      let index = this.selectedServices.indexOf(service);
+      if (index > -1) {
+        this.selectedServices.splice(index, 1);
+      }
     }
+    this.getAmmount();
   }
 
   async openCart() {

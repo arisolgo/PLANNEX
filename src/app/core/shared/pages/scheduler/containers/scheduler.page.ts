@@ -47,7 +47,7 @@ import {
 })
 export class SchedulerPage implements OnInit {
   currentProvider: Provider;
-  currentService: ProviderService;
+  currentServices: ProviderService[];
   calendarOptions: any = {
     showMonthPicker: false,
     weekdays: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
@@ -82,7 +82,8 @@ export class SchedulerPage implements OnInit {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
       this.currentProvider = state.provider;
-      this.currentService = state.selectedService;
+      this.currentServices = state.selectedServices;
+      console.log(this.currentServices);
     }
   }
 
@@ -137,7 +138,11 @@ export class SchedulerPage implements OnInit {
       if (now >= moment(now).hour(startTime.hours)) {
         this.availableSpaces.push({ value: now.toDate(), selected: false });
       }
-      now.add(this.currentService.duration, 'minutes');
+      let duration = 0;
+      this.currentServices.forEach((element) => {
+        duration += element.duration;
+      });
+      now.add(duration, 'minutes');
     }
     this.setServicesSpaces();
   }
@@ -194,7 +199,7 @@ export class SchedulerPage implements OnInit {
     this.navCtrl.navigateForward('/appointment-confirmation', {
       state: {
         provider: this.currentProvider,
-        service: this.currentService,
+        services: this.currentServices,
         timeSlot: this.selectedTimeSlot,
       },
     });

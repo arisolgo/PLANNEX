@@ -5,12 +5,6 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="primary">
-      <ion-button (click)="openCart()" icon-only>
-        <ion-badge>{{cartCount | async}}</ion-badge>
-        <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -59,10 +53,24 @@
           </div>
         </ion-card-content>
       </ion-card>
-      <ion-checkbox (click)="addToCart(service)" slot="end"> </ion-checkbox>
+      <ion-checkbox (click)="addService(service)" slot="end"> </ion-checkbox>
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title slot="start">{{getAmmount() | dominicanCurrency}}</ion-title>
+    <ion-button
+      slot="end"
+      #hourButton
+      [disabled]="!selectedServices.length"
+      (click)="goToSchedule()"
+      class="available-hours-btn continue-btn"
+      >Continuar</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>
 
 <!-- <ion-toolbar>
     <ion-buttons>

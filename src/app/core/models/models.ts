@@ -72,15 +72,15 @@ export interface ProviderAvailability {
 }
 
 export interface ScheduledService {
-  id: number;
+  id?: number;
   registerTime: Date;
   scheduledDate: Date;
-  scheduledEndDate: Date;
+  scheduledEndDate?: Date;
   providerId: number;
   clientId: number;
-  providerServiceId: number;
-  status: number;
-  rating: number;
+  providerServiceId?: number;
+  status?: number;
+  rating?: number;
 }
 
 export interface Service {
@@ -128,4 +128,10 @@ export interface enabledHours {
 export interface TimeSlot {
   value: Date;
   selected: boolean;
+}
+
+export interface ScheduledProviderService {
+  id?: number;
+  scheduledServiceId: number;
+  providerServiceId: number;
 }

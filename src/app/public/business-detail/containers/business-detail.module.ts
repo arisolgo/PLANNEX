@@ -9,6 +9,7 @@ import { BusinessDetailPageRoutingModule } from './business-detail-routing.modul
 import { BusinessDetailPage } from './business-detail.page';
 import { SharedModule } from 'src/app/core/shared/shared.module';
 import { ProvidersPageModule } from '../../providers/containers/providers.module';
+import { DominicanCurrencyPipe } from 'src/app/core/pipes/dominican-currency.pipe';
 
 @NgModule({
   imports: [
@@ -17,8 +18,9 @@ import { ProvidersPageModule } from '../../providers/containers/providers.module
     IonicModule,
     BusinessDetailPageRoutingModule,
     SharedModule,
-    ProvidersPageModule
+    ProvidersPageModule,
   ],
-  declarations: [BusinessDetailPage]
+  providers: [DominicanCurrencyPipe],
+  declarations: [BusinessDetailPage, DominicanCurrencyPipe],
 })
 export class BusinessDetailPageModule {}
