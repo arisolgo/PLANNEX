@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { ApiModule } from './core/services/api/api.module';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { environment } from 'src/environments/environment';
 registerLocaleData(es);
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,7 @@ registerLocaleData(es);
     IonicModule.forRoot({ mode: 'md' }),
     AppRoutingModule,
     CoreModule,
-    ApiModule.forRoot({ rootUrl: 'http://192.168.0.11:5000' }),
+    ApiModule.forRoot({ rootUrl: environment.devRootUrl }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

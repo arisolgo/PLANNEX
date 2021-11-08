@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import {
+  IonRouterOutlet,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
   Provider,
@@ -28,10 +32,10 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
-  observablesList = [];
 
   constructor(
     private router: Router,
+    private navController: NavController,
     private scheduledServiceService: ScheduledServiceService,
     private scheduledProviderServiceService: ScheduledProviderServiceService,
     private modalController: ModalController,
@@ -48,6 +52,7 @@ export class AppointmentConfirmationPage implements OnInit {
   }
 
   checkout() {
+    let scheduledProvServs = [];
     let postScheduledServices = this.scheduledServiceService
       .postScheduledService({
         registerTime: new Date(),
@@ -58,7 +63,7 @@ export class AppointmentConfirmationPage implements OnInit {
       .pipe(
         map((response: Response) => {
           this.selectedServices.forEach((element) => {
-            this.observablesList.push(
+            scheduledProvServs.push(
               this.scheduledProviderServiceService.postScheduledProviderService(
                 {
                   scheduledServiceId: response.result.id,
@@ -70,8 +75,31 @@ export class AppointmentConfirmationPage implements OnInit {
         })
       );
     postScheduledServices
-      .pipe(switchMap(() => forkJoin(this.observablesList)))
-      .subscribe((response) => console.log(response));
+      .pipe(switchMap(() => forkJoin(scheduledProvServs)))
+      .subscribe(
+        () => {
+          this.uiService.presentToast(
+            'Orden de servicios realizada satisfactoriamente!',
+            3000,
+            'top'
+          );
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error(error);
+          if (
+            error.error.errorMessages[0].includes(
+              'System.ArgumentException: Cliente ya tiene agendado este servicio.'
+            )
+          ) {
+            this.uiService.presentAlert(
+              'Parece que ya tienes este u otro servicio en la fecha y hora seleccionada.',
+              'Oops..',
+              'Espacio reservado'
+            );
+          }
+        }
+      );
   }
 
   ngOnInit() {}
@@ -123,10 +151,11 @@ export class AppointmentConfirmationPage implements OnInit {
             value: this.Total().toString(),
             onApprove: () => {
               this.uiService.presentToast(
-                'Pago realizado satisfactoriamente!',
+                'Orden de servicios realizada satisfactoriamente!',
                 3000,
                 'top'
               );
+              this.navController.navigateRoot(['/home']);
             },
           });
         }
