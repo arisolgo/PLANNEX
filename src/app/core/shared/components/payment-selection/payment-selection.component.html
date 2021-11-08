@@ -6,7 +6,7 @@
 <ion-content>
   <h3 class="content-title">Seleccione un método de pago</h3>
   <ion-list>
-    <ion-radio-group (ionChange)="showSelected($event)">
+    <ion-radio-group #paymentRadioGroup (ionChange)="showSelected($event)">
       <ion-item>
         <ion-card>
           <ion-card-content>

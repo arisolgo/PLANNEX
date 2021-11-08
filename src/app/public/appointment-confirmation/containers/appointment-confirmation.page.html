@@ -77,10 +77,13 @@
     <ion-label *ngIf="selectedPayment==1">Método de pago: Efectivo</ion-label>
     <ion-label *ngIf="selectedPayment==2">Método de pago: Tarjeta</ion-label>
   </ion-item>
+  <div class="payPal-container">
+    <div *ngIf="selectedPayment==2" id="paypal-buttons"></div>
+  </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="selectedPayment==1">
   <ion-toolbar class="ripple" (click)="goToCheckout()">
-    <ion-title>PROCEDER AL PAGO • {{Total() | dominicanCurrency}} </ion-title>
+    <ion-title>COMPLETAR</ion-title>
   </ion-toolbar>
 </ion-footer>
