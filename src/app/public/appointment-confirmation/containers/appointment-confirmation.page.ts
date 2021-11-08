@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
   Provider,
   ProviderService,
@@ -16,6 +16,7 @@ import {
 import { PaymentSelectionComponent } from 'src/app/core/shared/components/payment-selection/payment-selection.component';
 import { render } from 'creditcardpayments/creditCardPayments';
 import { UiService } from 'src/app/core/services/ui.service';
+import { map, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.page.html',
@@ -27,6 +28,8 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
+  observablesList = [];
+
   constructor(
     private router: Router,
     private scheduledServiceService: ScheduledServiceService,
@@ -45,33 +48,30 @@ export class AppointmentConfirmationPage implements OnInit {
   }
 
   checkout() {
-    this.scheduledServiceService
+    let postScheduledServices = this.scheduledServiceService
       .postScheduledService({
         registerTime: new Date(),
         scheduledDate: this.selectedTimeSlot.value,
         providerId: this.currentProvider.id,
         clientId: 1,
       })
-      .subscribe((response: Response) => {
-        // console.log(response);
-        // this.scheduledService.next(response.result.id);
-        this.selectedServices.forEach((element) => {
-          console.log(
-            'Scheduled Service',
-            response.result.id,
-            'elementId',
-            element.id
-          );
-          this.scheduledProviderServiceService
-            .postScheduledProviderService({
-              scheduledServiceId: response.result.id,
-              providerServiceId: element.id,
-            })
-            .subscribe((result) => {
-              console.log(result);
-            });
-        });
-      });
+      .pipe(
+        map((response: Response) => {
+          this.selectedServices.forEach((element) => {
+            this.observablesList.push(
+              this.scheduledProviderServiceService.postScheduledProviderService(
+                {
+                  scheduledServiceId: response.result.id,
+                  providerServiceId: element.id,
+                }
+              )
+            );
+          });
+        })
+      );
+    postScheduledServices
+      .pipe(switchMap(() => forkJoin(this.observablesList)))
+      .subscribe((response) => console.log(response));
   }
 
   ngOnInit() {}
@@ -121,14 +121,12 @@ export class AppointmentConfirmationPage implements OnInit {
             id: '#paypal-buttons',
             currency: 'DOP',
             value: this.Total().toString(),
-            onApprove: (details) => {
-              console.log(details);
+            onApprove: () => {
               this.uiService.presentToast(
                 'Pago realizado satisfactoriamente!',
                 3000,
                 'top'
               );
-              alert('Transaction successfull');
             },
           });
         }
