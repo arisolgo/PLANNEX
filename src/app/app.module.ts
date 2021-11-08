@@ -17,7 +17,7 @@ registerLocaleData(es);
     IonicModule.forRoot({ mode: 'md' }),
     AppRoutingModule,
     CoreModule,
-    ApiModule.forRoot({ rootUrl: 'https://localhost:44379' }),
+    ApiModule.forRoot({ rootUrl: 'http://192.168.0.11:5000' }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

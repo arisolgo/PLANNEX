@@ -14,12 +14,8 @@ import {
   ScheduledServiceService,
 } from 'src/app/core/services/api/services';
 import { PaymentSelectionComponent } from 'src/app/core/shared/components/payment-selection/payment-selection.component';
-// import {
-//   PayPal,
-//   PayPalPayment,
-//   PayPalConfiguration,
-// } from '@ionic-native/paypal/ngx';
 import { render } from 'creditcardpayments/creditCardPayments';
+import { UiService } from 'src/app/core/services/ui.service';
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.page.html',
@@ -31,15 +27,13 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
-  paymentAmount: string = '3.33';
-  currency: string = 'INR';
-  currencyIcon: string = '₹';
   constructor(
     private router: Router,
     private scheduledServiceService: ScheduledServiceService,
     private scheduledProviderServiceService: ScheduledProviderServiceService,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private uiService: UiService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
@@ -117,7 +111,6 @@ export class AppointmentConfirmationPage implements OnInit {
     modal.onWillDismiss().then((modal) => {
       if (modal.data) {
         this.selectedPayment = Number(modal.data);
-        console.log(this.selectedPayment);
       }
     });
 
@@ -126,10 +119,15 @@ export class AppointmentConfirmationPage implements OnInit {
         if (this.selectedPayment == 2) {
           render({
             id: '#paypal-buttons',
-            currency: 'USD',
-            value: '100.00',
+            currency: 'DOP',
+            value: this.Total().toString(),
             onApprove: (details) => {
               console.log(details);
+              this.uiService.presentToast(
+                'Pago realizado satisfactoriamente!',
+                3000,
+                'top'
+              );
               alert('Transaction successfull');
             },
           });
@@ -137,49 +135,4 @@ export class AppointmentConfirmationPage implements OnInit {
       }
     });
   }
-  // payWithPaypal() {
-  //   this.payPal
-  //     .init({
-  //       PayPalEnvironmentProduction: 'YOUR_PRODUCTION_CLIENT_ID',
-  //       PayPalEnvironmentSandbox: 'YOUR_SANDBOX_CLIENT_ID',
-  //     })
-  //     .then(
-  //       () => {
-  //         // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-  //         this.payPal
-  //           .prepareToRender(
-  //             'PayPalEnvironmentSandbox',
-  //             new PayPalConfiguration({
-  //               // Only needed if you get an "Internal Service Error" after PayPal login!
-  //               //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
-  //             })
-  //           )
-  //           .then(
-  //             () => {
-  //               let payment = new PayPalPayment(
-  //                 this.paymentAmount,
-  //                 this.currency,
-  //                 'Description',
-  //                 'sale'
-  //               );
-  //               this.payPal.renderSinglePaymentUI(payment).then(
-  //                 (res) => {
-  //                   console.log(res);
-  //                   // Successfully paid
-  //                 },
-  //                 () => {
-  //                   // Error or render dialog closed without being successful
-  //                 }
-  //               );
-  //             },
-  //             () => {
-  //               // Error in configuration
-  //             }
-  //           );
-  //       },
-  //       () => {
-  //         // Error in initialization, maybe PayPal isn't supported or something else
-  //       }
-  //     );
-  // }
 }
