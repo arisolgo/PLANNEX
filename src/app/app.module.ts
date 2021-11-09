@@ -9,6 +9,7 @@ import { ApiModule } from './core/services/api/api.module';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { environment } from 'src/environments/environment';
+import { IonicStorageModule } from '@ionic/storage-angular';
 registerLocaleData(es);
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ registerLocaleData(es);
     AppRoutingModule,
     CoreModule,
     ApiModule.forRoot({ rootUrl: environment.devRootUrl }),
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

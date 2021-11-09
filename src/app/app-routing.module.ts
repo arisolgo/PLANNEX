@@ -61,6 +61,21 @@ const routes: Routes = [
         (m) => m.CalendarPageModule
       ),
   },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./public/login/containers/login.module').then(
+        (m) => m.LoginPageModule
+      ),
+  },
+
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./public/register/containers/register.module').then(
+        (m) => m.RegisterPageModule
+      ),
+  },
 ];
 
 @NgModule({

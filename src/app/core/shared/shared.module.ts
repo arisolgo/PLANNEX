@@ -6,6 +6,7 @@ import { SchedulerPageModule } from './pages/scheduler/containers/scheduler.modu
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
 import { PaymentSelectionComponent } from './components/payment-selection/payment-selection.component';
 import { DominicanCurrencyPipe } from '../pipes/dominican-currency.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,11 +14,18 @@ import { DominicanCurrencyPipe } from '../pipes/dominican-currency.pipe';
     PaymentSelectionComponent,
     DominicanCurrencyPipe,
   ],
-  imports: [CommonModule, HttpClientModule, IonicModule, SchedulerPageModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    IonicModule,
+    SchedulerPageModule,
+    ReactiveFormsModule,
+  ],
   exports: [
     CategoryFilterComponent,
     PaymentSelectionComponent,
     DominicanCurrencyPipe,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}
