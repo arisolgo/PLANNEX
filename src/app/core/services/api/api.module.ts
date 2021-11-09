@@ -10,6 +10,7 @@ import { ProveedoresService } from './services/proveedores.service';
 import { ProveedorReviewsService } from './services/proveedor-reviews.service';
 import { ProveedorTiposService } from './services/proveedor-tipos.service';
 import { ProviderServiciosService } from './services/provider-servicios.service';
+import { ScheduledProviderServiceService } from './services/scheduled-provider-service.service';
 import { ScheduledServiceService } from './services/scheduled-service.service';
 import { ScheduledServiceRequiredService } from './services/scheduled-service-required.service';
 import { ServicesService } from './services/services.service';
@@ -36,6 +37,7 @@ import { UserService } from './services/user.service';
     ProveedorReviewsService,
     ProveedorTiposService,
     ProviderServiciosService,
+    ScheduledProviderServiceService,
     ScheduledServiceService,
     ScheduledServiceRequiredService,
     ServicesService,

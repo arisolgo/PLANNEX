@@ -1536,6 +1536,228 @@
                 }
             }
         },
+        "/api/ScheduledProviderService/CreateScheduledProviderService": {
+            "post": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/updateScheduledProviderService": {
+            "put": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService": {
+            "get": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/{scheduledProviderServiceId}/GetScheduledProviderServiceById": {
+            "get": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "parameters": [{
+                    "name": "scheduledProviderServiceId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/GetScheduledProviderServicesByScheduledServiceId": {
+            "get": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "parameters": [{
+                    "name": "scheduledServiceId",
+                    "in": "query",
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/{scheduledProviderServiceId}": {
+            "delete": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "parameters": [{
+                    "name": "scheduledProviderServiceId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/ScheduledService/CreateScheduledService": {
             "post": {
                 "tags": [
@@ -2476,6 +2698,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2537,6 +2763,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2651,6 +2881,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2778,6 +3012,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2952,6 +3190,46 @@
                 },
                 "additionalProperties": false
             },
+            "ScheduledProviderService": {
+                "required": [
+                    "providerServiceId",
+                    "scheduledServiceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "scheduledServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ScheduledProviderServiceDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "scheduledServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
             "ScheduledService": {
                 "required": [
                     "clientId",
@@ -2973,6 +3251,10 @@
                         "format": "date-time"
                     },
                     "scheduledDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "scheduledEndDate": {
                         "type": "string",
                         "format": "date-time"
                     },
@@ -3011,6 +3293,10 @@
                         "format": "date-time"
                     },
                     "scheduledDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "scheduledEndDate": {
                         "type": "string",
                         "format": "date-time"
                     },
