@@ -200,6 +200,7 @@ export class CalendarPage {
           this.getScheduledServiceName(element.providerServiceId);
           //this.title = name;
           // console.log('Event Name:', this.title);
+
           zip(this.title, this.minutesToAdd).subscribe((responses) => {
             this.event.title = responses[0];
             this.event.startTime = new Date(this.startTime);
