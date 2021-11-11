@@ -20,7 +20,7 @@ export class ApiInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     req = req.clone({
       setHeaders: {
-        Authorization: `bearer ` + this.authService.getToken(),
+        Authorization: `bearer ` + this.authService.token,
         'Content-Type': 'application/json',
       },
     });

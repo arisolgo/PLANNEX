@@ -53,14 +53,11 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   loginUser(credentials) {
-    //test@test.com
-    //12345
     this.authService
       .login({ userName: credentials.email, password: credentials.password })
       .subscribe(
-        async (response: Response) => {
+        (response: Response) => {
           this.errorMessage = '';
-          this.authService.setToken(response.result);
           this.navCtrl.navigateForward('/tabs/home');
         },
         (error) => {

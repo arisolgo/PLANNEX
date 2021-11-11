@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { StorageService } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginGuard implements CanLoad {
+export class AutoLoginGuard implements CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
+
   canLoad(): Observable<boolean> {
-    console.log('Login Guard');
+    console.log('AutoLogin Guard');
     return this.authService.isAuthenticated.pipe(
       filter((val) => val !== null),
       take(1),
       map((isAuthenticated) => {
+        console.log('Found previous token, automatic login');
         if (isAuthenticated) {
-          return true;
+          console.log('hola 2');
+          this.router.navigateByUrl('/tabs', { replaceUrl: true });
         } else {
-          this.router.navigateByUrl('/login');
-          return false;
+          console.log(isAuthenticated);
+          console.log('hola');
+          // Simply allow access to the login
+          return true;
         }
       })
     );
