@@ -34,6 +34,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
   providers: [
     API_INTERCEPTOR_PROVIDER,
     ApiInterceptorService,
+    IonicStorageModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'es-ES' },
   ],

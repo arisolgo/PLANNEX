@@ -21,6 +21,7 @@ export class AuthService {
 
   setToken(token: string) {
     this.storageService.set('token', token);
+    this.storageService.set('isUserLoggedIn', true);
     this.token = token;
   }
 

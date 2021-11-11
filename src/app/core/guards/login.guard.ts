@@ -8,17 +8,25 @@ import { StorageService } from '../services/storage.service';
 })
 export class LoginGuard implements CanActivate {
   constructor(private storage: StorageService, private router: Router) {}
-  canActivate() {
-    let isUserLoggedIn = true;
-    // this.storage.get('isUserLoggedIn').then(() => {
-    //   isUserLoggedIn = true;
-    // });
-    console.log(this.storage.get('token'));
+  async canActivate() {
+    const isUserLoggedIn = await this.storage.get('isUserLoggedIn');
     console.log(isUserLoggedIn);
     if (isUserLoggedIn) {
       return true;
     } else {
       this.router.navigateByUrl('/login');
     }
+    // let isUserLoggedIn = true;
+    // // this.storage.get('isUserLoggedIn').then(() => {
+    // //   isUserLoggedIn = true;
+    // // });
+    // console.log(this.storage.get('token'));
+    // //this.storage.get('token').then((result) => console.log(result));
+    // console.log(isUserLoggedIn);
+    // if (isUserLoggedIn) {
+    //   return true;
+    // } else {
+    //   this.router.navigateByUrl('/login');
+    // }
   }
 }
