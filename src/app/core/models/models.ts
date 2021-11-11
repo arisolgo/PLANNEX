@@ -76,9 +76,9 @@ export interface ScheduledService {
   registerTime: Date;
   scheduledDate: Date;
   scheduledEndDate?: Date;
-  providerId: number;
+  scheduledProviderServices: ScheduledProviderService[];
   clientId: number;
-  providerServiceId?: number;
+  providerId?: number;
   status?: number;
   rating?: number;
 }
@@ -132,6 +132,8 @@ export interface TimeSlot {
 
 export interface ScheduledProviderService {
   id?: number;
-  scheduledServiceId: number;
+  scheduledServiceId?: number;
   providerServiceId: number;
+  providerServiceDuration?: number;
+  providerServiceName?: string;
 }

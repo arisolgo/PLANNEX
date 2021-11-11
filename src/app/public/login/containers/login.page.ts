@@ -6,8 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+import { Response } from 'src/app/core/models/models';
 import { UserService } from 'src/app/core/services/api/services';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -30,8 +32,8 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
-    private userService: UserService,
-    private storage: Storage
+    private authService: AuthService,
+    private storage: StorageService
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -53,16 +55,18 @@ export class LoginPage implements OnInit {
   loginUser(credentials) {
     //test@test.com
     //12345
-    this.userService.postApiUserLogin().subscribe(
-      (result) => {
-        this.errorMessage = '';
-        this.storage.set('isUserLoggedIn', true);
-        this.navCtrl.navigateForward('/menu/home');
-      },
-      (error) => {
-        this.errorMessage = 'Login Incorrecto';
-      }
-    );
+    this.authService
+      .login({ userName: credentials.email, password: credentials.password })
+      .subscribe(
+        async (response: Response) => {
+          this.errorMessage = '';
+          this.authService.setToken(response.result);
+          this.navCtrl.navigateForward('/tabs/home');
+        },
+        (error) => {
+          this.errorMessage = 'Usuario y/o contraseña incorrectos.';
+        }
+      );
   }
 
   goToRegister() {

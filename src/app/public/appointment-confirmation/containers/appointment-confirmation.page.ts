@@ -21,6 +21,7 @@ import { PaymentSelectionComponent } from 'src/app/core/shared/components/paymen
 import { render } from 'creditcardpayments/creditCardPayments';
 import { UiService } from 'src/app/core/services/ui.service';
 import { map, switchMap } from 'rxjs/operators';
+import { PostService } from 'src/app/core/services/post.service';
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.page.html',
@@ -40,7 +41,8 @@ export class AppointmentConfirmationPage implements OnInit {
     private scheduledProviderServiceService: ScheduledProviderServiceService,
     private modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
-    private uiService: UiService
+    private uiService: UiService,
+    private postService: PostService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
@@ -52,54 +54,27 @@ export class AppointmentConfirmationPage implements OnInit {
   }
 
   checkout() {
-    let scheduledProvServs = [];
-    let postScheduledServices = this.scheduledServiceService
-      .postScheduledService({
+    let postServices = [];
+    this.selectedServices.forEach((element) => {
+      postServices.push({ providerServiceId: element.id });
+    });
+
+    this.postService
+      .createScheduledService({
         registerTime: new Date(),
         scheduledDate: this.selectedTimeSlot.value,
+        scheduledProviderServices: postServices,
         providerId: this.currentProvider.id,
         clientId: 1,
       })
-      .pipe(
-        map((response: Response) => {
-          this.selectedServices.forEach((element) => {
-            scheduledProvServs.push(
-              this.scheduledProviderServiceService.postScheduledProviderService(
-                {
-                  scheduledServiceId: response.result.id,
-                  providerServiceId: element.id,
-                }
-              )
-            );
-          });
-        })
-      );
-    postScheduledServices
-      .pipe(switchMap(() => forkJoin(scheduledProvServs)))
-      .subscribe(
-        () => {
-          this.uiService.presentToast(
-            'Orden de servicios realizada satisfactoriamente!',
-            3000,
-            'top'
-          );
-          this.router.navigate(['/home']);
-        },
-        (error) => {
-          console.error(error);
-          if (
-            error.error.errorMessages[0].includes(
-              'System.ArgumentException: Cliente ya tiene agendado este servicio.'
-            )
-          ) {
-            this.uiService.presentAlert(
-              'Parece que ya tienes este u otro servicio en la fecha y hora seleccionada.',
-              'Oops..',
-              'Espacio reservado'
-            );
-          }
-        }
-      );
+      .subscribe(() => {
+        this.uiService.presentToast(
+          'Orden de servicios realizada satisfactoriamente!',
+          3000,
+          'top'
+        );
+        this.navController.navigateRoot(['/home']);
+      });
   }
 
   ngOnInit() {}
