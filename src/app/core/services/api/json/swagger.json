@@ -8,9 +8,7 @@
     "paths": {
         "/api/Clientes": {
             "get": {
-                "tags": [
-                    "Clientes"
-                ],
+                "tags": ["Clientes"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -44,9 +42,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Clientes"
-                ],
+                "tags": ["Clientes"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -92,9 +88,7 @@
         },
         "/api/Clientes/{id}": {
             "get": {
-                "tags": [
-                    "Clientes"
-                ],
+                "tags": ["Clientes"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -128,9 +122,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Clientes"
-                ],
+                "tags": ["Clientes"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -166,9 +158,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Clientes"
-                ],
+                "tags": ["Clientes"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -187,9 +177,7 @@
         },
         "/api/Comentarios": {
             "get": {
-                "tags": [
-                    "Comentarios"
-                ],
+                "tags": ["Comentarios"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -223,9 +211,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Comentarios"
-                ],
+                "tags": ["Comentarios"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -271,9 +257,7 @@
         },
         "/api/Comentarios/{id}": {
             "get": {
-                "tags": [
-                    "Comentarios"
-                ],
+                "tags": ["Comentarios"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -307,9 +291,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Comentarios"
-                ],
+                "tags": ["Comentarios"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -345,9 +327,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Comentarios"
-                ],
+                "tags": ["Comentarios"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -366,9 +346,7 @@
         },
         "/api/ProveedorDisponibilidades": {
             "get": {
-                "tags": [
-                    "ProveedorDisponibilidades"
-                ],
+                "tags": ["ProveedorDisponibilidades"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -404,9 +382,7 @@
         },
         "/api/ProveedorDisponibilidades/{proveedorDisponibilidadId}/GetProveedorDisponibilidadById": {
             "get": {
-                "tags": [
-                    "ProveedorDisponibilidades"
-                ],
+                "tags": ["ProveedorDisponibilidades"],
                 "parameters": [{
                     "name": "proveedorDisponibilidadId",
                     "in": "path",
@@ -442,9 +418,7 @@
         },
         "/api/ProveedorDisponibilidades/{proveedorId}/GetDisponibilidadByProveedorId": {
             "get": {
-                "tags": [
-                    "ProveedorDisponibilidades"
-                ],
+                "tags": ["ProveedorDisponibilidades"],
                 "parameters": [{
                     "name": "proveedorId",
                     "in": "path",
@@ -489,9 +463,7 @@
         },
         "/api/ProveedorDisponibilidades/updateProveedorDisponibilidad": {
             "put": {
-                "tags": [
-                    "ProveedorDisponibilidades"
-                ],
+                "tags": ["ProveedorDisponibilidades"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -520,9 +492,7 @@
         },
         "/api/ProveedorDisponibilidades/CreateProveedorDisponibilidad": {
             "post": {
-                "tags": [
-                    "ProveedorDisponibilidades"
-                ],
+                "tags": ["ProveedorDisponibilidades"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -568,9 +538,7 @@
         },
         "/api/ProveedorDisponibilidades/{proveedorDisponibilidadId}": {
             "delete": {
-                "tags": [
-                    "ProveedorDisponibilidades"
-                ],
+                "tags": ["ProveedorDisponibilidades"],
                 "parameters": [{
                         "name": "proveedorDisponibilidadId",
                         "in": "path",
@@ -598,9 +566,7 @@
         },
         "/api/Proveedores": {
             "get": {
-                "tags": [
-                    "Proveedores"
-                ],
+                "tags": ["Proveedores"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -634,9 +600,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Proveedores"
-                ],
+                "tags": ["Proveedores"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -682,9 +646,7 @@
         },
         "/api/Proveedores/{id}": {
             "get": {
-                "tags": [
-                    "Proveedores"
-                ],
+                "tags": ["Proveedores"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -718,9 +680,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Proveedores"
-                ],
+                "tags": ["Proveedores"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -756,9 +716,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Proveedores"
-                ],
+                "tags": ["Proveedores"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -777,9 +735,7 @@
         },
         "/api/ProveedorReviews": {
             "get": {
-                "tags": [
-                    "ProveedorReviews"
-                ],
+                "tags": ["ProveedorReviews"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -813,9 +769,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "ProveedorReviews"
-                ],
+                "tags": ["ProveedorReviews"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -861,9 +815,7 @@
         },
         "/api/ProveedorReviews/{proveedorId}/GetProveedorReviewsByProveedorId": {
             "get": {
-                "tags": [
-                    "ProveedorReviews"
-                ],
+                "tags": ["ProveedorReviews"],
                 "parameters": [{
                     "name": "proveedorId",
                     "in": "path",
@@ -899,9 +851,7 @@
         },
         "/api/ProveedorReviews/{id}": {
             "get": {
-                "tags": [
-                    "ProveedorReviews"
-                ],
+                "tags": ["ProveedorReviews"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -937,9 +887,7 @@
         },
         "/api/ProveedorReviews/{clienteId}/{proveedorId}": {
             "put": {
-                "tags": [
-                    "ProveedorReviews"
-                ],
+                "tags": ["ProveedorReviews"],
                 "parameters": [{
                         "name": "clienteId",
                         "in": "path",
@@ -987,9 +935,7 @@
         },
         "/api/ProveedorReviews/{id}/{clienteId}/{proveedorId}": {
             "delete": {
-                "tags": [
-                    "ProveedorReviews"
-                ],
+                "tags": ["ProveedorReviews"],
                 "parameters": [{
                         "name": "id",
                         "in": "path",
@@ -1027,9 +973,7 @@
         },
         "/api/ProveedorTipos": {
             "get": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1065,9 +1009,7 @@
         },
         "/api/ProveedorTipos/{proveedorTipoId}/GetProveedorTipoById": {
             "get": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "parameters": [{
                     "name": "proveedorTipoId",
                     "in": "path",
@@ -1103,9 +1045,7 @@
         },
         "/api/ProveedorTipos/{proveedorId}/GetProveedorTipoByProveedorId": {
             "get": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "parameters": [{
                     "name": "proveedorId",
                     "in": "path",
@@ -1150,9 +1090,7 @@
         },
         "/api/ProveedorTipos/{tipoId}/GetProveedorTipoByTipoId": {
             "get": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "parameters": [{
                     "name": "tipoId",
                     "in": "path",
@@ -1197,9 +1135,7 @@
         },
         "/api/ProveedorTipos/updateProveedorTipo": {
             "put": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1228,9 +1164,7 @@
         },
         "/api/ProveedorTipos/CreateProveedorTipo": {
             "post": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1276,9 +1210,7 @@
         },
         "/api/ProveedorTipos/{proveedorTipoId}": {
             "delete": {
-                "tags": [
-                    "ProveedorTipos"
-                ],
+                "tags": ["ProveedorTipos"],
                 "parameters": [{
                         "name": "proveedorTipoId",
                         "in": "path",
@@ -1306,9 +1238,7 @@
         },
         "/api/ProviderServicios": {
             "get": {
-                "tags": [
-                    "ProviderServicios"
-                ],
+                "tags": ["ProviderServicios"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1344,9 +1274,7 @@
         },
         "/api/ProviderServicios/{providerServiceId}/GetProviderServiceById": {
             "get": {
-                "tags": [
-                    "ProviderServicios"
-                ],
+                "tags": ["ProviderServicios"],
                 "parameters": [{
                     "name": "providerServiceId",
                     "in": "path",
@@ -1382,9 +1310,7 @@
         },
         "/api/ProviderServicios/{providerId}/GetProviderServiceByProviderId": {
             "get": {
-                "tags": [
-                    "ProviderServicios"
-                ],
+                "tags": ["ProviderServicios"],
                 "parameters": [{
                     "name": "providerId",
                     "in": "path",
@@ -1429,9 +1355,7 @@
         },
         "/api/ProviderServicios/updateProviderService": {
             "put": {
-                "tags": [
-                    "ProviderServicios"
-                ],
+                "tags": ["ProviderServicios"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1460,9 +1384,7 @@
         },
         "/api/ProviderServicios/CreateProviderService": {
             "post": {
-                "tags": [
-                    "ProviderServicios"
-                ],
+                "tags": ["ProviderServicios"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1508,9 +1430,7 @@
         },
         "/api/ProviderServicios/{providerServiceId}": {
             "delete": {
-                "tags": [
-                    "ProviderServicios"
-                ],
+                "tags": ["ProviderServicios"],
                 "parameters": [{
                         "name": "providerServiceId",
                         "in": "path",
@@ -1538,9 +1458,7 @@
         },
         "/api/ScheduledProviderService/CreateScheduledProviderService": {
             "post": {
-                "tags": [
-                    "ScheduledProviderService"
-                ],
+                "tags": ["ScheduledProviderService"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1586,9 +1504,7 @@
         },
         "/api/ScheduledProviderService/updateScheduledProviderService": {
             "put": {
-                "tags": [
-                    "ScheduledProviderService"
-                ],
+                "tags": ["ScheduledProviderService"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1617,9 +1533,7 @@
         },
         "/api/ScheduledProviderService": {
             "get": {
-                "tags": [
-                    "ScheduledProviderService"
-                ],
+                "tags": ["ScheduledProviderService"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1655,9 +1569,7 @@
         },
         "/api/ScheduledProviderService/{scheduledProviderServiceId}/GetScheduledProviderServiceById": {
             "get": {
-                "tags": [
-                    "ScheduledProviderService"
-                ],
+                "tags": ["ScheduledProviderService"],
                 "parameters": [{
                     "name": "scheduledProviderServiceId",
                     "in": "path",
@@ -1693,9 +1605,7 @@
         },
         "/api/ScheduledProviderService/GetScheduledProviderServicesByScheduledServiceId": {
             "get": {
-                "tags": [
-                    "ScheduledProviderService"
-                ],
+                "tags": ["ScheduledProviderService"],
                 "parameters": [{
                     "name": "scheduledServiceId",
                     "in": "query",
@@ -1739,9 +1649,7 @@
         },
         "/api/ScheduledProviderService/{scheduledProviderServiceId}": {
             "delete": {
-                "tags": [
-                    "ScheduledProviderService"
-                ],
+                "tags": ["ScheduledProviderService"],
                 "parameters": [{
                     "name": "scheduledProviderServiceId",
                     "in": "path",
@@ -1760,9 +1668,7 @@
         },
         "/api/ScheduledService/CreateScheduledService": {
             "post": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1808,9 +1714,7 @@
         },
         "/api/ScheduledService/updateScheduledService": {
             "put": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1839,9 +1743,7 @@
         },
         "/api/ScheduledService": {
             "get": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1877,9 +1779,7 @@
         },
         "/api/ScheduledService/{scheduledServiceId}/GetScheduledServiceById": {
             "get": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "parameters": [{
                     "name": "scheduledServiceId",
                     "in": "path",
@@ -1915,9 +1815,7 @@
         },
         "/api/ScheduledService/{providerId}/GetScheduledServicesByProviderId": {
             "get": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "parameters": [{
                     "name": "providerId",
                     "in": "path",
@@ -1962,9 +1860,7 @@
         },
         "/api/ScheduledService/{clientId}/GetScheduledServicesByClientId": {
             "get": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "parameters": [{
                     "name": "clientId",
                     "in": "path",
@@ -2009,9 +1905,7 @@
         },
         "/api/ScheduledService/{scheduledServiceId}": {
             "delete": {
-                "tags": [
-                    "ScheduledService"
-                ],
+                "tags": ["ScheduledService"],
                 "parameters": [{
                     "name": "scheduledServiceId",
                     "in": "path",
@@ -2028,11 +1922,48 @@
                 }
             }
         },
+        "/api/ScheduledService/{scheduledServiceId}/GetServicesDuration": {
+            "get": {
+                "tags": ["ScheduledService"],
+                "parameters": [{
+                    "name": "scheduledServiceId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/ScheduledServiceRequired/CreateScheduledServiceRequired": {
             "post": {
-                "tags": [
-                    "ScheduledServiceRequired"
-                ],
+                "tags": ["ScheduledServiceRequired"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2078,9 +2009,7 @@
         },
         "/api/ScheduledServiceRequired/{scheduledServiceRequiredId}": {
             "delete": {
-                "tags": [
-                    "ScheduledServiceRequired"
-                ],
+                "tags": ["ScheduledServiceRequired"],
                 "parameters": [{
                     "name": "scheduledServiceRequiredId",
                     "in": "path",
@@ -2099,9 +2028,7 @@
         },
         "/api/ScheduledServiceRequired": {
             "get": {
-                "tags": [
-                    "ScheduledServiceRequired"
-                ],
+                "tags": ["ScheduledServiceRequired"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -2137,9 +2064,7 @@
         },
         "/api/ScheduledServiceRequired/{scheduledServiceRequiredId}/GetScheduledServiceRequiredById": {
             "get": {
-                "tags": [
-                    "ScheduledServiceRequired"
-                ],
+                "tags": ["ScheduledServiceRequired"],
                 "parameters": [{
                     "name": "scheduledServiceRequiredId",
                     "in": "path",
@@ -2175,9 +2100,7 @@
         },
         "/api/ScheduledServiceRequired/{scheduledServiceId}/GetScheduledServiceRequiredByScheduledServiceId": {
             "get": {
-                "tags": [
-                    "ScheduledServiceRequired"
-                ],
+                "tags": ["ScheduledServiceRequired"],
                 "parameters": [{
                     "name": "scheduledServiceId",
                     "in": "path",
@@ -2213,9 +2136,7 @@
         },
         "/api/Services": {
             "get": {
-                "tags": [
-                    "Services"
-                ],
+                "tags": ["Services"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -2249,9 +2170,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Services"
-                ],
+                "tags": ["Services"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2297,9 +2216,7 @@
         },
         "/api/Services/{id}": {
             "get": {
-                "tags": [
-                    "Services"
-                ],
+                "tags": ["Services"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -2333,9 +2250,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Services"
-                ],
+                "tags": ["Services"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -2371,9 +2286,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Services"
-                ],
+                "tags": ["Services"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -2392,9 +2305,7 @@
         },
         "/api/Tipos": {
             "get": {
-                "tags": [
-                    "Tipos"
-                ],
+                "tags": ["Tipos"],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -2424,13 +2335,20 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             },
             "post": {
-                "tags": [
-                    "Tipos"
-                ],
+                "tags": ["Tipos"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2470,15 +2388,22 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             }
         },
         "/api/Tipos/{id}": {
             "get": {
-                "tags": [
-                    "Tipos"
-                ],
+                "tags": ["Tipos"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -2508,13 +2433,20 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             },
             "put": {
-                "tags": [
-                    "Tipos"
-                ],
+                "tags": ["Tipos"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -2546,13 +2478,20 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             },
             "delete": {
-                "tags": [
-                    "Tipos"
-                ],
+                "tags": ["Tipos"],
                 "parameters": [{
                     "name": "id",
                     "in": "path",
@@ -2565,15 +2504,22 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             }
         },
         "/api/User/Register": {
             "post": {
-                "tags": [
-                    "User"
-                ],
+                "tags": ["User"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2602,9 +2548,7 @@
         },
         "/api/User/Login": {
             "post": {
-                "tags": [
-                    "User"
-                ],
+                "tags": ["User"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2772,10 +2716,7 @@
                 "additionalProperties": false
             },
             "Comentario": {
-                "required": [
-                    "comment",
-                    "creationTime"
-                ],
+                "required": ["comment", "creationTime"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -2890,12 +2831,7 @@
                 "additionalProperties": false
             },
             "ProveedorDisponibilidad": {
-                "required": [
-                    "dia",
-                    "horaDesde",
-                    "horaHasta",
-                    "proveedorId"
-                ],
+                "required": ["dia", "horaDesde", "horaHasta", "proveedorId"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3079,10 +3015,7 @@
                 "additionalProperties": false
             },
             "ProveedorTipo": {
-                "required": [
-                    "proveedorId",
-                    "tipoId"
-                ],
+                "required": ["proveedorId", "tipoId"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3157,10 +3090,7 @@
                 "additionalProperties": false
             },
             "ProviderServicioDto": {
-                "required": [
-                    "proveedorId",
-                    "serviceId"
-                ],
+                "required": ["proveedorId", "serviceId"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3191,10 +3121,7 @@
                 "additionalProperties": false
             },
             "ScheduledProviderService": {
-                "required": [
-                    "providerServiceId",
-                    "scheduledServiceId"
-                ],
+                "required": ["providerServiceId", "scheduledServiceId"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3208,6 +3135,18 @@
                     "providerServiceId": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "providerServiceName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "providerServiceDuration": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServicePrice": {
+                        "type": "number",
+                        "format": "float"
                     }
                 },
                 "additionalProperties": false
@@ -3226,20 +3165,24 @@
                     "providerServiceId": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "providerServiceName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "providerServiceDuration": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServicePrice": {
+                        "type": "number",
+                        "format": "float"
                     }
                 },
                 "additionalProperties": false
             },
             "ScheduledService": {
-                "required": [
-                    "clientId",
-                    "providerId",
-                    "providerServiceId",
-                    "rating",
-                    "registerTime",
-                    "scheduledDate",
-                    "status"
-                ],
+                "required": ["clientId", "providerId", "registerTime", "scheduledDate"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3263,10 +3206,6 @@
                         "format": "int32"
                     },
                     "clientId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "providerServiceId": {
                         "type": "integer",
                         "format": "int32"
                     },
@@ -3308,9 +3247,12 @@
                         "type": "integer",
                         "format": "int32"
                     },
-                    "providerServiceId": {
-                        "type": "integer",
-                        "format": "int32"
+                    "scheduledProviderServices": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                        },
+                        "nullable": true
                     },
                     "status": {
                         "type": "integer",
@@ -3342,9 +3284,7 @@
                 "additionalProperties": false
             },
             "ScheduledServicesRequired": {
-                "required": [
-                    "scheduledServiceId"
-                ],
+                "required": ["scheduledServiceId"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3363,9 +3303,7 @@
                 "additionalProperties": false
             },
             "Service": {
-                "required": [
-                    "description"
-                ],
+                "required": ["description"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3393,9 +3331,7 @@
                 "additionalProperties": false
             },
             "Tipo": {
-                "required": [
-                    "nombre"
-                ],
+                "required": ["nombre"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3404,6 +3340,10 @@
                     },
                     "nombre": {
                         "type": "string"
+                    },
+                    "logo": {
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "additionalProperties": false
@@ -3416,6 +3356,10 @@
                         "format": "int32"
                     },
                     "nombre": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "logo": {
                         "type": "string",
                         "nullable": true
                     }

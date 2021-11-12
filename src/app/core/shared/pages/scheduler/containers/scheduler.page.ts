@@ -10,9 +10,31 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import {
+  AlertController,
+  IonButton,
+  IonContent,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
+import {
+  CalendarModal,
+  CalendarModalOptions,
+  CalendarOptions,
+  CalendarResult,
+} from 'ion2-calendar';
 import { CalendarComponent } from 'ionic2-calendar';
-import { Response } from 'src/app/core/models/models';
+import * as moment from 'moment';
+import { Moment } from 'moment';
+import { BehaviorSubject, zip } from 'rxjs';
+import {
+  Provider,
+  ProviderAvailability,
+  ProviderService,
+  Response,
+  ScheduledService,
+  TimeSlot,
+} from 'src/app/core/models/models';
 import {
   ProveedorDisponibilidadesService,
   ScheduledServiceService,
@@ -24,248 +46,173 @@ import {
   styleUrls: ['./scheduler.page.scss'],
 })
 export class SchedulerPage implements OnInit {
-  @Input() parentCall = false;
-  @Input() providerEvents: any = {
-    // events: [],
-    // serviceDuration: 25,
-    // serviceName: 'Recorte',
-    // startHour: '10:00 AM',
-    // endHour: '11:00 PM',
-  }; //events sent by parent component
-  @Output() newEvents = new EventEmitter();
-  collapseCard: boolean = false;
-  event = {
-    title: '',
-    desc: '',
-    startTime: '',
-    endTime: '',
-    allDay: false,
+  currentProvider: Provider;
+  currentServices: ProviderService[];
+  calendarOptions: any = {
+    showMonthPicker: false,
+    weekdays: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
   };
-  // eventSource = []
-  //month-short-names:
-  monthShortNames = [
-    'Ene',
-    'Feb',
-    'Mar',
-    'Abr',
-    'May',
-    'Jun',
-    'Jul',
-    'Ago',
-    'Sept',
-    'Oct',
-    'Nov',
-    'Dic',
-  ];
-  //day-short-names:
-  dayShortNames = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
-  //minute-values:
-  minuteValues = [0, 30];
-  //hoursValues
-  hourValues = [];
-  tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-  minDate = new Date(Date.now() - this.tzoffset).toISOString().slice(0, -1);
-  selectedTime: any;
-  selectedDate: any;
+  selectedHours = { startService: '', endService: '' };
+  title: '';
+  date: Date;
+  type: 'moment';
+  selectedDay: Date;
+  isAvailableHourRange = { from: new Date(), to: new Date() };
+  isAvailable = true;
+  availableSpaces: TimeSlot[] = [];
 
-  viewTitle;
-
-  calendar = {
-    mode: 'week',
-    currentDate: new Date(),
-    // startHour: 0,
-    // endHour: 0,
-  };
-  isEventInserted: boolean = false;
-
+  //providerAvailabilities: ProviderAvailability[];
+  providerAvailabilities: BehaviorSubject<ProviderAvailability[]> =
+    new BehaviorSubject([]);
+  providerScheduledServices: BehaviorSubject<ScheduledService[]> =
+    new BehaviorSubject([]);
+  public hoursAvailable: ProviderAvailability[];
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  selectedTimeSlot: Partial<TimeSlot> = null;
 
   constructor(
-    private alertCtrl: AlertController,
     private navCtrl: NavController,
     private router: Router,
     private scheduledServices: ScheduledServiceService,
+    public modalCtrl: ModalController,
     private providerAvailabilityService: ProveedorDisponibilidadesService,
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
-      console.log(router.getCurrentNavigation().extras.state);
+      let state = router.getCurrentNavigation().extras.state;
+      this.currentProvider = state.provider;
+      this.currentServices = state.selectedServices;
+      console.log(this.currentServices);
     }
   }
 
   ngOnInit() {
-    this.getScheduledServices();
-    this.getProviderAvailability();
-    this.getTwentyFourHourTime(
-      this.providerEvents.startHour,
-      this.providerEvents.endHour
-    );
-    this.resetEvent();
+    // this.openCalendar();
+    // this.getAvailabityAndServices();
+    // this.getTwentyFourHourTime(
+    //   this.providerEvents.startHour,
+    //   this.providerEvents.endHour
+    // );
+    // this.resetEvent();
   }
 
-  resetEvent() {
-    this.event = {
-      title: this.providerEvents.serviceName, //service Name
-      desc: 'Ariel Solano', //Logged user Name
-      startTime: null,
-      endTime: null,
-      allDay: false,
-    };
-  }
-
-  // Create the right event format and reload source
-  addEvent() {
-    let eventCopy = {
-      title: this.event.title,
-      startTime: new Date(this.event.startTime),
-      endTime: new Date(this.event.endTime),
-      allDay: this.event.allDay,
-      desc: this.event.desc,
-    };
-
-    if (eventCopy.allDay) {
-      let start = eventCopy.startTime;
-      let end = eventCopy.endTime;
-
-      eventCopy.startTime = new Date(
-        Date.UTC(
-          start.getUTCFullYear(),
-          start.getUTCMonth(),
-          start.getUTCDate()
-        )
-      );
-      eventCopy.endTime = new Date(
-        Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1)
-      );
-    }
-
-    let duplicate = false;
-    this.providerEvents.events.forEach((element) => {
-      let formatElement =
-        element.startTime.getUTCDate().toString() +
-        element.startTime.getUTCMonth().toString() +
-        element.startTime.getUTCFullYear().toString();
-      formatElement += element.startTime.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-
-      let formatCurrentElement =
-        eventCopy.startTime.getUTCDate().toString() +
-        eventCopy.startTime.getUTCMonth().toString() +
-        eventCopy.startTime.getUTCFullYear().toString();
-      formatCurrentElement += eventCopy.startTime.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-
-      if (formatElement == formatCurrentElement) {
-        alert('Ya hay una cita en esta hora');
-        duplicate = true;
+  getDayAvailability(date: Date) {
+    this.availableSpaces = [];
+    let todayAvailability: ProviderAvailability;
+    this.hoursAvailable = this.providerAvailabilities.value;
+    this.providerAvailabilities.value.forEach((element) => {
+      if (date.getDay() === element.dia) {
+        todayAvailability = element;
       }
-      console.log(this.providerEvents.events);
     });
-    if (!duplicate) {
-      this.providerEvents.events.push(eventCopy);
-      this.isEventInserted = true;
-      this.myCal.loadEvents();
-      this.resetEvent();
+    if (todayAvailability) {
+      this.isAvailableHourRange.from = new Date(todayAvailability.horaDesde);
+      this.isAvailableHourRange.to = new Date(todayAvailability.horaHasta);
+      this.getAvailableRequestHours(todayAvailability);
+    } else {
+      this.isAvailable = false;
+      console.log('No labora');
     }
   }
 
-  next() {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    swiper.slideNext();
-  }
+  getAvailableRequestHours(availability: ProviderAvailability) {
+    let startTime = {
+      hours: new Date(availability.horaDesde).getHours(),
+      minutes: new Date(availability.horaDesde).getMinutes(),
+    };
+    let endTime = {
+      hours: new Date(availability.horaHasta).getHours(),
+      minutes: new Date(availability.horaHasta).getMinutes(),
+    };
+    const now = moment()
+      .startOf('day')
+      .hour(startTime.hours)
+      .minute(startTime.minutes);
+    const deadLine = moment()
+      .startOf('day')
+      .hour(endTime.hours)
+      .minute(endTime.minutes);
 
-  back() {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    swiper.slidePrev();
-  }
-
-  // Change between month/week/day
-  changeMode(mode) {
-    this.calendar.mode = mode;
-  }
-
-  // Focus today
-  today() {
-    this.calendar.currentDate = new Date();
-  }
-
-  // Selected date range and hence title changed
-  onViewTitleChanged(title) {
-    this.viewTitle = title;
-  }
-
-  // Calendar event was clicked
-  async onEventSelected(event) {
-    // Use Angular date pipe for conversion
-    let start = formatDate(event.startTime, 'medium', this.locale);
-    let end = formatDate(event.endTime, 'medium', this.locale);
-
-    const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK'],
-    });
-    alert.present();
-  }
-
-  // Time slot was clicked
-  //(onTimeSelected)="onTimeSelected($event)"
-  onTimeSelected(ev) {
-    let selected = new Date(ev.selectedTime);
-    this.event.startTime = selected.toISOString();
-    selected.setHours(selected.getHours() + 1);
-    this.event.endTime = selected.toISOString();
-  }
-
-  show(element) {
-    console.log(element);
-  }
-
-  setEndTime(startTime) {
-    let endTime = new Date(startTime);
-    endTime.setMinutes(
-      endTime.getMinutes() + this.providerEvents.serviceDuration
-    );
-    this.event.endTime = endTime.toISOString();
-  }
-
-  getTwentyFourHourTime(startHour, endHour) {
-    console.log('Me llame');
-    let sHour = new Date('1/1/2013 ' + startHour);
-    let eHour = new Date('1/1/2013 ' + endHour);
-    // this.calendar.startHour = sHour.getHours();
-    // this.calendar.endHour = eHour.getHours();
-
-    for (let index = sHour.getHours(); index <= eHour.getHours(); index++) {
-      this.hourValues.push(index);
-    }
-  }
-
-  getNewEvents() {
-    // this.newEvents.emit(this.providerEvents);
-    this.navCtrl.navigateForward('/appointment-confirmation');
-  }
-
-  getScheduledServices() {
-    this.scheduledServices
-      .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(1)
-      .subscribe((response: Response) => {
-        console.log(response.result);
+    while (now.diff(deadLine) < 0) {
+      if (now >= moment(now).hour(startTime.hours)) {
+        this.availableSpaces.push({ value: now.toDate(), selected: false });
+      }
+      let duration = 0;
+      this.currentServices.forEach((element) => {
+        duration += element.duration;
       });
+      now.add(duration, 'minutes');
+    }
+    this.setServicesSpaces();
   }
 
-  getProviderAvailability() {
-    this.providerAvailabilityService
-      .getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
-        1
+  setServicesSpaces() {
+    this.providerScheduledServices.value.forEach((service) => {
+      for (let i = 0; i < this.availableSpaces.length; i++) {
+        if (
+          new Date(service.scheduledDate) <= this.availableSpaces[i].value &&
+          this.availableSpaces[i].value <= new Date(service.scheduledEndDate)
+        ) {
+          this.availableSpaces.splice(i - 1, 2);
+        }
+      }
+    });
+  }
+
+  getAvailabityAndServices(date: Date) {
+    zip(
+      this.scheduledServices.getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
+        this.currentProvider.id
+      ),
+      this.providerAvailabilityService.getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
+        this.currentProvider.id
       )
-      .subscribe((response: Response) => {
-        console.log(response.result);
-      });
+    ).subscribe((response: Response[]) => {
+      this.providerAvailabilities.next(response[1].result);
+      this.providerScheduledServices.next(response[0].result);
+      this.getDayAvailability(date);
+    });
+  }
+
+  pickDay($event) {
+    this.selectedTimeSlot = null;
+    console.log($event);
+    let momentToDate = new Date($event.format());
+    this.selectedDay = momentToDate;
+    console.log(this.selectedDay);
+    this.getAvailabityAndServices(momentToDate);
+    this.scrollTo('timeSlots');
+  }
+
+  selectHour(availability: TimeSlot) {
+    this.availableSpaces.forEach((element) => {
+      element.selected = false;
+    });
+    availability.selected = true;
+    availability.value = new Date(
+      this.selectedDay.getFullYear(),
+      this.selectedDay.getMonth(),
+      this.selectedDay.getDate(),
+      availability.value.getHours(),
+      availability.value.getMinutes()
+    );
+
+    this.selectedTimeSlot = availability;
+  }
+
+  scrollTo(elementId: string) {
+    let y = document.getElementById(elementId).offsetTop;
+    this.content.scrollToPoint(0, y, 1500);
+  }
+
+  goToCheckout() {
+    this.navCtrl.navigateForward('/appointment-confirmation', {
+      state: {
+        provider: this.currentProvider,
+        services: this.currentServices,
+        timeSlot: this.selectedTimeSlot,
+      },
+    });
   }
 }

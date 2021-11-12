@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from './core/guards/login.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () =>
       import('./public/tabs/tabs.module').then((m) => m.TabsPageModule),
+    canActivate: [LoginGuard],
   },
   {
     path: '',
@@ -53,6 +55,28 @@ const routes: Routes = [
       import(
         './public/appointment-confirmation/containers/appointment-confirmation.module'
       ).then((m) => m.AppointmentConfirmationPageModule),
+  },
+  {
+    path: 'calendar',
+    loadChildren: () =>
+      import('./public/calendar/calendar.module').then(
+        (m) => m.CalendarPageModule
+      ),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./public/login/containers/login.module').then(
+        (m) => m.LoginPageModule
+      ),
+  },
+
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./public/register/containers/register.module').then(
+        (m) => m.RegisterPageModule
+      ),
   },
 ];
 

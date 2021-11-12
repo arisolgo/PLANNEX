@@ -1,3 +1,47 @@
 .service-card {
   width: 100%;
 }
+
+ion-badge {
+  position: absolute;
+  position: absolute;
+  background-color: red;
+  bottom: 15px;
+  color: white;
+  left: 16px;
+  font-size: 10px;
+  border-radius: 10px;
+}
+.shop-card {
+  & ~ ion-icon {
+    margin-right: 1.2rem;
+  }
+}
+
+ion-card {
+  width: 80%;
+}
+
+.service-list-item {
+  display: flex;
+  padding: 0px 15px 0px 15px;
+
+  ion-checkbox {
+    margin-top: 30px;
+    margin-left: 20px;
+  }
+}
+
+.service-price {
+  text-align: end;
+}
+
+.continue-btn {
+  margin-bottom: 0;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  height: 40px;
+  --border-radius: 10px;
+  --background: rgb(73, 176, 207);
+  --color: white;
+}

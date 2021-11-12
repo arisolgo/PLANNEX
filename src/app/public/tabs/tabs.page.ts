@@ -1,7 +1,8 @@
+import { STRING_TYPE } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { BehaviorSubject, zip } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, ReplaySubject, zip } from 'rxjs';
+import { map, skip, skipWhile, switchMap, take } from 'rxjs/operators';
 import {
   Response,
   ScheduledService,
@@ -11,8 +12,10 @@ import {
   ServicesService,
   ScheduledServiceService,
   ProviderServiciosService,
+  ScheduledProviderServiceService,
+  ProveedoresService,
 } from 'src/app/core/services/api/services';
-import { TabsService } from './services/tabs.service';
+import { TabsService } from 'src/app/public/tabs/services/tabs.service';
 
 @Component({
   selector: 'app-tabs',
@@ -24,7 +27,9 @@ export class TabsPage implements OnInit {
     private servicesService: ServicesService,
     private scheduledServices: ScheduledServiceService,
     private providerServicesService: ProviderServiciosService,
-    private tabService: TabsService
+    private tabService: TabsService,
+    private scheduledProviderService: ScheduledProviderServiceService,
+    private providerService: ProveedoresService
   ) {}
 
   ngOnInit() {
@@ -33,32 +38,48 @@ export class TabsPage implements OnInit {
 
   getUserScheduledServices() {
     this.scheduledServices
-      .getApiScheduledServiceClientIdGetScheduledServicesByClientId(1)
+      .getApiScheduledServiceClientIdGetScheduledServicesByClientId(3)
       .subscribe((response: Response) => {
         response.result.forEach((element: ScheduledService) => {
-          this.providerServicesService
-            .getApiProviderServiciosProviderServiceIdGetProviderServiceById(
-              element.providerServiceId
-            )
-            .pipe(
-              switchMap((providerService: Response) =>
-                this.servicesService
-                  .getApiServicesId(providerService.result.serviceId)
-                  .pipe(map((service: Response) => [providerService, service]))
-              )
-            )
-            .subscribe((responses: Response[]) => {
-              let newEvent: ServiceEvent = {
-                title: responses[1].result.description,
-                startTime: new Date(element.scheduledDate),
-                endTime: moment(element.scheduledDate)
-                  .add(responses[0].result.duration, 'm')
-                  .toDate(),
-                desc: '',
-                allDay: false,
-              };
-              this.tabService.addUserEvent(newEvent);
-            });
+          console.log('ELEMENT:', element);
+
+          let servicesNames = '';
+          let providerName = '';
+          let counter = 0;
+          element.scheduledProviderServices.forEach((element) => {
+            servicesNames += element.providerServiceName;
+            if (counter > 0) {
+              servicesNames += ', ';
+            }
+            providerName = element.providerName;
+            counter++;
+          });
+
+          // var subscription = this.providerName.subscribe(
+          //   function (x) {
+          //     console.log('Next: ' + x.toString());
+          //   },
+          //   function (err) {
+          //     console.log('Error: ' + err);
+          //   },
+          //   function () {
+          //     console.log('Completed');
+          //   }
+          // );
+
+          // this.providerName.subscribe();
+
+          let newEvent: ServiceEvent = {
+            title: servicesNames,
+            startTime: new Date(element.scheduledDate),
+            endTime: new Date(element.scheduledEndDate),
+            desc: 'Servicio a proveer por: ' + providerName,
+            allDay: false,
+          };
+
+          console.log('PROVIDER NAME', providerName);
+
+          this.tabService.addUserEvent(newEvent);
         });
       });
   }

@@ -1,0 +1,57 @@
+<ion-content>
+  <div class="login-form-container">
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+      <div class="input-container">
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.email">
+            <div
+              *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div
+              *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="login-button-container">
+        <ion-button
+          expand="full"
+          shape="round"
+          color="success"
+          [disabled]="!loginForm.valid"
+          type="submit"
+        >
+          Login
+        </ion-button>
+        <p class="login-failed">{{errorMessage}}</p>
+        <p>No tienes cuenta?</p>
+        <ion-button
+          expand="full"
+          shape="round"
+          color="success"
+          (click)="goToRegister()"
+          type="button"
+          >Registrate</ion-button
+        >
+      </div>
+    </form>
+  </div>
+</ion-content>
