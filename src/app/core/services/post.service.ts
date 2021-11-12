@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ScheduledService } from '../models/models';
+import { Client, ScheduledService } from '../models/models';
 
 @Injectable({
   providedIn: 'root',

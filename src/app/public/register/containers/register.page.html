@@ -1,14 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Registro</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-title>Registro de Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
     <div class="login-form-container">
+      <div class="main-title">
+        <h1>Registrate</h1>
+      </div>
+      <h4 class="role-selection-title">Seleccione tipo de usuario:</h4>
+      <ion-radio-group
+        (ionChange)="setRole($event)"
+        class="role-select"
+        name="role"
+      >
+        <ion-item>
+          <ion-label>Cliente</ion-label>
+          <ion-radio value="1"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Proveedor</ion-label>
+          <ion-radio value="2"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
       <div class="input-container">
         <ion-item>
           <ion-label position="floating">Nombres</ion-label>
@@ -36,6 +54,107 @@
             </div>
           </ng-container>
         </div>
+        <ion-item>
+          <ion-label position="floating">Direccion1</ion-label>
+          <ion-input formControlName="direccion1"></ion-input>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container
+            *ngFor="let validation of validation_messages.direccion1"
+          >
+            <div
+              *ngIf="registerForm.get('direccion1').hasError(validation.type) && (registerForm.get('direccion1').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label position="floating">Direccion2</ion-label>
+          <ion-input formControlName="direccion2"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Ciudad</ion-label>
+          <ion-input formControlName="ciudad"></ion-input>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.ciudad">
+            <div
+              *ngIf="registerForm.get('ciudad').hasError(validation.type) && (registerForm.get('ciudad').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label>Pais</ion-label>
+          <ion-select formControlName="pais" placeholder="Seleccione País">
+            <ion-select-option
+              *ngFor="let country of countries"
+              [value]="country.id"
+            >
+              {{country.name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.pais">
+            <div
+              *ngIf="registerForm.get('pais').hasError(validation.type) && (registerForm.get('pais').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label position="floating">Teléfono</ion-label>
+          <ion-input type="number" formControlName="telefono"></ion-input>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.telefono">
+            <div
+              *ngIf="registerForm.get('telefono').hasError(validation.type) && (registerForm.get('telefono').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label position="floating">Celular</ion-label>
+          <ion-input type="number" formControlName="celular"></ion-input>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.celular">
+            <div
+              *ngIf="registerForm.get('celular').hasError(validation.type) && (registerForm.get('celular').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label>Sexo</ion-label>
+          <ion-select formControlName="sexo" placeholder="Seleccione Sexo">
+            <ion-select-option value="M"> Masculino </ion-select-option>
+            <ion-select-option value="F"> Femenino </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.sexo">
+            <div
+              *ngIf="registerForm.get('sexo').hasError(validation.type) && (registerForm.get('sexo').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
         <ion-item>
           <ion-label position="floating">Email</ion-label>
           <ion-input formControlName="email"></ion-input>
@@ -70,7 +189,7 @@
             expand="full"
             shape="round"
             color="success"
-            [disabled]="!registerForm.valid"
+            [disabled]="!registerForm.valid || selectedRole ==0"
             type="submit"
           >
             Registrarme

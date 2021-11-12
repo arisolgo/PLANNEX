@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
 
   loginUser(credentials) {
     this.authService
-      .login({ userName: credentials.email, password: credentials.password })
+      .login({ email: credentials.email, password: credentials.password })
       .subscribe(
         (response: Response) => {
           this.errorMessage = '';

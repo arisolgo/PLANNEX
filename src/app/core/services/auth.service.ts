@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Response, User } from '../models/models';
+import { Client, Provider, Response, User } from '../models/models';
 import { StorageService } from './storage.service';
 import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, from, Observable } from 'rxjs';
@@ -37,8 +37,13 @@ export class AuthService {
   login(user: User): Observable<any> {
     return this.http.post(this.rootUrl + '/api/User/Login', user).pipe(
       map((response: Response) => response.result),
-      switchMap((token) => {
-        return from(Storage.set({ key: TOKEN_KEY, value: token }));
+      switchMap((responseValue) => {
+        let userData = JSON.parse(responseValue);
+        Storage.set({
+          key: 'currentUser',
+          value: JSON.stringify(userData.accountObj),
+        });
+        return from(Storage.set({ key: TOKEN_KEY, value: userData.token }));
       }),
       tap(() => {
         this.isAuthenticated.next(true);
@@ -50,5 +55,17 @@ export class AuthService {
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
     return Storage.remove({ key: TOKEN_KEY });
+  }
+
+  register(user: User): Observable<any> {
+    return this.http.post(this.rootUrl + '/api/User/Register', user);
+  }
+
+  createClient(client: Client) {
+    return this.http.post(this.rootUrl + '/api/Clientes', client);
+  }
+
+  createProvider(provider: Provider) {
+    return this.http.post(this.rootUrl + '/api/Proveedores', provider);
   }
 }

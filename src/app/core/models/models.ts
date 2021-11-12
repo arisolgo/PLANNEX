@@ -1,12 +1,14 @@
 export interface User {
-  userName: string;
+  email: string;
   password: string;
 }
 
 export interface Client {
-  id: number;
+  id?: number;
   nombres: string;
   apellidos: string;
+  email: string;
+  password: string;
   direccion1: string;
   direccion2: string;
   ciudad: string;
@@ -17,11 +19,15 @@ export interface Client {
   celular: string;
   sexo: string;
   status: number;
+  role: number;
+  profilePicture?: string;
 }
 
 export interface Provider {
-  id: number;
+  id?: number;
+  userId?: number;
   email: string;
+  password: string;
   nombres: string;
   apellidos: string;
   direccion1: string;
@@ -34,8 +40,10 @@ export interface Provider {
   celular: string;
   sexo: string;
   status: number;
-  rating: number;
-  providerReviews: ProviderReview[];
+  profilePicture?: string;
+  role: number;
+  rating?: number;
+  providerReviews?: ProviderReview[];
 }
 
 export interface ProviderReview {

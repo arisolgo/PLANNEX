@@ -326,3 +326,20 @@ ion-calendar {
 .login-failed {
   color: red;
 }
+
+.role-select {
+  display: flex;
+  justify-content: center;
+}
+
+.role-select ion-label {
+  margin-right: 5px;
+}
+
+.main-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.role-selection-title {
+  text-align: center;
+}
