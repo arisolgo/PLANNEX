@@ -1,132 +1,71 @@
-<ion-header *ngIf="!parentCall">
+<ion-header>
   <ion-toolbar>
-    <ion-title> {{ viewTitle }} </ion-title>
+    <ion-title> Agendar Servicio </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <!-- <ion-button (click)="today()">Today</ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Card for adding a new event -->
+<ion-content [scrollEvents]="true">
   <ion-card>
-    <ion-card-header tappable (click)="collapseCard = !collapseCard">
-      <ion-card-title>Servicio</ion-card-title>
+    <ion-card-header>
+      <ion-card-title>Seleccione un dia:</ion-card-title>
     </ion-card-header>
-    <ion-card-content *ngIf="!collapseCard">
-      <ion-item>
-        <ion-input
-          readonly
-          type="text"
-          placeholder="Title"
-          [(ngModel)]="event.title"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          readonly
-          type="text"
-          placeholder="Description"
-          [(ngModel)]="event.desc"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Desde: </ion-label>
-        <ion-datetime
-          placeholder="Calendarizar Servicio"
-          [monthShortNames]="monthShortNames"
-          [dayShortNames]="dayShortNames"
-          [hourValues]="hourValues"
-          [minuteValues]="minuteValues"
-          displayFormat="MM/DD/YYYY HH:mm"
-          pickerFormat="MMM D:HH:mm"
-          [(ngModel)]="event.startTime"
-          (ngModelChange)="setEndTime(event.startTime)"
-          [min]="minDate"
-        ></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>Hasta: </ion-label>
-        <ion-datetime
-          placeholder="Tiempo Límite"
-          readonly
-          displayFormat="MM/DD/YYYY HH:mm"
-          pickerFormat="MMM D:HH:mm"
-          [(ngModel)]="event.endTime"
-          [min]="minDate"
-        ></ion-datetime>
-      </ion-item>
-      <!-- <ion-item>
-        <ion-label>All Day?</ion-label>
-        <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-      </ion-item> -->
-      <ion-button
-        fill="outline"
-        expand="block"
-        (click)="addEvent()"
-        [disabled]="!event.startTime"
-        >Añadir Servicio</ion-button
+    <ion-card-content>
+      <ion-calendar
+        [(ngModel)]="date"
+        (change)="pickDay($event)"
+        [type]="type"
+        [options]="calendarOptions"
+        [format]="'YYYY-MM-DD'"
       >
+      </ion-calendar>
     </ion-card-content>
   </ion-card>
 
-  <!-- <ion-row> -->
-  <!-- Change the displayed calendar mode -->
-  <!-- <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'" (click)="changeMode('month')">Month</ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'" (click)="changeMode('week')">Week</ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" (click)="changeMode('day')">Day</ion-button>
-    </ion-col> -->
-
-  <!-- Move back one screen of the slides -->
-  <!-- <ion-col size="6" text-left> -->
-  <ion-title> {{ viewTitle }} </ion-title>
-  <div class="next-previous-btn">
-    <ion-button fill="clear" (click)="back()">
-      <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-    </ion-button>
-    <!-- </ion-col> -->
-
-    <!-- Move forward one screen of the slides -->
-    <!-- <ion-col size="6" text-right> -->
-    <ion-button fill="clear" (click)="next()">
-      <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
-    </ion-button>
+  <div class="availability" *ngIf="date">
+    <ion-title class="selected-day"> {{date | date:'fullDate'}}</ion-title>
+    <ion-title
+      >Disponible: {{isAvailableHourRange.from | date:'h:mm a'}} -
+      {{isAvailableHourRange.to | date:'h:mm a'}}</ion-title
+    >
+    <ion-title>Horas disponibles:</ion-title>
   </div>
-  <!-- </ion-col> -->
-  <!-- </ion-row> -->
 
-
-  <calendar
-    [eventSource]="providerEvents.events"
-    [calendarMode]="calendar.mode"
-    [currentDate]="calendar.currentDate"
-    (onEventSelected)="onEventSelected($event)"
-    (onTitleChanged)="onViewTitleChanged($event)"
-    [startHour]="10"
-    [endHour]="23"
-    [step]="30"
-    [startingDayWeek]="1"
-  >
-  </calendar>
-  
-  <div class="bottom-btn-container">
-  <ion-button
-  fill="outline"
-  expand="block"
-  >Cancelar
-  </ion-button>
-
-  <ion-button
-  fill="outline"
-  expand="block"
-  (click)="getNewEvents()"
-  [disabled]="!isEventInserted"
-  >Finalizar
-  </ion-button>
-</div>
+  <div id="timeSlots" class="available-spaces">
+    <ion-grid fixed *ngIf="date">
+      <ion-row>
+        <ion-col *ngFor="let availability of availableSpaces" size="4">
+          <ion-button
+            #hourButton
+            [ngClass]="{
+                'available-hours-btn': availability.selected == false,
+                'available-hours-btn-pressed': availability.selected == true
+              }"
+            (click)="selectHour(availability)"
+            expand="block"
+            >{{availability.value | date: 'h:mm a'}}</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title slot="start">$0.00</ion-title>
+    <ion-button
+      slot="end"
+      #hourButton
+      [disabled]="!selectedTimeSlot"
+      (click)="goToCheckout()"
+      class="available-hours-btn continue-btn"
+      >Continuar</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>

@@ -7,15 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { AppointmentConfirmationPageRoutingModule } from './appointment-confirmation-routing.module';
 
 import { AppointmentConfirmationPage } from './appointment-confirmation.page';
-import { OrderDetailComponent } from '../components/order-detail/order-detail.component';
+import { DominicanCurrencyPipe } from 'src/app/core/pipes/dominican-currency.pipe';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AppointmentConfirmationPageRoutingModule
+    AppointmentConfirmationPageRoutingModule,
+    SharedModule,
   ],
-  declarations: [AppointmentConfirmationPage,OrderDetailComponent]
+  declarations: [AppointmentConfirmationPage],
 })
 export class AppointmentConfirmationPageModule {}

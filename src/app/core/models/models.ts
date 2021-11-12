@@ -1,12 +1,14 @@
 export interface User {
-  userName: string;
+  email: string;
   password: string;
 }
 
 export interface Client {
-  id: number;
+  id?: number;
   nombres: string;
   apellidos: string;
+  email: string;
+  password: string;
   direccion1: string;
   direccion2: string;
   ciudad: string;
@@ -17,11 +19,15 @@ export interface Client {
   celular: string;
   sexo: string;
   status: number;
+  role: number;
+  profilePicture?: string;
 }
 
 export interface Provider {
-  id: number;
+  id?: number;
+  userId?: number;
   email: string;
+  password: string;
   nombres: string;
   apellidos: string;
   direccion1: string;
@@ -34,8 +40,10 @@ export interface Provider {
   celular: string;
   sexo: string;
   status: number;
-  rating: number;
-  providerReviews: ProviderReview[];
+  profilePicture?: string;
+  role: number;
+  rating?: number;
+  providerReviews?: ProviderReview[];
 }
 
 export interface ProviderReview {
@@ -52,6 +60,9 @@ export interface ProviderService {
   proveedorId: number;
   serviceId: number;
   creatorUserId: number;
+  serviceName?: string;
+  duration: number;
+  selected?: boolean;
 }
 
 export interface Comment {
@@ -65,11 +76,11 @@ export interface ProviderAvailability {
   provideedorId: number;
   dia: number;
   horaDesde: Date;
-  horaHaste: Date;
+  horaHasta: Date;
 }
 
 export interface ScheduledService {
-  id: number;
+  id?: number;
   registerTime: Date;
   scheduledDate: Date;
   providerId: number;
@@ -78,9 +89,11 @@ export interface ScheduledService {
   status: number;
   rating: number;
   duration: number;
+  scheduledEndDate?: Date;
+  scheduledProviderServices: ScheduledProviderService[];
 }
 
-export interface ServiceDto {
+export interface Service {
   id: number;
   description: string;
 }
@@ -124,4 +137,21 @@ export interface ServiceEvent {
   startTime: Date;
   endTime: Date;
   allDay: boolean;
+}
+export interface enabledHours {
+  start: Date;
+  end: Date;
+}
+
+export interface TimeSlot {
+  value: Date;
+  selected: boolean;
+}
+
+export interface ScheduledProviderService {
+  id?: number;
+  scheduledServiceId?: number;
+  providerServiceId: number;
+  providerServiceDuration?: number;
+  providerServiceName?: string;
 }

@@ -18,6 +18,7 @@ class ScheduledServiceService extends __BaseService {
   static readonly getApiScheduledServiceProviderIdGetScheduledServicesByProviderIdPath = '/api/ScheduledService/{providerId}/GetScheduledServicesByProviderId';
   static readonly getApiScheduledServiceClientIdGetScheduledServicesByClientIdPath = '/api/ScheduledService/{clientId}/GetScheduledServicesByClientId';
   static readonly deleteApiScheduledServiceScheduledServiceIdPath = '/api/ScheduledService/{scheduledServiceId}';
+  static readonly getApiScheduledServiceScheduledServiceIdGetServicesDurationPath = '/api/ScheduledService/{scheduledServiceId}/GetServicesDuration';
 
   constructor(
     config: __Configuration,
@@ -233,6 +234,40 @@ class ScheduledServiceService extends __BaseService {
    */
   deleteApiScheduledServiceScheduledServiceId(scheduledServiceId: number): __Observable<null> {
     return this.deleteApiScheduledServiceScheduledServiceIdResponse(scheduledServiceId).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param scheduledServiceId undefined
+   */
+  getApiScheduledServiceScheduledServiceIdGetServicesDurationResponse(scheduledServiceId: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/ScheduledService/${encodeURIComponent(String(scheduledServiceId))}/GetServicesDuration`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param scheduledServiceId undefined
+   */
+  getApiScheduledServiceScheduledServiceIdGetServicesDuration(scheduledServiceId: number): __Observable<null> {
+    return this.getApiScheduledServiceScheduledServiceIdGetServicesDurationResponse(scheduledServiceId).pipe(
       __map(_r => _r.body as null)
     );
   }
