@@ -1,75 +1,66 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons>
-      <ion-button routerLink="">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons>
+            <ion-button routerLink="">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <div class="company-logo">
-    <ion-label class="business-name-title"
-      >{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label
-    >
-    <ion-avatar class="center">
-      <img [src]="provider_aux.profilePicture" />
-    </ion-avatar>
-    <h2 class="subtitle">{{provider_aux.rating}}</h2>
-    <ion-icon name="star"></ion-icon>
-  </div>
-
-  <div>
-    <ion-text>
-      <h4>Direccion</h4>
-    </ion-text>
-    <p>
-      <ion-text color="dark">
-        <h6>{{provider_aux.direccion1}}</h6>
-        <h6>{{provider_aux.direccion2}}</h6>
-      </ion-text>
-    </p>
-
-    <ion-text>
-      <h4>Horario</h4>
-    </ion-text>
-    <p>
-      <!-- <ion-text color="dark">{{business.days}} | {{business.startTime}} - {{business.endTime}} </ion-text> -->
-    </p>
-  </div>
-  <ion-text>
-    <h4>Servicios</h4>
-  </ion-text>
-
-  <div class="services-list">
-    <div class="service-list-item" *ngFor="let service of providerServices">
-      <!-- <ion-card (click)="goToSchedule(service)"> -->
-      <ion-card>
-        <ion-card-content>
-          <div class="service-info">
-            <h6 class="service-title">{{service.serviceName}}</h6>
-            <h6 class="service-price">RD${{service.price}}.00</h6>
-          </div>
-        </ion-card-content>
-      </ion-card>
-      <ion-checkbox (click)="addService(service)" slot="end"> </ion-checkbox>
+    <div class="company-logo" onclick="goToProviderProfile()">
+        <ion-label class="business-name-title">{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label>
+        <ion-avatar class="center">
+            <img [src]="provider_aux.profilePicture" />
+        </ion-avatar>
+        <h2 class="subtitle">{{provider_aux.rating}}</h2>
+        <ion-icon name="star"></ion-icon>
     </div>
-  </div>
+
+    <div>
+        <ion-text>
+            <h4>Direccion</h4>
+        </ion-text>
+        <p>
+            <ion-text color="dark">
+                <h6>{{provider_aux.direccion1}}</h6>
+                <h6>{{provider_aux.direccion2}}</h6>
+            </ion-text>
+        </p>
+
+        <ion-text>
+            <h4>Horario</h4>
+        </ion-text>
+        <p>
+            <!-- <ion-text color="dark">{{business.days}} | {{business.startTime}} - {{business.endTime}} </ion-text> -->
+        </p>
+    </div>
+    <ion-text>
+        <h4>Servicios</h4>
+    </ion-text>
+
+    <div class="services-list">
+        <div class="service-list-item" *ngFor="let service of providerServices">
+            <!-- <ion-card (click)="goToSchedule(service)"> -->
+            <ion-card>
+                <ion-card-content>
+                    <div class="service-info">
+                        <h6 class="service-title">{{service.serviceName}}</h6>
+                        <h6 class="service-price">RD${{service.price}}.00</h6>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+            <ion-checkbox (click)="addService(service)" slot="end"> </ion-checkbox>
+        </div>
+    </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-title slot="start">{{getAmmount() | dominicanCurrency}}</ion-title>
-    <ion-button
-      slot="end"
-      #hourButton
-      [disabled]="!selectedServices.length"
-      (click)="goToSchedule()"
-      class="available-hours-btn continue-btn"
-      >Continuar</ion-button
-    >
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title slot="start">{{getAmmount() | dominicanCurrency}}</ion-title>
+        <ion-button slot="end" #hourButton [disabled]="!selectedServices.length" (click)="goToSchedule()" class="available-hours-btn continue-btn">Continuar</ion-button>
+    </ion-toolbar>
 </ion-footer>
 
 <!-- <ion-toolbar>

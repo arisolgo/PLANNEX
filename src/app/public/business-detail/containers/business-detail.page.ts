@@ -91,6 +91,14 @@ export class BusinessDetailPage implements OnInit {
     });
   }
 
+  goToProviderProfile() {
+    this.navCtrl.navigateForward('/provider-profile', {
+      state: {
+        provider: this.provider_aux,
+      },
+    });
+  }
+
   getAmmount() {
     let ammount = 0;
     this.selectedServices.forEach((element) => {
