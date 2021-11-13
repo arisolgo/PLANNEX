@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  devRootUrl: 'https://localhost:44379',
 };
 const NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
