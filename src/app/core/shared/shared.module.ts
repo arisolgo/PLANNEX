@@ -4,20 +4,28 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { SchedulerPageModule } from './pages/scheduler/containers/scheduler.module';
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
-import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { PaymentSelectionComponent } from './components/payment-selection/payment-selection.component';
 import { DominicanCurrencyPipe } from '../pipes/dominican-currency.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     CategoryFilterComponent,
-    ShoppingCartComponent,
+    PaymentSelectionComponent,
     DominicanCurrencyPipe,
   ],
-  imports: [CommonModule, HttpClientModule, IonicModule, SchedulerPageModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    IonicModule,
+    SchedulerPageModule,
+    ReactiveFormsModule,
+  ],
   exports: [
     CategoryFilterComponent,
-    ShoppingCartComponent,
+    PaymentSelectionComponent,
     DominicanCurrencyPipe,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

@@ -9,7 +9,6 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-
 /* Core CSS required for Ionic components to work properly */
 
 @import "~@ionic/angular/css/core.css";
@@ -30,359 +29,337 @@
 @import "~@ionic/angular/css/flex-utils.css";
 //global classes
 :root {
-    --ion-safe-area-top: 20px;
+  --ion-safe-area-top: 20px;
+}
+.ion-color-dollar {
+  --ion-color-base: #44c4a2;
+  --ion-color-base-rgb: 68, 196, 162;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0, 0, 0;
+  --ion-color-shade: #3cac8f;
+  --ion-color-tint: #57caab;
 }
 
 ion-content {
-    ion-text {
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            padding-left: 16px;
-        }
+  ion-text {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      padding-left: 16px;
     }
-    ion-label {
-        padding-left: 16px;
-    }
+  }
+  ion-label {
+    padding-left: 16px;
+  }
 }
 
 ion-chip {
-    ion-label {
-        padding-left: 0;
-    }
+  ion-label {
+    padding-left: 0;
+  }
 }
 
 hr {
-    border: 0;
-    clear: both;
-    display: block;
-    width: 96%;
-    background-color: #000000;
-    height: 1px;
+  border: 0;
+  clear: both;
+  display: block;
+  width: 96%;
+  background-color: #000000;
+  height: 1px;
 }
 
 .centered-container {
-    text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .center {
-    margin: auto;
-    width: 60%;
-    padding: 10px;
+  margin: auto;
+  width: 60%;
+  padding: 10px;
 }
 
 ion-grid {
+  height: 100%;
+  ion-row {
     height: 100%;
-    ion-row {
-        height: 100%;
-    }
+  }
 }
 
 ion-avatar {
-    height: auto;
+  height: auto;
 }
 
 .avatar-title {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .company-logo {
-    padding-top: 20px;
-    ion-avatar {
-        height: auto;
-        width: 30%;
-    }
+  padding-top: 20px;
+  ion-avatar {
+    height: auto;
+    width: 30%;
+  }
 }
 
 //HomePage:ServiceCategoriesComponent
 app-service-categories {
-    .service-category-card {
-        height: auto;
-        ion-col {
-            display: flex;
-            justify-content: center;
-        }
-        ion-avatar {
-            height: auto;
-            width: 30%;
-        }
+  .service-category-card {
+    height: auto;
+    ion-col {
+      display: flex;
+      justify-content: center;
     }
+    ion-avatar {
+      height: auto;
+      width: 30%;
+    }
+  }
 }
 
 //HomePage:providersCarouselComponent
 app-providers-carousel {
-    ion-slides {
-        ion-slide {
-            .company-slide-item {
-                width: 100%;
-                .company-image-container {
-                    height: 180px;
-                }
-                ion-card-title {
-                    text-align: start;
-                }
-                ion-card-subtitle {
-                    text-align: start;
-                }
-            }
+  ion-slides {
+    ion-slide {
+      .company-slide-item {
+        width: 100%;
+        .company-image-container {
+          height: 180px;
         }
+        ion-card-title {
+          text-align: start;
+        }
+        ion-card-subtitle {
+          text-align: start;
+        }
+      }
     }
+  }
 }
 
 app-offers-carousel {
-    ion-slides {
-        height: 150px;
-        div.swiper-pagination {
-            bottom: 20px;
-        }
-        ion-slide {
-            ion-card {
-                width: 100%;
-                height: 160px;
-                box-shadow: none;
-                border-radius: 12px;
-                img {
-                    object-fit: cover;
-                    width: 100%;
-                    transform: scale(1.1, 1.1);
-                }
-            }
-        }
+  ion-slides {
+    height: 150px;
+    div.swiper-pagination {
+      bottom: 20px;
     }
+    ion-slide {
+      ion-card {
+        width: 100%;
+        height: 160px;
+        box-shadow: none;
+        border-radius: 12px;
+        img {
+          object-fit: cover;
+          width: 100%;
+          transform: scale(1.1, 1.1);
+        }
+      }
+    }
+  }
 }
 
 app-providers {
-    .providers-list {
-        ion-avatar {
-            width: 100%;
-        }
+  .providers-list {
+    ion-avatar {
+      width: 100%;
     }
-    ion-card {
-        width: 90%;
-    }
+  }
+  ion-card {
+    width: 90%;
+  }
 }
 
 //Shared:Category Filter Component
 app-category-filter {
-    .cancel-chips-filter {
-        display: flex;
-        justify-content: flex-end;
-    }
-    .chips-filter {
-        padding-top: 12px;
-    }
+  .cancel-chips-filter {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .chips-filter {
+    padding-top: 12px;
+  }
 }
 
 //BusinessDetailPage: Business
 //Shared:Category Filter Component
 app-category-filter {
-    .cancel-chips-filter {
-        display: flex;
-        justify-content: flex-end;
-    }
+  .cancel-chips-filter {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 //BusinessDetailPage: Business
-app-business-detail {
-    ion-header {
-        ion-toolbar {
-            ion-buttons {
-                ion-button {
-                    span .button-inner {
-                        font-size: 20px !important;
-                    }
-                    ion-icon {
-                        zoom: 1.5;
-                    }
-                }
-            }
-        }
-    }
-    div {
-        text-align: left;
-    }
-    app-category-filter {
-        width: 100%;
-    }
-    .swiper-pagination {
-        text-align: center !important;
-        bottom: 807px !important;
-    }
-    .swiper-container {
-        height: initial;
-        app-providers {
-            width: 100%;
-        }
-        div {
-            text-align: left;
-        }
-        .wrapper * {
-            height: 100%;
-            width: 100%;
-        }
-        .swiper-slide {
-            flex-direction: column;
-        }
-        .swiper-container {
-            height: initial;
-        }
-        .company-logo {
-            padding-top: 20px;
-            ion-avatar {
-                height: auto;
-                width: 30%;
-            }
-        }
-        .services-list {
-            .service-title {
-                text-align: left;
-            }
-            .service-price {
-                text-align: right;
-            }
-            width: 90%;
-            ion-avatar {
-                width: 100%;
-            }
-            .service-card {
-                width: 90%;
-            }
-        }
-        ion-slides {
-            height: 100%;
-        }
-    }
-}
 
 app-business-card {
-    .card {
-        width: 100%;
-        height: 1%;
-        padding: 1.6rem 2rem;
-        background: #f3f3f3;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        border-radius: 2.5rem;
-        margin-bottom: 1.5rem;
-        .card-content {
-            text-align: center;
-            .title {
-                font-weight: 700;
-                font-size: 1.3rem;
-                margin-bottom: 0.2rem;
-                color: #1d1d1d;
-            }
-            .subtitle {
-                font-size: 1.1rem;
-                font-weight: 700;
-                color: #ffb800;
-                margin-top: 0;
-            }
-            .subtitle1 {
-                font-size: 0.9rem;
-                font-weight: 700;
-                color: #1d1d1d;
-                margin-top: 0;
-            }
-        }
+  .card {
+    width: 100%;
+    height: 1%;
+    padding: 1.6rem 2rem;
+    background: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-radius: 2.5rem;
+    margin-bottom: 1.5rem;
+    .card-content {
+      text-align: center;
+      .title {
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 0.2rem;
+        color: #1d1d1d;
+      }
+      .subtitle {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #ffb800;
+        margin-top: 0;
+      }
+      .subtitle1 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #1d1d1d;
+        margin-top: 0;
+      }
     }
+  }
 }
 
 // SchedulerPage
 //_ngcontent-cyn-c139
 app-scheduler {
-    .next-previous-btn {
-        display: flex;
-        justify-content: space-between;
+  .next-previous-btn {
+    display: flex;
+    justify-content: space-between;
+  }
+  calendar {
+    .weekview-container {
+      height: 80% !important;
     }
-    calendar {
-        .weekview-container {
-            height: 80% !important;
-        }
-    }
-    .bottom-btn-container {
-        display: flex;
-        justify-content: space-around;
-        padding: 15px;
-    }
+  }
+  .bottom-btn-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+  }
 }
 
 app-calendar {
-    .next-previous-btn {
-        display: flex;
-        justify-content: space-between;
+  .next-previous-btn {
+    display: flex;
+    justify-content: space-between;
+  }
+  calendar {
+    .weekview-container {
+      height: 80% !important;
     }
-    calendar {
-        .weekview-container {
-            height: 80% !important;
-        }
-    }
-    .bottom-btn-container {
-        display: flex;
-        justify-content: space-around;
-        padding: 15px;
-    }
+  }
+  .bottom-btn-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+  }
 }
 
 app-order-detail {
-    position: relative;
-    .totalPrice {
-        font-weight: bold;
-    }
+  position: relative;
+  .totalPrice {
+    font-weight: bold;
+  }
 }
 
 app-appointment-confirmation {
-    position: relative;
-    .confirmOrder {
-        margin-top: -40%;
-        margin-left: 32%;
-        position: absolute;
-    }
+  position: relative;
+  .confirmOrder {
+    margin-top: -40%;
+    margin-left: 32%;
+    position: absolute;
+  }
 }
 
 ion-calendar {
-    padding: 0 !important;
-    .title {
-        .switch-btn {
-            font-size: large !important;
-        }
-        ion-button {
-            background-size: 30px;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-         :nth-child(2n) {
-            background-image: url(../src/assets/icon/arrow-back-outline.svg) !important;
-        }
-         :nth-child(3n) {
-            background-image: url(../src/assets/icon/arrow-forward-outline.svg) !important;
-        }
+  padding: 0 !important;
+
+  .title {
+    .switch-btn {
+      font-size: large !important;
     }
+    ion-button {
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    :nth-child(2n) {
+      background-image: url(../src/assets/icon/arrow-back-outline.svg) !important;
+    }
+    :nth-child(3n) {
+      background-image: url(../src/assets/icon/arrow-forward-outline.svg) !important;
+    }
+  }
 }
 
 .ripple {
-    background-position: center;
-    transition: background 0.8s;
+  background-position: center;
+  transition: background 0.8s;
 }
-
 .ripple:hover {
-    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%)
+    center/15000%;
+}
+.ripple:active {
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background 0s;
 }
 
-.ripple:active {
-    background-color: #6eb9f7;
-    background-size: 100%;
-    transition: background 0s;
+//Login and Register Styles
+
+.login-form-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-button-container {
+  padding: 0px 40px 0px 40px;
+  p {
+    text-align: center;
+  }
+}
+
+.input-container {
+  padding: 25px;
+}
+.login-failed {
+  color: red;
+}
+
+.role-select {
+  display: flex;
+  justify-content: center;
+}
+
+.role-select ion-label {
+  margin-right: 5px;
+}
+
+.main-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.role-selection-title {
+  text-align: center;
 }

@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AutoLoginGuard } from './core/guards/autologin.guard';
+import { LoginGuard } from './core/guards/login.guard';
 
 const routes: Routes = [
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./public/login/containers/login.module').then(
+        (m) => m.LoginPageModule
+      ),
+    canLoad: [AutoLoginGuard],
+  },
   {
     path: 'home',
     loadChildren: () =>
@@ -13,6 +23,7 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () =>
       import('./public/tabs/tabs.module').then((m) => m.TabsPageModule),
+    canLoad: [LoginGuard],
   },
   {
     path: '',
@@ -63,10 +74,10 @@ const routes: Routes = [
   },
 
   {
-    path: 'provider-profile',
+    path: 'register',
     loadChildren: () =>
-      import('./public/provider-profile/provider-profile.component').then(
-        (m) => m.ProviderProfileComponent
+      import('./public/register/containers/register.module').then(
+        (m) => m.RegisterPageModule
       ),
   },
 ];
