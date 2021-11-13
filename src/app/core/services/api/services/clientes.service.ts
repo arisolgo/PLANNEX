@@ -48,10 +48,15 @@ class ClientesService extends __BaseService {
       __map(_r => _r.body as null)
     );
   }
-  postApiClientesResponse(): __Observable<__StrictHttpResponse<null>> {
+
+  /**
+   * @param password undefined
+   */
+  postApiClientesResponse(password?: string): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (password != null) __params = __params.set('password', password.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/Clientes`,
@@ -68,8 +73,12 @@ class ClientesService extends __BaseService {
         return _r as __StrictHttpResponse<null>;
       })
     );
-  }  postApiClientes(): __Observable<null> {
-    return this.postApiClientesResponse().pipe(
+  }
+  /**
+   * @param password undefined
+   */
+  postApiClientes(password?: string): __Observable<null> {
+    return this.postApiClientesResponse(password).pipe(
       __map(_r => _r.body as null)
     );
   }

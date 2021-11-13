@@ -1,18 +1,25 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, Provider } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import {
+  IonRouterOutlet,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 import {
   ProviderAvailability,
   ProviderService,
   Response,
 } from 'src/app/core/models/models';
 import {
-  ProveedorDisponibilidadesService,
+  ComentariosService,
   ProveedoresService,
   ServicesService,
 } from 'src/app/core/services/api/services';
 import { ProviderServiciosService } from 'src/app/core/services/api/services';
+import { CartService } from 'src/app/core/services/cart.service';
+import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-business-detail',
@@ -22,24 +29,14 @@ import { ProviderServiciosService } from 'src/app/core/services/api/services';
 export class BusinessDetailPage implements OnInit {
   provider: Provider;
   provider_aux: any;
-  providerDisponibilidad: ProviderAvailability[] = [];
-  days = [
-    'Lunes',
-    'Martes',
-    'Miércoles',
-    'Jueves',
-    'Viernes',
-    'Sábado',
-    'Domingo',
-  ];
-
+  providerDisponibilidad: ProviderAvailability;
   providerServices: any[] = [];
   slideOpts = {
     initialSlide: 0,
     speed: 400,
   };
 
-  services = [];
+  selectedServices: ProviderService[] = [];
   servicesNames = [];
 
   constructor(
@@ -48,7 +45,10 @@ export class BusinessDetailPage implements OnInit {
     private providerService: ProveedoresService,
     private providerServiciosService: ProviderServiciosService,
     private servicioService: ServicesService,
-    private providerAvailability: ProveedorDisponibilidadesService
+    private comentarioService: ComentariosService,
+    private cartService: CartService,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet
   ) {
     if (router.getCurrentNavigation().extras.state) {
       this.provider_aux = this.router.getCurrentNavigation().extras.state;
@@ -56,8 +56,8 @@ export class BusinessDetailPage implements OnInit {
     }
   }
   ngOnInit() {
+    // this.cartCount = this.cartService.getCartItemCount();
     this.getServices(this.provider_aux.id);
-    this.getProviderAvailability(this.provider_aux.id);
   }
 
   getServices(providerId: number) {
@@ -72,104 +72,52 @@ export class BusinessDetailPage implements OnInit {
       });
   }
 
-  setServices(providerServices: any[]) {
-    providerServices.forEach((element: any) => {
+  setServices(providerServices: ProviderService[]) {
+    providerServices.forEach((element: ProviderService) => {
       this.servicioService
         .getApiServicesId(element.serviceId)
         .subscribe((response: Response) => {
-          element['serviceName'] = response.result.description;
-          this.services.push(element);
-          console.log('TEST4554:', this.services);
+          element.serviceName = response.result.description;
+          this.providerServices.push(element);
         });
     });
   }
-  getProviderAvailability(providerId: number) {
-    this.providerAvailability
-      .getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
-        providerId
-      )
-      .subscribe((response: Response) => {
-        console.log('GET PROVIDER AVAILABILITY:', response.result);
-        this.setProviderAvailability(response.result);
-      });
-  }
-
-  setProviderAvailability(providerAvailability: any[]) {
-    providerAvailability.forEach((element: any) => {
-      switch (element.dia) {
-        case 0:
-          element['diaNombre'] = 'Domingo';
-          break;
-        case 1:
-          element['diaNombre'] = 'Lunes';
-          break;
-        case 2:
-          element['diaNombre'] = 'Martes';
-          break;
-        case 3:
-          element['diaNombre'] = 'Miércoles';
-          break;
-        case 4:
-          element['diaNombre'] = 'Jueves';
-          break;
-        case 5:
-          element['diaNombre'] = 'Viernes';
-          break;
-        case 6:
-          element['diaNombre'] = 'Sábado';
-        default:
-          break;
-      }
-      console.log('ELEMENT HORAS', element['horaDesde']);
-      element['horaDesdeF12'] = formatDate(
-        element['horaDesde'],
-        'hh:MM a',
-        'en-US',
-        '+0530'
-      );
-      element['horaHastaF12'] = formatDate(
-        element['horaHasta'],
-        'hh:MM a',
-        'en-US',
-        '+0530'
-      );
-      this.providerDisponibilidad.push(element);
+  goToSchedule() {
+    this.navCtrl.navigateForward('/scheduler', {
+      state: {
+        provider: this.provider_aux,
+        selectedServices: this.selectedServices,
+      },
     });
   }
 
-  // this.services[0] = {
-  //   name: 'Corte sencillo',
-  //   img: 'https://via.placeholder.com/80x80',
-  //   category: 'Recorte',
-  //   price: 350.00,
-  //   description:"Recorte de pelo + estilado",
-  // };
-  // this.services[1] = {
-  //   name: 'Corte completo',
-  //   img: 'https://via.placeholder.com/80x80',
-  //   category: 'Recorte',
-  //   price: 500.00,
-  //   description:"Recorte de pelo, estilado y lavado",
-  // };
-  // this.services[2] = {
-  //   name: 'Manicure',
-  //   img: 'https://via.placeholder.com/80x80',
-  //   category: 'Uñas',
-  //   price: 800.00,
-  //   description:"Corte y esmaltado de uñas de las manos.",
-  // };
-  // this.services[3] = {
-  //   name: 'Pedicure',
-  //   img: 'https://via.placeholder.com/80x80',
-  //   category: 'Uñas',
-  //   price: 800.00,
-  //   description:"Corte y esmaltado de uñas de los pies.",
-  // };
-  // this.services[4] = {
-  //   name: 'Servicio completo',
-  //   img: 'https://via.placeholder.com/80x80',
-  //   category: 'Uñas',
-  //   price: 1500.00,
-  //   description:"Corte y esmaltado de uñas de las manos y pies.",
-  // };
+  getAmmount() {
+    let ammount = 0;
+    this.selectedServices.forEach((element) => {
+      ammount += element.price;
+    });
+    return ammount;
+  }
+
+  addService(service: ProviderService) {
+    service.selected = !service.selected;
+    if (service.selected) {
+      this.selectedServices.push(service);
+    } else {
+      let index = this.selectedServices.indexOf(service);
+      if (index > -1) {
+        this.selectedServices.splice(index, 1);
+      }
+    }
+    this.getAmmount();
+  }
+
+  async openCart() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: ShoppingCartComponent,
+    });
+
+    await modal.present();
+  }
 }

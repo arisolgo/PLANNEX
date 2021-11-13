@@ -17,8 +17,8 @@ import { ProvidersPageModule } from '../../providers/containers/providers.module
     IonicModule,
     BusinessDetailPageRoutingModule,
     SharedModule,
-    ProvidersPageModule
+    ProvidersPageModule,
   ],
-  declarations: [BusinessDetailPage]
+  declarations: [BusinessDetailPage],
 })
 export class BusinessDetailPageModule {}

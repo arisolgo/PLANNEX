@@ -1,5 +1,7 @@
 {
   "name": "plannex",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

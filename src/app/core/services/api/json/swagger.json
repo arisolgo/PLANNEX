@@ -47,6 +47,13 @@
                 "tags": [
                     "Clientes"
                 ],
+                "parameters": [{
+                    "name": "password",
+                    "in": "query",
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -761,6 +768,27 @@
                 ],
                 "parameters": [{
                     "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/Proveedores/setRating/{proveedorId}": {
+            "put": {
+                "tags": [
+                    "Proveedores"
+                ],
+                "parameters": [{
+                    "name": "proveedorId",
                     "in": "path",
                     "required": true,
                     "schema": {
@@ -1536,6 +1564,228 @@
                 }
             }
         },
+        "/api/ScheduledProviderService/CreateScheduledProviderService": {
+            "post": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/updateScheduledProviderService": {
+            "put": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService": {
+            "get": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/{scheduledProviderServiceId}/GetScheduledProviderServiceById": {
+            "get": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "parameters": [{
+                    "name": "scheduledProviderServiceId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledProviderService"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/GetScheduledProviderServicesByScheduledServiceId": {
+            "get": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "parameters": [{
+                    "name": "scheduledServiceId",
+                    "in": "query",
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScheduledProviderService"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ScheduledProviderService/{scheduledProviderServiceId}": {
+            "delete": {
+                "tags": [
+                    "ScheduledProviderService"
+                ],
+                "parameters": [{
+                    "name": "scheduledProviderServiceId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/ScheduledService/CreateScheduledService": {
             "post": {
                 "tags": [
@@ -1802,6 +2052,47 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/ScheduledService/{scheduledServiceId}/GetServicesDuration": {
+            "get": {
+                "tags": [
+                    "ScheduledService"
+                ],
+                "parameters": [{
+                    "name": "scheduledServiceId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2202,8 +2493,17 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             },
             "post": {
                 "tags": [
@@ -2248,8 +2548,17 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             }
         },
         "/api/Tipos/{id}": {
@@ -2286,8 +2595,17 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             },
             "put": {
                 "tags": [
@@ -2324,8 +2642,17 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             },
             "delete": {
                 "tags": [
@@ -2343,8 +2670,17 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [{
+                    "oauth2": []
+                }]
             }
         },
         "/api/User/Register": {
@@ -2419,6 +2755,7 @@
                     "ciudad",
                     "direccion1",
                     "direccion2",
+                    "email",
                     "latitud",
                     "longitud",
                     "nombres",
@@ -2433,6 +2770,13 @@
                         "type": "integer",
                         "format": "int32"
                     },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
                     "nombres": {
                         "type": "string"
                     },
@@ -2476,6 +2820,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2487,6 +2835,18 @@
                         "type": "integer",
                         "format": "int32"
                     },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "email": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "nombres": {
                         "type": "string",
                         "nullable": true
@@ -2537,6 +2897,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2592,12 +2956,17 @@
                     "longitud",
                     "nombres",
                     "pais",
+                    "role",
                     "sexo",
                     "telefono"
                 ],
                 "type": "object",
                 "properties": {
                     "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "userId": {
                         "type": "integer",
                         "format": "int32"
                     },
@@ -2651,6 +3020,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2720,7 +3093,15 @@
                         "type": "integer",
                         "format": "int32"
                     },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
                     "email": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "password": {
                         "type": "string",
                         "nullable": true
                     },
@@ -2778,6 +3159,10 @@
                     "profilePicture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "role": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
                 "additionalProperties": false
@@ -2785,7 +3170,6 @@
             "ProveedorReview": {
                 "required": [
                     "clienteId",
-                    "comentarioId",
                     "proveedorId",
                     "serviceRating"
                 ],
@@ -2803,13 +3187,17 @@
                         "type": "integer",
                         "format": "int32"
                     },
-                    "comentarioId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "serviceRating": {
                         "type": "number",
                         "format": "float"
+                    },
+                    "reviewDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "comentario": {
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "additionalProperties": false
@@ -2829,13 +3217,17 @@
                         "type": "integer",
                         "format": "int32"
                     },
-                    "comentarioId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "serviceRating": {
                         "type": "number",
                         "format": "float"
+                    },
+                    "reviewDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "comentario": {
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "additionalProperties": false
@@ -2952,15 +3344,84 @@
                 },
                 "additionalProperties": false
             },
+            "ScheduledProviderService": {
+                "required": [
+                    "providerServiceId",
+                    "scheduledServiceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "scheduledServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServiceName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "providerServiceDuration": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServicePrice": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "providerName": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ScheduledProviderServiceDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "scheduledServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServiceId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServiceName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "providerServiceDuration": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "providerServicePrice": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "providerName": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
             "ScheduledService": {
                 "required": [
                     "clientId",
                     "providerId",
-                    "providerServiceId",
-                    "rating",
                     "registerTime",
-                    "scheduledDate",
-                    "status"
+                    "scheduledDate"
                 ],
                 "type": "object",
                 "properties": {
@@ -2976,15 +3437,15 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "scheduledEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "providerId": {
                         "type": "integer",
                         "format": "int32"
                     },
                     "clientId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "providerServiceId": {
                         "type": "integer",
                         "format": "int32"
                     },
@@ -3014,6 +3475,10 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "scheduledEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "providerId": {
                         "type": "integer",
                         "format": "int32"
@@ -3022,9 +3487,12 @@
                         "type": "integer",
                         "format": "int32"
                     },
-                    "providerServiceId": {
-                        "type": "integer",
-                        "format": "int32"
+                    "scheduledProviderServices": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ScheduledProviderServiceDto"
+                        },
+                        "nullable": true
                     },
                     "status": {
                         "type": "integer",
@@ -3118,6 +3586,10 @@
                     },
                     "nombre": {
                         "type": "string"
+                    },
+                    "logo": {
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "additionalProperties": false
@@ -3132,6 +3604,10 @@
                     "nombre": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "logo": {
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "additionalProperties": false
@@ -3139,7 +3615,7 @@
             "UserDto": {
                 "type": "object",
                 "properties": {
-                    "userName": {
+                    "email": {
                         "type": "string",
                         "nullable": true
                     },

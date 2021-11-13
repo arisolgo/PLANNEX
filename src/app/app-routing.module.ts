@@ -54,6 +54,13 @@ const routes: Routes = [
         './public/appointment-confirmation/containers/appointment-confirmation.module'
       ).then((m) => m.AppointmentConfirmationPageModule),
   },
+  {
+    path: 'calendar',
+    loadChildren: () =>
+      import('./public/calendar/calendar.module').then(
+        (m) => m.CalendarPageModule
+      ),
+  },
 ];
 
 @NgModule({

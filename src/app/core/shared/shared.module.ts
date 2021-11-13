@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { SchedulerPageModule } from './pages/scheduler/containers/scheduler.module';
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
-
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { DominicanCurrencyPipe } from '../pipes/dominican-currency.pipe';
 
 @NgModule({
-  declarations: [CategoryFilterComponent],
-  imports: [
-    CommonModule,
-    HttpClientModule, 
-    IonicModule,
-    SchedulerPageModule
+  declarations: [
+    CategoryFilterComponent,
+    ShoppingCartComponent,
+    DominicanCurrencyPipe,
   ],
-  exports:[CategoryFilterComponent]
+  imports: [CommonModule, HttpClientModule, IonicModule, SchedulerPageModule],
+  exports: [
+    CategoryFilterComponent,
+    ShoppingCartComponent,
+    DominicanCurrencyPipe,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}
