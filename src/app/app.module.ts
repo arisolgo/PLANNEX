@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { ApiModule } from './core/services/api/api.module';
-import es from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';

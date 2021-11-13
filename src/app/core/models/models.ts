@@ -130,6 +130,14 @@ export interface ServiceItem {
   endDate: '';
   serviceDuration: 0; //minutes
 }
+
+export interface ServiceEvent {
+  title: string;
+  desc: string;
+  startTime: Date;
+  endTime: Date;
+  allDay: boolean;
+}
 export interface enabledHours {
   start: Date;
   end: Date;
@@ -146,4 +154,5 @@ export interface ScheduledProviderService {
   providerServiceId: number;
   providerServiceDuration?: number;
   providerServiceName?: string;
+  providerName?: string;
 }
