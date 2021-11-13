@@ -85,12 +85,14 @@ export interface ScheduledService {
   id?: number;
   registerTime: Date;
   scheduledDate: Date;
-  scheduledEndDate?: Date;
-  scheduledProviderServices: ScheduledProviderService[];
+  providerId: number;
   clientId: number;
-  providerId?: number;
+  providerServiceId?: number;
   status?: number;
   rating?: number;
+  duration?: number;
+  scheduledEndDate?: Date;
+  scheduledProviderServices: ScheduledProviderService[];
 }
 
 export interface Service {

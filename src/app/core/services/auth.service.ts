@@ -16,10 +16,12 @@ export class AuthService {
     null
   );
   token = '';
+  loggedUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(
     private http: HttpClient,
     private storageService: StorageService
   ) {
+    this.setCurrentUser();
     this.loadToken();
   }
   rootUrl = environment.devRootUrl;
@@ -43,6 +45,7 @@ export class AuthService {
           key: 'currentUser',
           value: JSON.stringify(userData.accountObj),
         });
+        this.setCurrentUser();
         return from(Storage.set({ key: TOKEN_KEY, value: userData.token }));
       }),
       tap(() => {
@@ -67,5 +70,10 @@ export class AuthService {
 
   createProvider(provider: Provider) {
     return this.http.post(this.rootUrl + '/api/Proveedores', provider);
+  }
+
+  async setCurrentUser() {
+    const currentUser = await Storage.get({ key: 'currentUser' });
+    this.loggedUser.next(currentUser);
   }
 }

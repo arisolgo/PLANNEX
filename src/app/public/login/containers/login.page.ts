@@ -9,7 +9,7 @@ import { NavController } from '@ionic/angular';
 import { Response } from 'src/app/core/models/models';
 import { UserService } from 'src/app/core/services/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { StorageService } from 'src/app/core/services/storage.service';
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-login',
@@ -32,8 +32,7 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
-    private authService: AuthService,
-    private storage: StorageService
+    private authService: AuthService
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -56,9 +55,16 @@ export class LoginPage implements OnInit {
     this.authService
       .login({ email: credentials.email, password: credentials.password })
       .subscribe(
-        (response: Response) => {
+        async (response: Response) => {
           this.errorMessage = '';
-          this.navCtrl.navigateForward('/tabs/home');
+          // const currentUser = JSON.parse(
+          //   (await Storage.get({ key: 'currentUser' })).value
+          // );
+          if (this.authService.loggedUser.value.Role == 1)
+            this.navCtrl.navigateForward('/tabs/home');
+          else {
+            this.navCtrl.navigateForward('/tabs/calendar');
+          }
         },
         (error) => {
           this.errorMessage = 'Usuario y/o contraseña incorrectos.';
