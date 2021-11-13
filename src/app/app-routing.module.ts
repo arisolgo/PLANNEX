@@ -61,6 +61,14 @@ const routes: Routes = [
         (m) => m.CalendarPageModule
       ),
   },
+
+  {
+    path: 'provider-profile',
+    loadChildren: () =>
+      import('./public/provider-profile/provider-profile.component').then(
+        (m) => m.ProviderProfileComponent
+      ),
+  },
 ];
 
 @NgModule({

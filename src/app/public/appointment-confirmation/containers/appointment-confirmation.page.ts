@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {
+  IonRouterOutlet,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
   Provider,
   ProviderService,
@@ -14,6 +18,10 @@ import {
   ScheduledServiceService,
 } from 'src/app/core/services/api/services';
 
+import { render } from 'creditcardpayments/creditCardPayments';
+
+import { map, switchMap } from 'rxjs/operators';
+import { PostService } from 'src/app/core/services/api/post.service';
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.page.html',
@@ -23,11 +31,17 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedServices: ProviderService[] = [];
   currentProvider: Provider;
   selectedTimeSlot: TimeSlot;
+  selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
+
   constructor(
     private router: Router,
+    private navController: NavController,
     private scheduledServiceService: ScheduledServiceService,
-    private scheduledProviderServiceService: ScheduledProviderServiceService
+    private scheduledProviderServiceService: ScheduledProviderServiceService,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
+    private postService: PostService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
@@ -37,38 +51,33 @@ export class AppointmentConfirmationPage implements OnInit {
       this.selectedTimeSlot = state.timeSlot;
     }
   }
-
+  /*
   checkout() {
-    this.scheduledServiceService
-      .postScheduledService({
+    let postServices = [];
+    this.selectedServices.forEach((element) => {
+      postServices.push({ providerServiceId: element.id });
+    });
+
+    this.postService
+      .createScheduledService({
         registerTime: new Date(),
         scheduledDate: this.selectedTimeSlot.value,
+        scheduledProviderServices: postServices,
         providerId: this.currentProvider.id,
         clientId: 1,
       })
-      .subscribe((response: Response) => {
-        // console.log(response);
-        // this.scheduledService.next(response.result.id);
-        this.selectedServices.forEach((element) => {
-          console.log(
-            'Scheduled Service',
-            response.result.id,
-            'elementId',
-            element.id
-          );
-          this.scheduledProviderServiceService
-            .postScheduledProviderService({
-              scheduledServiceId: response.result.id,
-              providerServiceId: element.id,
-            })
-            .subscribe((result) => {
-              console.log(result);
-            });
-        });
+      .subscribe(() => {
+        this.uiService.presentToast(
+          'Orden de servicios realizada satisfactoriamente!',
+          3000,
+          'top'
+        );
+        this.navController.navigateRoot(['/home']);
       });
   }
-
+*/
   ngOnInit() {}
+
   goHome() {}
 
   subTotal() {
@@ -89,4 +98,43 @@ export class AppointmentConfirmationPage implements OnInit {
   goToCheckout() {
     console.log('hola');
   }
+  /*
+  async openPayTypeModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: PaymentSelectionComponent,
+      componentProps: {
+        parentPayment: this.selectedPayment.toString(),
+      },
+    });
+
+    await modal.present();
+
+    modal.onWillDismiss().then((modal) => {
+      if (modal.data) {
+        this.selectedPayment = Number(modal.data);
+      }
+    });
+
+    modal.onDidDismiss().then((modal) => {
+      if (modal.data) {
+        if (this.selectedPayment == 2) {
+          render({
+            id: '#paypal-buttons',
+            currency: 'DOP',
+            value: this.Total().toString(),
+            onApprove: () => {
+              this.uiService.presentToast(
+                'Orden de servicios realizada satisfactoriamente!',
+                3000,
+                'top'
+              );
+              this.navController.navigateRoot(['/home']);
+            },
+          });
+        }
+      }
+    });
+  }
+  */
 }

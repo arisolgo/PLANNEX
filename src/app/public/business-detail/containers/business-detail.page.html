@@ -9,9 +9,9 @@
 </ion-header>
 
 <ion-content fullscreen>
-    <div class="company-logo" onclick="goToProviderProfile()">
+    <div class="company-logo">
         <ion-label class="business-name-title">{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label>
-        <ion-avatar class="center">
+        <ion-avatar class="center" (click)="goToProviderProfile()">
             <img [src]="provider_aux.profilePicture" />
         </ion-avatar>
         <h2 class="subtitle">{{provider_aux.rating}}</h2>

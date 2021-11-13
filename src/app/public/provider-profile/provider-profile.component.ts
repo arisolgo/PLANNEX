@@ -5,7 +5,6 @@ import {
   ModalController,
   NavController,
 } from '@ionic/angular';
-import { type } from 'os';
 import {
   Provider,
   ProviderAvailability,
