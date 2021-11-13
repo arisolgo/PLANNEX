@@ -14,13 +14,15 @@ import {
   ScheduledProviderServiceService,
 } from 'src/app/core/services/api/services';
 import { TabsService } from './services/tabs.service';
-
+import { Storage } from '@capacitor/storage';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
+  currentUser = {};
+
   constructor(
     private servicesService: ServicesService,
     private scheduledServices: ScheduledServiceService,
@@ -29,7 +31,11 @@ export class TabsPage implements OnInit {
     private scheduledProviderService: ScheduledProviderServiceService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.currentUser = JSON.parse(
+      (await Storage.get({ key: 'currentUser' })).value
+    );
+    console.log(this.currentUser);
     this.getUserScheduledServices();
   }
 
@@ -58,35 +64,5 @@ export class TabsPage implements OnInit {
     getScheduledService
       .pipe(switchMap(() => forkJoin(scheduledProviderServiceObs)))
       .subscribe((result) => console.log(result));
-
-    // this.scheduledServices
-    //   .getApiScheduledServiceClientIdGetScheduledServicesByClientId(1)
-    //   .subscribe((response: Response) => {
-    //     response.result.forEach((element: ScheduledService) => {
-    //       this.providerServicesService
-    //         .getApiProviderServiciosProviderServiceIdGetProviderServiceById(
-    //           element.providerServiceId
-    //         )
-    //         .pipe(
-    //           switchMap((providerService: Response) =>
-    //             this.servicesService
-    //               .getApiServicesId(providerService.result.serviceId)
-    //               .pipe(map((service: Response) => [providerService, service]))
-    //           )
-    //         )
-    //         .subscribe((responses: Response[]) => {
-    //           let newEvent: ServiceEvent = {
-    //             title: responses[1].result.description,
-    //             startTime: new Date(element.scheduledDate),
-    //             endTime: moment(element.scheduledDate)
-    //               .add(responses[0].result.duration, 'm')
-    //               .toDate(),
-    //             desc: '',
-    //             allDay: false,
-    //           };
-    //           this.tabService.addUserEvent(newEvent);
-    //         });
-    //     });
-    //   });
   }
 }

@@ -16,6 +16,7 @@ export class AuthService {
     null
   );
   token = '';
+  loggedUser = {};
   constructor(
     private http: HttpClient,
     private storageService: StorageService
@@ -47,6 +48,7 @@ export class AuthService {
       }),
       tap(() => {
         this.isAuthenticated.next(true);
+        this.setCurrentUser();
         this.loadToken();
       })
     );
@@ -67,5 +69,10 @@ export class AuthService {
 
   createProvider(provider: Provider) {
     return this.http.post(this.rootUrl + '/api/Proveedores', provider);
+  }
+
+  async setCurrentUser() {
+    const currentUser = await Storage.get({ key: 'currentUser' });
+    this.loggedUser = currentUser;
   }
 }
