@@ -24,7 +24,7 @@ import { Storage } from '@capacitor/storage';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
-  currentUser = {};
+  currentUser: any = {};
 
   constructor(
     private servicesService: ServicesService,

@@ -154,8 +154,5 @@ export interface ScheduledProviderService {
   providerServiceId: number;
   providerServiceDuration?: number;
   providerServiceName?: string;
-<<<<<<< HEAD
-=======
   providerName?: string;
->>>>>>> dad511273d1d4e78f3e1b681b3652a0896db9208
 }
