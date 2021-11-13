@@ -17,7 +17,12 @@ import {
 } from 'src/app/core/services/api/services';
 import { CalendarComponent } from 'ionic2-calendar';
 import { formatDate } from '@angular/common';
-import { AlertController, NavController } from '@ionic/angular';
+import {
+  AlertButton,
+  AlertController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CalendarMode } from 'ionic2-calendar/calendar';
 import { ScheduledService } from 'src/app/core/models/models';
@@ -108,6 +113,7 @@ export class CalendarPage {
     private scheduledServices: ScheduledServiceService,
     private providerServicesService: ProviderServiciosService,
     private tabsService: TabsService,
+    private modalController: ModalController,
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
@@ -170,8 +176,14 @@ export class CalendarPage {
     const alert = await this.alertCtrl.create({
       header: event.title,
       subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK'],
+      message: 'Inicio: ' + start + '<br><br>Final: ' + end,
+      buttons: [
+        {
+          text: 'EDITAR',
+          handler: () => console.log('Dddd'),
+        },
+        'OK',
+      ],
     });
     alert.present();
   }
@@ -257,4 +269,27 @@ export class CalendarPage {
         // this.event.title = this.title;
       });
   }
+
+  // async editAppointment(title, start, end) {
+  //   const modal = await this.modalController.create({
+  //     component: PaymentSelectionComponent,
+  //     componentProps: {
+  //       appointmentDetail: { title: title, startTime: start, endTime: end },
+  //     },
+  //   });
+
+  //   await modal.present();
+
+  //   modal.onWillDismiss().then((modal) => {
+  //     // if (modal.data) {
+  //     //   this.selectedPayment = Number(modal.data);
+  //     // }
+  //     this.ngOnInit();
+  //   });
+
+  //   modal.onDidDismiss().then((modal) => {
+  //     if (modal.data) {
+  //     }
+  //   });
+  // }
 }
