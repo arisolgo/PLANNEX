@@ -195,9 +195,6 @@ export class CalendarPage {
       .subscribe((response: Response) => {
         console.log('Scheduled Services Response:', response.result);
         response.result.forEach((element: ScheduledService) => {
-          console.log('Event 1:', element.providerServiceId);
-          // let name: string = 'No entro';
-          this.getScheduledServiceName(element.providerServiceId);
           //this.title = name;
           // console.log('Event Name:', this.title);
 

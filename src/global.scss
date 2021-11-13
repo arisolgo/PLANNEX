@@ -31,6 +31,7 @@
 :root {
   --ion-safe-area-top: 20px;
 }
+
 .ion-color-dollar {
   --ion-color-base: #44c4a2;
   --ion-color-base-rgb: 68, 196, 162;
@@ -200,7 +201,6 @@ app-category-filter {
 }
 
 //BusinessDetailPage: Business
-
 app-business-card {
   .card {
     width: 100%;
@@ -291,7 +291,6 @@ app-appointment-confirmation {
 
 ion-calendar {
   padding: 0 !important;
-
   .title {
     .switch-btn {
       font-size: large !important;
@@ -314,10 +313,12 @@ ion-calendar {
   background-position: center;
   transition: background 0.8s;
 }
+
 .ripple:hover {
   background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%)
     center/15000%;
 }
+
 .ripple:active {
   background-color: #6eb9f7;
   background-size: 100%;
@@ -325,7 +326,6 @@ ion-calendar {
 }
 
 //Login and Register Styles
-
 .login-form-container {
   height: 100%;
   display: flex;
@@ -343,6 +343,7 @@ ion-calendar {
 .input-container {
   padding: 25px;
 }
+
 .login-failed {
   color: red;
 }
