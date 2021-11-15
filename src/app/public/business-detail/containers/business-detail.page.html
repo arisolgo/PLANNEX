@@ -11,7 +11,7 @@
 <ion-content fullscreen>
     <div class="company-logo">
         <ion-label class="business-name-title">{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label>
-        <ion-avatar class="center" (click)="goToProviderProfile()">
+        <ion-avatar class="center">
             <img [src]="provider_aux.profilePicture" />
         </ion-avatar>
         <h2 class="subtitle">{{provider_aux.rating}}</h2>
@@ -51,7 +51,8 @@
                     </div>
                 </ion-card-content>
             </ion-card>
-            <ion-checkbox (click)="addService(service)" slot="end"> </ion-checkbox>
+            <ion-checkbox #serviceCheckbox [(ngModel)]="service.selected" (ionChange)="addService(service)" slot="end">
+            </ion-checkbox>
         </div>
     </div>
 </ion-content>
@@ -61,6 +62,12 @@
         <ion-title slot="start">{{getAmmount() | dominicanCurrency}}</ion-title>
         <ion-button slot="end" #hourButton [disabled]="!selectedServices.length" (click)="goToSchedule()" class="available-hours-btn continue-btn">Continuar</ion-button>
     </ion-toolbar>
+
+    <ion-toolbar>
+        <ion-title slot="start">{{getAmmount() | dominicanCurrency}}</ion-title>
+        <ion-button slot="end" #hourButton [disabled]="!selectedServices.length" (click)="goToSchedule()" class="available-hours-btn continue-btn">Continuar</ion-button>
+    </ion-toolbar>
+
 </ion-footer>
 
 <!-- <ion-toolbar>

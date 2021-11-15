@@ -1,0 +1,68 @@
+.cart-header {
+  padding: 15px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  ion-button {
+    margin-top: 12px;
+    --background: transparent;
+    --box-shadow: 0;
+  }
+  ion-icon {
+    zoom: 1.2;
+    color: gray;
+  }
+}
+
+ion-item {
+  padding: 15px;
+}
+.cart-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  ion-button {
+    --color: black;
+    margin-top: 12px;
+    --background: transparent;
+    --box-shadow: 0;
+  }
+  .item-description {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.content-title {
+  margin-left: 20px;
+}
+ion-item {
+  padding: 6px;
+}
+ion-card {
+  width: 100%;
+}
+ion-card-content {
+  display: flex;
+  justify-content: space-between;
+  p {
+    font-size: 17px;
+  }
+  ion-icon {
+    zoom: 2.2;
+  }
+}
+
+.selection-radio {
+  display: flex;
+  ion-radio {
+    margin: 5px;
+  }
+}
+
+.selection-btn-container {
+  padding: 25px;
+}

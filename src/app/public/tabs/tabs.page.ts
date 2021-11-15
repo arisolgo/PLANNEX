@@ -4,6 +4,7 @@ import { BehaviorSubject, zip } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import {
   Response,
+  ScheduledProviderService,
   ScheduledService,
   ServiceEvent,
 } from 'src/app/core/models/models';
@@ -11,6 +12,7 @@ import {
   ServicesService,
   ScheduledServiceService,
   ProviderServiciosService,
+  ScheduledProviderServiceService,
 } from 'src/app/core/services/api/services';
 import { TabsService } from './services/tabs.service';
 
@@ -23,7 +25,7 @@ export class TabsPage implements OnInit {
   constructor(
     private servicesService: ServicesService,
     private scheduledServices: ScheduledServiceService,
-    private providerServicesService: ProviderServiciosService,
+    private scheduledProviderServicesService: ScheduledProviderServiceService,
     private tabService: TabsService
   ) {}
 
@@ -36,9 +38,9 @@ export class TabsPage implements OnInit {
       .getApiScheduledServiceClientIdGetScheduledServicesByClientId(1)
       .subscribe((response: Response) => {
         response.result.forEach((element: ScheduledService) => {
-          this.providerServicesService
-            .getApiProviderServiciosProviderServiceIdGetProviderServiceById(
-              element.providerServiceId
+          this.scheduledProviderServicesService
+            .getApiScheduledProviderServiceGetScheduledProviderServicesByScheduledServiceId(
+              element.id
             )
             .pipe(
               switchMap((providerService: Response) =>

@@ -17,11 +17,11 @@ import {
   ScheduledProviderServiceService,
   ScheduledServiceService,
 } from 'src/app/core/services/api/services';
-
+import { PaymentSelectionComponent } from 'src/app/core/shared/components/payment-selection/payment-selection.component';
 import { render } from 'creditcardpayments/creditCardPayments';
-
+import { UiService } from 'src/app/core/services/ui.service';
 import { map, switchMap } from 'rxjs/operators';
-import { PostService } from 'src/app/core/services/api/post.service';
+import { PostService } from 'src/app/core/services/post.service';
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.page.html',
@@ -41,6 +41,7 @@ export class AppointmentConfirmationPage implements OnInit {
     private scheduledProviderServiceService: ScheduledProviderServiceService,
     private modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
+    private uiService: UiService,
     private postService: PostService
   ) {
     if (router.getCurrentNavigation().extras.state) {
@@ -51,7 +52,6 @@ export class AppointmentConfirmationPage implements OnInit {
       this.selectedTimeSlot = state.timeSlot;
     }
   }
-  /*
   checkout() {
     let postServices = [];
     this.selectedServices.forEach((element) => {
@@ -75,7 +75,7 @@ export class AppointmentConfirmationPage implements OnInit {
         this.navController.navigateRoot(['/home']);
       });
   }
-*/
+
   ngOnInit() {}
 
   goHome() {}
@@ -98,7 +98,7 @@ export class AppointmentConfirmationPage implements OnInit {
   goToCheckout() {
     console.log('hola');
   }
-  /*
+
   async openPayTypeModal() {
     const modal = await this.modalController.create({
       presentingElement: this.routerOutlet.nativeEl,
@@ -136,5 +136,4 @@ export class AppointmentConfirmationPage implements OnInit {
       }
     });
   }
-  */
 }
