@@ -22,6 +22,7 @@ import { render } from 'creditcardpayments/creditCardPayments';
 import { UiService } from 'src/app/core/services/ui.service';
 import { map, switchMap } from 'rxjs/operators';
 import { PostService } from 'src/app/core/services/post.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.page.html',
@@ -33,7 +34,7 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
-
+  currentUser = JSON.parse(this.authService.loggedUser.value.value);
   constructor(
     private router: Router,
     private navController: NavController,
@@ -42,7 +43,8 @@ export class AppointmentConfirmationPage implements OnInit {
     private modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     private uiService: UiService,
-    private postService: PostService
+    private postService: PostService,
+    private authService: AuthService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       let state = router.getCurrentNavigation().extras.state;
@@ -53,27 +55,29 @@ export class AppointmentConfirmationPage implements OnInit {
     }
   }
   checkout() {
-    let postServices = [];
-    this.selectedServices.forEach((element) => {
-      postServices.push({ providerServiceId: element.id });
-    });
-
-    this.postService
-      .createScheduledService({
-        registerTime: new Date(),
-        scheduledDate: this.selectedTimeSlot.value,
-        scheduledProviderServices: postServices,
-        providerId: this.currentProvider.id,
-        clientId: 1,
-      })
-      .subscribe(() => {
-        this.uiService.presentToast(
-          'Orden de servicios realizada satisfactoriamente!',
-          3000,
-          'top'
-        );
-        this.navController.navigateRoot(['/home']);
+    if (this.currentUser.Role == 1) {
+      let postServices = [];
+      this.selectedServices.forEach((element) => {
+        postServices.push({ providerServiceId: element.id });
       });
+
+      this.postService
+        .createScheduledService({
+          registerTime: new Date(),
+          scheduledDate: this.selectedTimeSlot.value,
+          scheduledProviderServices: postServices,
+          providerId: this.currentProvider.id,
+          clientId: this.currentUser.Id,
+        })
+        .subscribe(() => {
+          this.uiService.presentToast(
+            'Orden de servicios realizada satisfactoriamente!',
+            3000,
+            'top'
+          );
+          this.navController.navigateRoot(['/home']);
+        });
+    }
   }
 
   ngOnInit() {}

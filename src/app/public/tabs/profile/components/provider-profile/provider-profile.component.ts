@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   IonRouterOutlet,
@@ -33,9 +33,9 @@ import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-c
   styleUrls: ['./provider-profile.component.scss'],
 })
 export class ProviderProfileComponent implements OnInit {
+  @Input() currentProvider: any = {};
   provider: Provider;
-  weekday: string[];
-  provider_aux: any;
+  weekday: string[] = [];
   rating: number;
   providerDisponibilidad: ProviderAvailability[];
   providerComments: any[] = [];
@@ -65,21 +65,15 @@ export class ProviderProfileComponent implements OnInit {
     private scheduledService: ScheduledServiceService,
     private providerAvailabilityService: ProveedorDisponibilidadesService,
     private typeService: TiposService
-  ) {
-    if (router.getCurrentNavigation().extras.state) {
-      this.provider_aux = this.router.getCurrentNavigation().extras.state;
-      this.provider_aux = this.provider_aux.provider;
-      console.log('PROVIDER:', this.provider_aux);
-    }
-  }
+  ) {}
   ngOnInit() {
     // this.cartCount = this.cartService.getCartItemCount();
     this.setDays();
-    this.getComments(this.provider_aux.id);
-    this.getServices(this.provider_aux.id);
-    this.getTipos(this.provider_aux.id);
-    this.getProviderAvailability(this.provider_aux.id);
-    this.setRating(this.provider_aux.id);
+    this.getComments(this.currentProvider.Id);
+    this.getServices(this.currentProvider.Id);
+    this.getTipos(this.currentProvider.Id);
+    this.getProviderAvailability(this.currentProvider.Id);
+    this.setRating(this.currentProvider.Id);
   }
 
   setRating(providerId: number) {

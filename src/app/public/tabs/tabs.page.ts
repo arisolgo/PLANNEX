@@ -44,11 +44,11 @@ export class TabsPage implements OnInit {
     console.log(this.currentUser);
     if (this.currentUser.Role == 1) {
       this.scheduledServices
-        .getApiScheduledServiceClientIdGetScheduledServicesByClientId(3)
+        .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
+          this.currentUser.UserId
+        )
         .subscribe((response: Response) => {
           response.result.forEach((element: ScheduledService) => {
-            console.log('ELEMENT:', element);
-
             let servicesNames = '';
             let providerName = '';
             let counter = 0;
@@ -76,11 +76,11 @@ export class TabsPage implements OnInit {
         });
     } else if (this.currentUser.Role == 2) {
       this.scheduledServices
-        .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(1)
+        .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
+          this.currentUser.UserId
+        )
         .subscribe((response: Response) => {
           response.result.forEach((element: ScheduledService) => {
-            console.log('ELEMENT:', element);
-
             let servicesNames = '';
             let providerName = '';
             let counter = 0;
@@ -114,8 +114,6 @@ export class TabsPage implements OnInit {
               desc: 'Servicio a proveer por: ' + providerName,
               allDay: false,
             };
-
-            console.log('PROVIDER NAME', providerName);
 
             this.tabService.addUserEvent(newEvent);
           });

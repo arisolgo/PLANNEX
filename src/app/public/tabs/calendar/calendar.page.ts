@@ -199,52 +199,6 @@ export class CalendarPage {
     // this.navCtrl.navigateForward('/appointment-confirmation');
   }
 
-  async getScheduledServices() {
-    //change 1 to Cliente.id
-
-    this.scheduledServices
-      .getApiScheduledServiceClientIdGetScheduledServicesByClientId(1)
-      .subscribe((response: Response) => {
-        console.log('Scheduled Services Response:', response.result);
-        response.result.forEach((element: ScheduledService) => {
-          //this.title = name;
-          // console.log('Event Name:', this.title);
-
-          zip(this.title, this.minutesToAdd).subscribe((responses) => {
-            this.event.title = responses[0];
-            this.event.startTime = new Date(this.startTime);
-            this.event.endTime = moment(this.startTime)
-              .add(responses[1], 'm')
-              .toDate();
-
-            this.providerEvents.events.push(this.event);
-            console.log(this.providerEvents);
-            // this.myCalendar.loadEvents();
-          });
-
-          // this.title.subscribe((title: string) => {});
-
-          // this.startTime = element.scheduledDate;
-
-          // this.event.startTime = new Date(this.startTime).toString();
-          // let endTime = new Date(this.startTime);
-          // endTime = new Date(endTime.getTime() + element.duration);
-          // this.minutesToAdd.subscribe((minutesToAdd) => {
-          //   console.log('Duration: ', minutesToAdd);
-          //   this.event.endTime = moment(this.startTime)
-          //     .add(minutesToAdd, 'm')
-          //     .toDate()
-          //     .toString();
-          //   console.log('End TIME:', this.endTime);
-
-          //   console.log('AFTER EVENT PUSH:', this.providerEvents);
-          // });
-
-          // console.log('PUSH ATTEMPT:', this.event);
-        });
-      });
-  }
-
   loadEvents(): void {
     this.eventSource = this.tabsService.userEvents.value;
     this.myCal.loadEvents();

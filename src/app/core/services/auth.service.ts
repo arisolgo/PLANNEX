@@ -21,12 +21,12 @@ export class AuthService {
     private http: HttpClient,
     private storageService: StorageService
   ) {
-    this.setCurrentUser();
     this.loadToken();
   }
   rootUrl = environment.devRootUrl;
 
   async loadToken() {
+    await this.setCurrentUser();
     const token = await Storage.get({ key: TOKEN_KEY });
     if (token && token.value) {
       this.token = token.value;
