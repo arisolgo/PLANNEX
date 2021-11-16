@@ -26,7 +26,7 @@ export class AuthService {
   rootUrl = environment.devRootUrl;
 
   async loadToken() {
-    await this.setCurrentUser();
+    // await this.setCurrentUser();
     const token = await Storage.get({ key: TOKEN_KEY });
     if (token && token.value) {
       this.token = token.value;
@@ -40,6 +40,7 @@ export class AuthService {
     return this.http.post(this.rootUrl + '/api/User/Login', user).pipe(
       map((response: Response) => response.result),
       switchMap((responseValue) => {
+        console.log(responseValue);
         let userData = JSON.parse(responseValue);
         Storage.set({
           key: 'currentUser',

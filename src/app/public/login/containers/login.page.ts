@@ -55,11 +55,12 @@ export class LoginPage implements OnInit {
     this.authService
       .login({ email: credentials.email, password: credentials.password })
       .subscribe(
-        async (response: Response) => {
+        (response: Response) => {
           this.errorMessage = '';
           // const currentUser = JSON.parse(
           //   (await Storage.get({ key: 'currentUser' })).value
           // );
+          console.log(response);
           if (this.authService.loggedUser.value.Role == 1)
             this.navCtrl.navigateForward('/tabs/home');
           else {
@@ -67,6 +68,7 @@ export class LoginPage implements OnInit {
           }
         },
         (error) => {
+          console.error(error);
           this.errorMessage = 'Usuario y/o contraseña incorrectos.';
         }
       );
