@@ -5,6 +5,7 @@ import { BehaviorSubject, ReplaySubject, zip } from 'rxjs';
 import { map, skip, skipWhile, switchMap, take } from 'rxjs/operators';
 import {
   Response,
+  ScheduledProviderService,
   ScheduledService,
   ServiceEvent,
 } from 'src/app/core/models/models';

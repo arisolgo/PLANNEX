@@ -1,54 +1,47 @@
 {
-  "swagger": "2.0",
-  "openapi": "3.0.1",
-  "info": {
-    "title": "ApiPlannex",
-    "version": "v1"
-  },
-  "paths": {
-    "/api/Clientes": {
-      "get": {
-        "tags": ["Clientes"],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Cliente"
-                  }
+    "swagger": "2.0",
+    "openapi": "3.0.1",
+    "info": {
+        "title": "ApiPlannex",
+        "version": "v1"
+    },
+    "paths": {
+        "/api/Clientes": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Cliente"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Cliente"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Cliente"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Cliente"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Cliente"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": ["Clientes"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteDto"
-              }
             },
             "text/json": {
               "schema": {
@@ -235,262 +228,81 @@
                 "$ref": "#/components/schemas/ComentarioDto"
               }
             }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comentario"
+        "/api/Clientes/{id}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comentario"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comentario"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Comentarios/{id}": {
-      "get": {
-        "tags": ["Comentarios"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comentario"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comentario"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comentario"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": ["Comentarios"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ComentarioDto"
-              }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ComentarioDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ComentarioDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Comentarios"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/ProveedorDisponibilidades": {
-      "get": {
-        "tags": ["ProveedorDisponibilidades"],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                  }
+            "put": {
+                "tags": [
+                    "Clientes"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ProveedorDisponibilidades/{proveedorDisponibilidadId}/GetProveedorDisponibilidadById": {
-      "get": {
-        "tags": ["ProveedorDisponibilidades"],
-        "parameters": [
-          {
-            "name": "proveedorDisponibilidadId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ProveedorDisponibilidades/{proveedorId}/GetDisponibilidadByProveedorId": {
-      "get": {
-        "tags": ["ProveedorDisponibilidades"],
-        "parameters": [
-          {
-            "name": "proveedorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ProveedorDisponibilidades/updateProveedorDisponibilidad": {
-      "put": {
-        "tags": ["ProveedorDisponibilidades"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDisponibilidadDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDisponibilidadDto"
-              }
             },
             "application/*+json": {
               "schema": {
@@ -613,300 +425,254 @@
                 }
               }
             }
-          }
-        }
-      },
-      "post": {
-        "tags": ["Proveedores"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDto"
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Proveedor"
+        "/api/Comentarios/{id}": {
+            "get": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comentario"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comentario"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comentario"
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Proveedor"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Proveedor"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Proveedores/{id}": {
-      "get": {
-        "tags": ["Proveedores"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Proveedor"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Proveedor"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Proveedor"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": ["Proveedores"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDto"
-              }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDto"
-              }
+            "put": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComentarioDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComentarioDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComentarioDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
             },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorDto"
-              }
+            "delete": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
             }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Proveedores"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/ProveedorReviews": {
-      "get": {
-        "tags": ["ProveedorReviews"],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorReview"
-                  }
+        "/api/ProveedorDisponibilidades": {
+            "get": {
+                "tags": [
+                    "ProveedorDisponibilidades"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorReview"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProveedorReview"
-                  }
-                }
-              }
             }
-          }
-        }
-      },
-      "post": {
-        "tags": ["ProveedorReviews"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorReviewDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorReviewDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProveedorReviewDto"
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
+        "/api/ProveedorDisponibilidades/{proveedorDisponibilidadId}/GetProveedorDisponibilidadById": {
+            "get": {
+                "tags": [
+                    "ProveedorDisponibilidades"
+                ],
+                "parameters": [{
+                    "name": "proveedorDisponibilidadId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              }
             }
-          }
-        }
-      }
-    },
-    "/api/ProveedorReviews/{proveedorId}/GetProveedorReviewsByProveedorId": {
-      "get": {
-        "tags": ["ProveedorReviews"],
-        "parameters": [
-          {
-            "name": "proveedorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        },
+        "/api/ProveedorDisponibilidades/{proveedorId}/GetDisponibilidadByProveedorId": {
+            "get": {
+                "tags": [
+                    "ProveedorDisponibilidades"
+                ],
+                "parameters": [{
+                    "name": "proveedorId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProveedorDisponibilidad"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
+        },
+        "/api/ProveedorDisponibilidades/updateProveedorDisponibilidad": {
+            "put": {
+                "tags": [
+                    "ProveedorDisponibilidades"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProveedorDisponibilidadDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProveedorDisponibilidadDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProveedorDisponibilidadDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ProveedorReviews/{id}": {
-      "get": {
-        "tags": ["ProveedorReviews"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProveedorReview"
-                }
-              }
             }
           }
         }
@@ -1188,7 +954,6 @@
                 "$ref": "#/components/schemas/ProveedorTipoDto"
               }
             }
-          }
         },
         "responses": {
           "200": {
@@ -1371,23 +1136,63 @@
                     "$ref": "#/components/schemas/ProviderServicio"
                   }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProviderServicio"
-                  }
+            },
+            "put": {
+                "tags": [
+                    "Services"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServiceDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServiceDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServiceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
                 }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProviderServicio"
-                  }
+            },
+            "delete": {
+                "tags": [
+                    "Services"
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
                 }
-              }
             }
           }
         }
@@ -1413,7 +1218,6 @@
                 "$ref": "#/components/schemas/ProviderServicioDto"
               }
             }
-          }
         },
         "responses": {
           "200": {
@@ -1442,60 +1246,69 @@
                 "$ref": "#/components/schemas/ProviderServicioDto"
               }
             }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProviderServicio"
+        "/api/User/Register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProviderServicio"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProviderServicio"
-                }
-              }
             }
-          }
+        },
+        "/api/User/Login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
         }
-      }
-    },
-    "/api/ProviderServicios/{providerServiceId}": {
-      "delete": {
-        "tags": ["ProviderServicios"],
-        "parameters": [
-          {
-            "name": "providerServiceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "providerId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
     },
     "/api/ScheduledProviderService/CreateScheduledProviderService": {
       "post": {
@@ -1512,51 +1325,44 @@
                 "$ref": "#/components/schemas/ScheduledProviderServiceDto"
               }
             },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduledProviderService"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduledProviderService"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduledProviderService"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ScheduledProviderService/updateScheduledProviderService": {
-      "put": {
-        "tags": ["ScheduledProviderService"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
-              }
+            "Comentario": {
+                "required": [
+                    "comment",
+                    "creationTime"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "comment": {
+                        "type": "string"
+                    },
+                    "creationTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "additionalProperties": false
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScheduledProviderServiceDto"
-              }
+            "ComentarioDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "creationTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "additionalProperties": false
             },
             "application/*+json": {
               "schema": {
@@ -1774,259 +1580,63 @@
                 "$ref": "#/components/schemas/ScheduledServiceDto"
               }
             },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScheduledServiceDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/ScheduledService": {
-      "get": {
-        "tags": ["ScheduledService"],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduledService"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduledService"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduledService"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ScheduledService/{scheduledServiceId}/GetScheduledServiceById": {
-      "get": {
-        "tags": ["ScheduledService"],
-        "parameters": [
-          {
-            "name": "scheduledServiceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduledService"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduledService"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduledService"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ScheduledService/{providerId}/GetScheduledServicesByProviderId": {
-      "get": {
-        "tags": ["ScheduledService"],
-        "parameters": [
-          {
-            "name": "providerId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProviderServicio"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProviderServicio"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProviderServicio"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ScheduledService/{clientId}/GetScheduledServicesByClientId": {
-      "get": {
-        "tags": ["ScheduledService"],
-        "parameters": [
-          {
-            "name": "clientId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduledService"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduledService"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduledService"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ScheduledService/{scheduledServiceId}": {
-      "delete": {
-        "tags": ["ScheduledService"],
-        "parameters": [
-          {
-            "name": "scheduledServiceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/ScheduledService/{scheduledServiceId}/GetServicesDuration": {
-      "get": {
-        "tags": ["ScheduledService"],
-        "parameters": [
-          {
-            "name": "scheduledServiceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/ScheduledServiceRequired/CreateScheduledServiceRequired": {
-      "post": {
-        "tags": ["ScheduledServiceRequired"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScheduledServiceRequiredDto"
-              }
+            "ProveedorDisponibilidad": {
+                "required": [
+                    "dia",
+                    "horaDesde",
+                    "horaHasta",
+                    "proveedorId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "proveedorId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dia": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "horaDesde": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "horaHasta": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ProveedorDisponibilidadDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "proveedorId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dia": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "horaDesde": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "horaHasta": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "additionalProperties": false
             },
             "text/json": {
               "schema": {
