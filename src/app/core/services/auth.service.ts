@@ -1,13 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Client, Provider, Response, User } from '../models/models';
+import {
+  Client,
+  LoginResponse,
+  Provider,
+  Response,
+  User,
+} from '../models/models';
 import { StorageService } from './storage.service';
 import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 const TOKEN_KEY = 'authToken';
+const USER_KEY = 'currentUser';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,6 +24,7 @@ export class AuthService {
   );
   token = '';
   loggedUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  user: LoginResponse;
   constructor(
     private http: HttpClient,
     private storageService: StorageService
@@ -36,24 +44,42 @@ export class AuthService {
     }
   }
 
+  // login(user: User): Observable<any> {
+  //   return this.http.post(this.rootUrl + '/api/User/Login', user).pipe(
+  //     map((response: Response) => response.result),
+  //     switchMap((responseValue) => {
+  //       console.log(responseValue);
+  //       let userData = JSON.parse(responseValue);
+  //       Storage.set({
+  //         key: 'currentUser',
+  //         value: JSON.stringify(userData.accountObj),
+  //       });
+  //       this.setCurrentUser();
+  //       return from(Storage.set({ key: TOKEN_KEY, value: userData.token }));
+  //     }),
+  //     tap(() => {
+  //       this.isAuthenticated.next(true);
+  //       this.loadToken();
+  //     })
+  //   );
+  // }
   login(user: User): Observable<any> {
     return this.http.post(this.rootUrl + '/api/User/Login', user).pipe(
-      map((response: Response) => response.result),
-      switchMap((responseValue) => {
-        console.log(responseValue);
-        let userData = JSON.parse(responseValue);
-        Storage.set({
-          key: 'currentUser',
-          value: JSON.stringify(userData.accountObj),
-        });
-        this.setCurrentUser();
-        return from(Storage.set({ key: TOKEN_KEY, value: userData.token }));
-      }),
-      tap(() => {
+      tap((response) => {
         this.isAuthenticated.next(true);
+        Storage.set({
+          key: TOKEN_KEY,
+          value: JSON.parse(response.result).token,
+        });
+        this.user = this.getUser(response.result);
         this.loadToken();
       })
     );
+  }
+
+  private getUser(loginResponse): LoginResponse {
+    console.log(loginResponse);
+    return JSON.parse(loginResponse) as LoginResponse;
   }
 
   logout(): Promise<void> {

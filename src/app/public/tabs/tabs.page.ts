@@ -35,7 +35,7 @@ export class TabsPage implements OnInit {
     private providerService: ProveedoresService,
     private authService: AuthService
   ) {}
-  currentUser = JSON.parse(this.authService.loggedUser.value.value);
+  currentUser = this.authService.user.accountObj;
 
   ngOnInit() {
     this.getUserScheduledServices();

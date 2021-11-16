@@ -158,3 +158,8 @@ export interface ScheduledProviderService {
   providerServiceName?: string;
   providerName?: string;
 }
+
+export interface LoginResponse {
+  token: string;
+  accountObj: any;
+}

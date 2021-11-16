@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AutoLoginGuard } from './core/guards/autologin.guard';
+import { HasRoleGuard } from './core/guards/has-role.guard';
 import { LoginGuard } from './core/guards/login.guard';
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
       import('./public/tabs/home/containers/home.module').then(
         (m) => m.HomePageModule
       ),
+    canActivate: [HasRoleGuard],
+    data: {
+      role: 1,
+    },
   },
   {
     path: 'tabs',

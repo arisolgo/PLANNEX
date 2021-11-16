@@ -61,11 +61,8 @@ export class LoginPage implements OnInit {
           //   (await Storage.get({ key: 'currentUser' })).value
           // );
           console.log(response);
-          if (this.authService.loggedUser.value.Role == 1)
-            this.navCtrl.navigateForward('/tabs/home');
-          else {
-            this.navCtrl.navigateForward('/tabs/calendar');
-          }
+
+          this.navCtrl.navigateForward('/home');
         },
         (error) => {
           console.error(error);
