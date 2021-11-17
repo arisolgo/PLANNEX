@@ -21,13 +21,20 @@ export class HasRoleGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     console.log('Estas tocandome');
-    const isAuthorized =
-      this.authService.user.accountObj.role == route.data.role;
+    const getUser = this.authService.getCurrentUser().then((user) => {
+      let currentUser = JSON.parse(user.value);
+      if (!currentUser) {
+        this.navCtrl.navigateForward('/login');
+        return false;
+      }
+      const isAuthorized = currentUser.Role == route.data.role;
+      console.log(isAuthorized);
+      if (!isAuthorized) {
+        this.navCtrl.navigateForward('/tabs/calendar');
+      }
 
-    if (!isAuthorized) {
-      this.navCtrl.navigateForward('/tabs/calendar');
-    }
-
-    return isAuthorized;
+      return isAuthorized;
+    });
+    return getUser;
   }
 }

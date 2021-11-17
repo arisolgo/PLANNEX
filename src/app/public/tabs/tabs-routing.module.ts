@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HasRoleGuard } from 'src/app/core/guards/has-role.guard';
 
 import { TabsPage } from './tabs.page';
 
@@ -14,6 +15,10 @@ const routes: Routes = [
           import('../tabs/home/containers/home.module').then(
             (m) => m.HomePageModule
           ),
+        canActivate: [HasRoleGuard],
+        data: {
+          role: 1,
+        },
       },
       {
         path: 'profile',

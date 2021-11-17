@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
           // );
           console.log(response);
 
-          this.navCtrl.navigateForward('/home');
+          this.navCtrl.navigateForward('/tabs/home');
         },
         (error) => {
           console.error(error);

@@ -12,9 +12,10 @@ export class ProfilePage implements OnInit {
   constructor(
     private modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
-  currentUser = JSON.parse(this.authService.loggedUser.value.value);
+  getUser = this.authService.getCurrentUser();
+  currentUser: any;
   async openModal() {
     const modal = await this.modalController.create({
       presentingElement: this.routerOutlet.nativeEl,
@@ -23,7 +24,11 @@ export class ProfilePage implements OnInit {
 
     await modal.present();
   }
-  ngOnInit() {
-    console.log(this.currentUser);
+  async ngOnInit() {
+    await this.getUser.then((user) => {
+      this.currentUser = JSON.parse(user.value);
+      console.log(this.currentUser);
+    });
   }
+  ionWillEnter() {}
 }

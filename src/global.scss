@@ -33,12 +33,12 @@
 }
 
 .ion-color-dollar {
-    --ion-color-base: #44c4a2;
-    --ion-color-base-rgb: 68, 196, 162;
-    --ion-color-contrast: #000000;
-    --ion-color-contrast-rgb: 0, 0, 0;
-    --ion-color-shade: #3cac8f;
-    --ion-color-tint: #57caab;
+  --ion-color-base: #44c4a2;
+  --ion-color-base-rgb: 68, 196, 162;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0, 0, 0;
+  --ion-color-shade: #3cac8f;
+  --ion-color-tint: #57caab;
 }
 
 ion-content {
@@ -87,12 +87,12 @@ hr {
   padding: 10px;
 }
 
-ion-grid {
-  height: 100%;
-  ion-row {
-    height: 100%;
-  }
-}
+// ion-grid {
+//   height: 100%;
+//   ion-row {
+//     height: 100%;
+//   }
+// }
 
 ion-avatar {
   height: auto;

@@ -75,7 +75,7 @@ export class AppointmentConfirmationPage implements OnInit {
             3000,
             'top'
           );
-          this.navController.navigateRoot(['/home']);
+          this.navController.navigateRoot(['/tabs/home']);
         });
     }
   }

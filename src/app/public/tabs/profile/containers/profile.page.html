@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <app-user-data *ngIf="currentUser.Role == 1"></app-user-data>
+  <app-user-data *ngIf="currentUser?.Role == 1"></app-user-data>
   <app-provider-profile
     [currentProvider]="currentUser"
-    *ngIf="currentUser.Role == 2"
+    *ngIf="currentUser?.Role == 2"
   ></app-provider-profile>
 </ion-content>

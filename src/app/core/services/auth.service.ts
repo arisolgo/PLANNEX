@@ -91,9 +91,11 @@ export class AuthService {
     return Storage.get({ key: USER_KEY });
   }
 
-  logout(): Promise<void> {
+  logout() {
     this.isAuthenticated.next(false);
-    return Storage.remove({ key: TOKEN_KEY });
+    let deleteUserSession = Storage.remove({ key: USER_KEY });
+    let deleteTokenSession = Storage.remove({ key: TOKEN_KEY });
+    return Promise.all([deleteUserSession, deleteTokenSession]);
   }
 
   register(user: User): Observable<any> {

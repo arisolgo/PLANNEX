@@ -37,6 +37,7 @@ export class TabsPage implements OnInit {
     private authService: AuthService
   ) {}
   currentUser = this.authService.getCurrentUser();
+  currentRole = 0;
 
   ngOnInit() {
     this.getUserScheduledServices();
@@ -46,9 +47,10 @@ export class TabsPage implements OnInit {
     this.currentUser.then((user) => {
       console.log(user);
       let userObj = JSON.parse(user.value);
+      this.currentRole = userObj.Role;
       console.log(userObj);
 
-      if (userObj.Role == 1) {
+      if (this.currentRole == 1) {
         this.scheduledServices
           .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
             userObj.UserId
@@ -80,7 +82,7 @@ export class TabsPage implements OnInit {
               this.tabService.addUserEvent(newEvent);
             });
           });
-      } else if (userObj.Role == 2) {
+      } else if (this.currentRole == 2) {
         this.scheduledServices
           .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
             userObj.UserId
