@@ -19,6 +19,7 @@ import {
 import { TabsService } from './services/tabs.service';
 import { Storage } from '@capacitor/storage';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-tabs',
@@ -35,90 +36,80 @@ export class TabsPage implements OnInit {
     private providerService: ProveedoresService,
     private authService: AuthService
   ) {}
-  currentUser = this.authService.user.accountObj;
+  currentUser = this.authService.getCurrentUser();
 
   ngOnInit() {
     this.getUserScheduledServices();
   }
 
   getUserScheduledServices() {
-    console.log(this.currentUser);
-    if (this.currentUser.Role == 1) {
-      this.scheduledServices
-        .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
-          this.currentUser.UserId
-        )
-        .subscribe((response: Response) => {
-          response.result.forEach((element: ScheduledService) => {
-            let servicesNames = '';
-            let providerName = '';
-            let counter = 0;
-            element.scheduledProviderServices.forEach((element) => {
-              servicesNames += ' ' + element.providerServiceName;
-              if (counter > 0) {
-                servicesNames += ', ';
-              }
-              providerName = element.providerName;
-              counter++;
+    this.currentUser.then((user) => {
+      console.log(user);
+      let userObj = JSON.parse(user.value);
+      console.log(userObj);
+
+      if (userObj.Role == 1) {
+        this.scheduledServices
+          .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
+            userObj.UserId
+          )
+          .subscribe((response: Response) => {
+            response.result.forEach((element: ScheduledService) => {
+              let servicesNames = '';
+              let providerName = '';
+              let counter = 0;
+              element.scheduledProviderServices.forEach((element) => {
+                servicesNames += ' ' + element.providerServiceName;
+                if (counter > 0) {
+                  servicesNames += ', ';
+                }
+                providerName = element.providerName;
+                counter++;
+              });
+
+              let newEvent: ServiceEvent = {
+                title: servicesNames,
+                startTime: new Date(element.scheduledDate),
+                endTime: new Date(element.scheduledEndDate),
+                desc: 'Servicio a proveer por: ' + providerName,
+                allDay: false,
+              };
+
+              console.log('PROVIDER NAME', providerName);
+
+              this.tabService.addUserEvent(newEvent);
             });
-
-            let newEvent: ServiceEvent = {
-              title: servicesNames,
-              startTime: new Date(element.scheduledDate),
-              endTime: new Date(element.scheduledEndDate),
-              desc: 'Servicio a proveer por: ' + providerName,
-              allDay: false,
-            };
-
-            console.log('PROVIDER NAME', providerName);
-
-            this.tabService.addUserEvent(newEvent);
           });
-        });
-    } else if (this.currentUser.Role == 2) {
-      this.scheduledServices
-        .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
-          this.currentUser.UserId
-        )
-        .subscribe((response: Response) => {
-          response.result.forEach((element: ScheduledService) => {
-            let servicesNames = '';
-            let providerName = '';
-            let counter = 0;
-            element.scheduledProviderServices.forEach((element) => {
-              servicesNames += element.providerServiceName + ' ';
-              if (counter > 0) {
-                servicesNames += ', ';
-              }
-              providerName = element.providerName;
-              counter++;
+      } else if (userObj.Role == 2) {
+        this.scheduledServices
+          .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
+            userObj.UserId
+          )
+          .subscribe((response: Response) => {
+            response.result.forEach((element: ScheduledService) => {
+              let servicesNames = '';
+              let providerName = '';
+              let counter = 0;
+              element.scheduledProviderServices.forEach((element) => {
+                servicesNames += element.providerServiceName + ' ';
+                if (counter > 0) {
+                  servicesNames += ', ';
+                }
+                providerName = element.providerName;
+                counter++;
+              });
+              let newEvent: ServiceEvent = {
+                title: servicesNames,
+                startTime: new Date(element.scheduledDate),
+                endTime: new Date(element.scheduledEndDate),
+                desc: 'Servicio a proveer por: ' + providerName,
+                allDay: false,
+              };
+
+              this.tabService.addUserEvent(newEvent);
             });
-
-            // var subscription = this.providerName.subscribe(
-            //   function (x) {
-            //     console.log('Next: ' + x.toString());
-            //   },
-            //   function (err) {
-            //     console.log('Error: ' + err);
-            //   },
-            //   function () {
-            //     console.log('Completed');
-            //   }
-            // );
-
-            // this.providerName.subscribe();
-
-            let newEvent: ServiceEvent = {
-              title: servicesNames,
-              startTime: new Date(element.scheduledDate),
-              endTime: new Date(element.scheduledEndDate),
-              desc: 'Servicio a proveer por: ' + providerName,
-              allDay: false,
-            };
-
-            this.tabService.addUserEvent(newEvent);
           });
-        });
-    }
+      }
+    });
   }
 }

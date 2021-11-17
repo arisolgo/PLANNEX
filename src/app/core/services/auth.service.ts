@@ -71,6 +71,10 @@ export class AuthService {
           key: TOKEN_KEY,
           value: JSON.parse(response.result).token,
         });
+        Storage.set({
+          key: USER_KEY,
+          value: JSON.stringify(JSON.parse(response.result).accountObj),
+        });
         this.user = this.getUser(response.result);
         this.loadToken();
       })
@@ -80,6 +84,11 @@ export class AuthService {
   private getUser(loginResponse): LoginResponse {
     console.log(loginResponse);
     return JSON.parse(loginResponse) as LoginResponse;
+  }
+
+  getCurrentUser() {
+    console.log(Storage.get({ key: USER_KEY }));
+    return Storage.get({ key: USER_KEY });
   }
 
   logout(): Promise<void> {
