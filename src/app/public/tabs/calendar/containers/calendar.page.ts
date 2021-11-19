@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Response } from 'src/app/core/models/models';
+import { Response, ServiceEvent } from 'src/app/core/models/models';
 import {
   ProveedorDisponibilidadesService,
   ProviderServiciosService,
@@ -29,7 +29,9 @@ import { ScheduledService } from 'src/app/core/models/models';
 import { stringify } from 'querystring';
 import { BehaviorSubject, zip } from 'rxjs';
 import * as moment from 'moment';
-import { TabsService } from '../services/tabs.service';
+import { TabsService } from '../../services/tabs.service';
+import { EditAppointmentComponent } from '../components/edit-appointment.component';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -64,6 +66,7 @@ export class CalendarPage {
   endTime = new Date();
   allDay: boolean;
   minutesToAdd: BehaviorSubject<number> = new BehaviorSubject(0);
+  userRole: BehaviorSubject<number> = new BehaviorSubject(0);
   // eventSource = []
   //month-short-names:
   monthShortNames = [
@@ -92,7 +95,6 @@ export class CalendarPage {
   monthDisplay = this.monthShortNames[this.month.getMonth()];
   selectedTime: any;
   selectedDate: any;
-
   viewTitle;
 
   calendar = {
@@ -102,18 +104,18 @@ export class CalendarPage {
     // endHour: 0,
   };
   isEventInserted: boolean = false;
-
+  currentUser = {};
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
     private alertCtrl: AlertController,
-    private navCtrl: NavController,
     private router: Router,
-    private servicesService: ServicesService,
-    private scheduledServices: ScheduledServiceService,
-    private providerServicesService: ProviderServiciosService,
     private tabsService: TabsService,
     private modalController: ModalController,
+    private navController: NavController,
+    private authService: AuthService,
+    private scheduledServices: ScheduledServiceService,
+
     @Inject(LOCALE_ID) private locale: string
   ) {
     if (router.getCurrentNavigation().extras.state) {
@@ -124,17 +126,13 @@ export class CalendarPage {
   ngOnInit() {
     // this.tabsService.getUserScheduledServices(this.eventSource);
     // this.getScheduledServices();
+
     this.eventSource = this.tabsService.userEvents.value;
   }
 
   ionViewDidLoad() {
     this.eventSource = this.tabsService.userEvents.value;
     this.myCal.update();
-  }
-
-  ngAfterViewInit() {
-    this.eventSource = this.tabsService.userEvents.value;
-    this.loadEvents();
   }
 
   getEventSource() {}
@@ -180,7 +178,13 @@ export class CalendarPage {
       buttons: [
         {
           text: 'EDITAR',
-          handler: () => console.log('Dddd'),
+          handler: () =>
+            this.editAppointment(
+              event.title,
+              event.startTime,
+              event.endTime,
+              event.scheduledServiceId
+            ),
         },
         'OK',
       ],
@@ -200,50 +204,110 @@ export class CalendarPage {
   }
 
   loadEvents(): void {
+    this.eventSource = [];
     this.eventSource = this.tabsService.userEvents.value;
     this.myCal.loadEvents();
+
+    console.log(this.eventSource);
   }
 
-  getScheduledServiceName(id: number) {
-    this.providerServicesService
-      .getApiProviderServiciosProviderServiceIdGetProviderServiceById(id)
-      .subscribe((response: Response) => {
-        console.log('Response Name Method:', response.result);
-        id = response.result.serviceId;
-        this.minutesToAdd.next(response.result.duration);
-        console.log('Response Name Method ID Assign:', id);
-      });
+  getScheduledServices() {}
 
-    this.servicesService
-      .getApiServicesId(id)
-      .subscribe((response: Response) => {
-        console.log('Response Name Method: ServiveAPI', response.result);
-        this.title.next(response.result.description);
-        console.log('NAME:', this.title);
-        // this.event.title = this.title;
-      });
+  async editAppointment(title, start, end, sId) {
+    console.log(this.userRole.getValue());
+    const modal = await this.modalController.create({
+      component: EditAppointmentComponent,
+      componentProps: {
+        appointmentDetail: {
+          title: title,
+          startTime: start,
+          endTime: end,
+          scheduledProviderServiceId: sId,
+        },
+      },
+    });
+
+    await modal.present();
+
+    modal.onWillDismiss().then((modal) => {
+      if (modal.data) {
+        this.getUserScheduledServices();
+      }
+    });
   }
 
-  // async editAppointment(title, start, end) {
-  //   const modal = await this.modalController.create({
-  //     component: PaymentSelectionComponent,
-  //     componentProps: {
-  //       appointmentDetail: { title: title, startTime: start, endTime: end },
-  //     },
-  //   });
+  getUserScheduledServices() {
+    this.tabsService.resetUserEvents();
+    this.authService.getCurrentUser().then((user) => {
+      let userObj = JSON.parse(user.value);
+      this.userRole.next(userObj.Role);
+      if (userObj.Role == 1) {
+        this.scheduledServices
+          .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
+            userObj.Id
+          )
+          .subscribe((response: Response) => {
+            response.result.forEach((element: ScheduledService) => {
+              let servicesNames = '';
+              let providerName = '';
+              let counter = 0;
+              let eventList = [];
+              element.scheduledProviderServices.forEach((element) => {
+                servicesNames += ' ' + element.providerServiceName;
+                if (counter > 0) {
+                  servicesNames += ', ';
+                }
+                providerName = element.providerName;
+                counter++;
+              });
 
-  //   await modal.present();
-
-  //   modal.onWillDismiss().then((modal) => {
-  //     // if (modal.data) {
-  //     //   this.selectedPayment = Number(modal.data);
-  //     // }
-  //     this.ngOnInit();
-  //   });
-
-  //   modal.onDidDismiss().then((modal) => {
-  //     if (modal.data) {
-  //     }
-  //   });
-  // }
+              let newEvent: ServiceEvent = {
+                title: servicesNames,
+                startTime: new Date(element.scheduledDate),
+                endTime: new Date(element.scheduledEndDate),
+                desc: 'Servicio a proveer por: ' + providerName,
+                allDay: false,
+                scheduledServiceId: element.id,
+              };
+              if (element.status < 2) {
+                this.tabsService.addUserEvent(newEvent);
+              }
+            });
+            this.loadEvents();
+          });
+      } else if (userObj.Role == 2) {
+        this.scheduledServices
+          .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
+            userObj.Id
+          )
+          .subscribe((response: Response) => {
+            response.result.forEach((element: ScheduledService) => {
+              let servicesNames = '';
+              let providerName = '';
+              let counter = 0;
+              element.scheduledProviderServices.forEach((element) => {
+                servicesNames += element.providerServiceName + ' ';
+                if (counter > 0) {
+                  servicesNames += ', ';
+                }
+                providerName = element.providerName;
+                counter++;
+              });
+              let newEvent: ServiceEvent = {
+                title: servicesNames,
+                startTime: new Date(element.scheduledDate),
+                endTime: new Date(element.scheduledEndDate),
+                desc: 'Servicio a proveer por: ' + providerName,
+                allDay: false,
+                scheduledServiceId: element.id,
+              };
+              if (element.status < 2) {
+                this.tabsService.addUserEvent(newEvent);
+              }
+            });
+            this.loadEvents();
+          });
+      }
+    });
+  }
 }

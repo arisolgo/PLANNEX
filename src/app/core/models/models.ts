@@ -139,6 +139,7 @@ export interface ServiceEvent {
   startTime: Date;
   endTime: Date;
   allDay: boolean;
+  scheduledServiceId?: number;
 }
 export interface enabledHours {
   start: Date;
@@ -151,12 +152,14 @@ export interface TimeSlot {
 }
 
 export interface ScheduledProviderService {
+  clientName?: string;
   id?: number;
-  scheduledServiceId?: number;
-  providerServiceId: number;
-  providerServiceDuration?: number;
-  providerServiceName?: string;
   providerName?: string;
+  providerServiceDuration?: number;
+  providerServiceId: number;
+  providerServiceName?: string;
+  providerServicePrice: number;
+  scheduledServiceId?: number;
 }
 
 export interface LoginResponse {

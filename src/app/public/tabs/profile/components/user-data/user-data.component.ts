@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -12,7 +13,8 @@ export class UserDataComponent implements OnInit {
   constructor(
     public modalController: ModalController,
     private authService: AuthService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) {}
 
   userList: any[] = [
@@ -31,7 +33,7 @@ export class UserDataComponent implements OnInit {
 
   logout() {
     this.authService.logout().then(() => {
-      this.navCtrl.navigateForward('/login');
+      this.router.navigateByUrl('/login');
     });
   }
 

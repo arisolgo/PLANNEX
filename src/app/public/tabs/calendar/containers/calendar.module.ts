@@ -9,6 +9,8 @@ import { CalendarPageRoutingModule } from './calendar-routing.module';
 import { CalendarPage } from './calendar.page';
 
 import { NgCalendarModule } from 'ionic2-calendar';
+import { EditAppointmentComponent } from '../components/edit-appointment.component';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +19,8 @@ import { NgCalendarModule } from 'ionic2-calendar';
     IonicModule,
     CalendarPageRoutingModule,
     NgCalendarModule,
+    SharedModule,
   ],
-  declarations: [CalendarPage],
+  declarations: [EditAppointmentComponent, CalendarPage],
 })
 export class CalendarPageModule {}

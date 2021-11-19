@@ -39,6 +39,7 @@ import {
   ProveedorDisponibilidadesService,
   ScheduledServiceService,
 } from 'src/app/core/services/api/services';
+import { UiService } from 'src/app/core/services/ui.service';
 
 @Component({
   selector: 'app-scheduler',
@@ -74,6 +75,7 @@ export class SchedulerPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private router: Router,
+    private uiService: UiService,
     private scheduledServices: ScheduledServiceService,
     public modalCtrl: ModalController,
     private providerAvailabilityService: ProveedorDisponibilidadesService,
@@ -112,7 +114,11 @@ export class SchedulerPage implements OnInit {
       this.getAvailableRequestHours(todayAvailability);
     } else {
       this.isAvailable = false;
-      console.log('No labora');
+      this.uiService.presentAlert(
+        'El proveedor seleccionado no labora este día, por favor intente seleccionar otro.',
+        'No labora',
+        'Proveedor sin disponibilidad'
+      );
     }
   }
 

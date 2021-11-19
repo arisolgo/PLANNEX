@@ -34,7 +34,8 @@ export class AppointmentConfirmationPage implements OnInit {
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
   scheduledService = new BehaviorSubject<number>(0);
-  currentUser = JSON.parse(this.authService.loggedUser.value.value);
+  getCurrentUser = this.authService.getCurrentUser();
+  currentUser: any = {};
   constructor(
     private router: Router,
     private navController: NavController,
@@ -60,16 +61,18 @@ export class AppointmentConfirmationPage implements OnInit {
       this.selectedServices.forEach((element) => {
         postServices.push({ providerServiceId: element.id });
       });
-
+      let newTimeSlot = new Date(this.selectedTimeSlot.value);
+      newTimeSlot.setHours(newTimeSlot.getHours() - 4);
       this.postService
         .createScheduledService({
           registerTime: new Date(),
-          scheduledDate: this.selectedTimeSlot.value,
+          scheduledDate: newTimeSlot,
           scheduledProviderServices: postServices,
           providerId: this.currentProvider.id,
           clientId: this.currentUser.Id,
         })
         .subscribe(() => {
+          console.log(this.selectedTimeSlot.value);
           this.uiService.presentToast(
             'Orden de servicios realizada satisfactoriamente!',
             3000,
@@ -80,7 +83,11 @@ export class AppointmentConfirmationPage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCurrentUser.then((user) => {
+      this.currentUser = JSON.parse(user.value);
+    });
+  }
 
   goHome() {}
 

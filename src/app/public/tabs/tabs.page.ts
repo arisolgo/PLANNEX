@@ -1,25 +1,12 @@
-import { STRING_TYPE } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import { BehaviorSubject, ReplaySubject, zip } from 'rxjs';
-import { map, skip, skipWhile, switchMap, take } from 'rxjs/operators';
 import {
   Response,
-  ScheduledProviderService,
   ScheduledService,
   ServiceEvent,
 } from 'src/app/core/models/models';
-import {
-  ServicesService,
-  ScheduledServiceService,
-  ProviderServiciosService,
-  ScheduledProviderServiceService,
-  ProveedoresService,
-} from 'src/app/core/services/api/services';
-import { TabsService } from './services/tabs.service';
-import { Storage } from '@capacitor/storage';
+import { ScheduledServiceService } from 'src/app/core/services/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { TabsService } from './services/tabs.service';
 
 @Component({
   selector: 'app-tabs',
@@ -28,12 +15,8 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 })
 export class TabsPage implements OnInit {
   constructor(
-    private servicesService: ServicesService,
     private scheduledServices: ScheduledServiceService,
-    private providerServicesService: ProviderServiciosService,
     private tabService: TabsService,
-    private scheduledProviderService: ScheduledProviderServiceService,
-    private providerService: ProveedoresService,
     private authService: AuthService
   ) {}
   currentUser = this.authService.getCurrentUser();
@@ -41,19 +24,23 @@ export class TabsPage implements OnInit {
 
   ngOnInit() {
     this.getUserScheduledServices();
+    console.log('Ree');
+  }
+  ionViewDidEnter() {
+    this.getUserScheduledServices();
+    console.log('Ree');
   }
 
   getUserScheduledServices() {
+    this.tabService.resetUserEvents();
     this.currentUser.then((user) => {
-      console.log(user);
       let userObj = JSON.parse(user.value);
       this.currentRole = userObj.Role;
-      console.log(userObj);
 
       if (this.currentRole == 1) {
         this.scheduledServices
           .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
-            userObj.UserId
+            userObj.Id
           )
           .subscribe((response: Response) => {
             response.result.forEach((element: ScheduledService) => {
@@ -75,17 +62,17 @@ export class TabsPage implements OnInit {
                 endTime: new Date(element.scheduledEndDate),
                 desc: 'Servicio a proveer por: ' + providerName,
                 allDay: false,
+                scheduledServiceId: element.id,
               };
-
-              console.log('PROVIDER NAME', providerName);
-
-              this.tabService.addUserEvent(newEvent);
+              if (element.status < 2) {
+                this.tabService.addUserEvent(newEvent);
+              }
             });
           });
       } else if (this.currentRole == 2) {
         this.scheduledServices
           .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
-            userObj.UserId
+            userObj.Id
           )
           .subscribe((response: Response) => {
             response.result.forEach((element: ScheduledService) => {
@@ -106,9 +93,11 @@ export class TabsPage implements OnInit {
                 endTime: new Date(element.scheduledEndDate),
                 desc: 'Servicio a proveer por: ' + providerName,
                 allDay: false,
+                scheduledServiceId: element.id,
               };
-
-              this.tabService.addUserEvent(newEvent);
+              if (element.status < 2) {
+                this.tabService.addUserEvent(newEvent);
+              }
             });
           });
       }

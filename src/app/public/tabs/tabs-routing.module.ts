@@ -30,7 +30,7 @@ const routes: Routes = [
       {
         path: 'calendar',
         loadChildren: () =>
-          import('../tabs/calendar/calendar.module').then(
+          import('../tabs/calendar/containers/calendar.module').then(
             (m) => m.CalendarPageModule
           ),
       },

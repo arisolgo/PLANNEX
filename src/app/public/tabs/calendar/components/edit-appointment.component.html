@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Confirmación de cita</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 class="content-title">Listado de Servicios Agendados:</h3>
+  <ion-card *ngFor="let service of scheduledService?.scheduledProviderServices">
+    <ion-card-header>
+      <ion-card-title>Cliente: {{ service.clientName }}</ion-card-title>
+      <h5 class="service-title">Servicio: {{ service.providerServiceName }}</h5>
+      <h5 class="service-title">
+        Costo: {{ service.providerServicePrice | dominicanCurrency }}
+      </h5>
+
+      <h6>
+        Horario: {{ appointmentDetail.startTime | date: "hh:mm a" }} -
+        {{ appointmentDetail.endTime | date: "hh:mm a" }}
+      </h6>
+    </ion-card-header>
+  </ion-card>
+  <div class="cancel-btn-container">
+    <ion-button
+      (click)="openCancelAlert()"
+      color="danger"
+      expand="block"
+      shape="round"
+    >
+      Cancelar
+    </ion-button>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="userRole == 2">
+  <ion-toolbar (click)="openComplete()" color="success" class="ripple">
+    <ion-title>COMPLETAR</ion-title>
+  </ion-toolbar>
+</ion-footer>
