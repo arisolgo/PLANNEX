@@ -8,6 +8,7 @@ import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
 import { SharedModule } from 'src/app/core/shared/shared.module';
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
     IonicModule,
     RegisterPageRoutingModule,
     SharedModule,
+    BrMaskerModule,
   ],
   declarations: [RegisterPage],
 })

@@ -112,7 +112,13 @@
 
         <ion-item>
           <ion-label position="floating">Teléfono</ion-label>
-          <ion-input type="number" formControlName="telefono"></ion-input>
+          <!-- <ion-intl-tel-input formControlName="telefono"> </ion-intl-tel-input> -->
+          <ion-input
+            formControlName="telefono"
+            [brmasker]="{mask:'(000)-000-0000', len:14, type:'num'}"
+          >
+          </ion-input>
+          <!-- <ion-input type="number" formControlName="telefono"></ion-input> -->
         </ion-item>
         <div class="validation-error">
           <ng-container *ngFor="let validation of validation_messages.telefono">
@@ -126,7 +132,10 @@
 
         <ion-item>
           <ion-label position="floating">Celular</ion-label>
-          <ion-input type="number" formControlName="celular"></ion-input>
+          <ion-input
+            formControlName="celular"
+            [brmasker]="{mask:'(000)-000-0000', len:14, type:'num'}"
+          ></ion-input>
         </ion-item>
         <div class="validation-error">
           <ng-container *ngFor="let validation of validation_messages.celular">
