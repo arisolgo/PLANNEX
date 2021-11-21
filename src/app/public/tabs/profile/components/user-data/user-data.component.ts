@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Geolocation } from '@capacitor/geolocation';
+import { TabsService } from '../../../services/tabs.service';
 
 @Component({
   selector: 'app-user-data',
@@ -14,7 +16,8 @@ export class UserDataComponent implements OnInit {
     public modalController: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private tabService: TabsService
   ) {}
 
   userList: any[] = [

@@ -18,6 +18,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptorService } from './core/services/api-interceptor.service';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { Capacitor } from '@capacitor/core';
 registerLocaleData(es);
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -25,6 +26,14 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
   useExisting: forwardRef(() => ApiInterceptorService),
   multi: true,
 };
+let rootUrl = '';
+if (Capacitor.isNativePlatform()) {
+  // Platform is mobile
+  rootUrl = 'http://192.168.0.18:5000';
+} else {
+  // Platform is not mobile
+  rootUrl = environment.devRootUrl;
+}
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -34,7 +43,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     IonicModule.forRoot({ mode: 'md' }),
     AppRoutingModule,
     CoreModule,
-    ApiModule.forRoot({ rootUrl: 'http://192.168.0.18:5000' }),
+    ApiModule.forRoot({ rootUrl: rootUrl }),
   ],
   providers: [
     API_INTERCEPTOR_PROVIDER,

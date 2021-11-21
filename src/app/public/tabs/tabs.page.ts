@@ -13,6 +13,7 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-tabs',
@@ -29,6 +30,38 @@ export class TabsPage implements OnInit {
   currentRole = 0;
 
   ngOnInit() {
+    this.setPushNotifications();
+  }
+  ionViewDidEnter() {
+    this.getUserScheduledServices();
+  }
+
+  async startTrackPosition(todayService: ScheduledService) {
+    const callBackId = await Geolocation.watchPosition(
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 5 },
+      (event) => {
+        console.log('evento', event);
+        let dateData = new Date(todayService.scheduledEndDate);
+        let now = new Date();
+        if (
+          dateData.getFullYear() === now.getFullYear() &&
+          dateData.getMonth() === now.getMonth() &&
+          dateData.getDay() === now.getDay() &&
+          dateData.getHours() <= now.getHours()
+        ) {
+          this.stopTrackPosition(callBackId);
+        }
+      }
+    );
+  }
+
+  async stopTrackPosition(callBackId) {
+    await Geolocation.clearWatch({ id: callBackId }).then(() =>
+      console.log('Watch paused, id: ', callBackId)
+    );
+  }
+
+  setPushNotifications() {
     console.log('Initializing HomePage');
 
     // Request permission to use push notifications
@@ -68,12 +101,6 @@ export class TabsPage implements OnInit {
         alert('Push action performed: ' + JSON.stringify(notification));
       }
     );
-    this.getUserScheduledServices();
-    console.log('Ree');
-  }
-  ionViewDidEnter() {
-    this.getUserScheduledServices();
-    console.log('Ree');
   }
 
   getUserScheduledServices() {
@@ -88,6 +115,8 @@ export class TabsPage implements OnInit {
             userObj.Id
           )
           .subscribe((response: Response) => {
+            let hasServiceToday = false;
+            let todayService: ScheduledService;
             response.result.forEach((element: ScheduledService) => {
               let servicesNames = '';
               let providerName = '';
@@ -112,7 +141,23 @@ export class TabsPage implements OnInit {
               if (element.status < 2) {
                 this.tabService.addUserEvent(newEvent);
               }
+              let dateData = new Date(element.scheduledDate);
+
+              let now = new Date();
+
+              if (
+                dateData.getFullYear() === now.getFullYear() &&
+                dateData.getMonth() === now.getMonth() &&
+                dateData.getDay() === now.getDay() &&
+                dateData.getHours() > now.getHours()
+              ) {
+                hasServiceToday = true;
+                todayService = element;
+              }
             });
+            if (hasServiceToday) {
+              this.startTrackPosition(todayService);
+            }
           });
       } else if (this.currentRole == 2) {
         this.scheduledServices

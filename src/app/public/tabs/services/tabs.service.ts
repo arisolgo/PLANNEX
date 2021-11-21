@@ -19,6 +19,7 @@ export class TabsService {
     newArray.push(event);
     this.userEvents.next(newArray);
   }
+
   resetUserEvents() {
     this.userEvents.next([]);
   }
