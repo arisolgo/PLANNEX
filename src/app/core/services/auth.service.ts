@@ -12,6 +12,7 @@ import { StorageService } from './storage.service';
 import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { Capacitor } from '@capacitor/core';
 
 const TOKEN_KEY = 'authToken';
 const USER_KEY = 'currentUser';
@@ -25,13 +26,20 @@ export class AuthService {
   token = '';
   loggedUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   user: LoginResponse;
+  rootUrl = '';
   constructor(
     private http: HttpClient,
     private storageService: StorageService
   ) {
+    if (Capacitor.isNativePlatform()) {
+      // Platform is mobile
+      this.rootUrl = 'http://192.168.0.18:5000';
+    } else {
+      // Platform is not mobile
+      this.rootUrl = environment.devRootUrl;
+    }
     this.loadToken();
   }
-  rootUrl = 'http://192.168.0.18:5000';
 
   async loadToken() {
     // await this.setCurrentUser();
