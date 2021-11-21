@@ -31,7 +31,7 @@ export class AuthService {
   ) {
     this.loadToken();
   }
-  rootUrl = environment.devRootUrl;
+  rootUrl = 'http://192.168.0.18:5000';
 
   async loadToken() {
     // await this.setCurrentUser();

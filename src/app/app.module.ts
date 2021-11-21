@@ -1,4 +1,10 @@
-import { forwardRef, LOCALE_ID, NgModule, Provider } from '@angular/core';
+import {
+  ErrorHandler,
+  forwardRef,
+  LOCALE_ID,
+  NgModule,
+  Provider,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -10,6 +16,8 @@ import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptorService } from './core/services/api-interceptor.service';
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
 registerLocaleData(es);
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -17,10 +25,6 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
   useExisting: forwardRef(() => ApiInterceptorService),
   multi: true,
 };
-
-import es from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common';
-registerLocaleData(es);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -30,7 +34,7 @@ registerLocaleData(es);
     IonicModule.forRoot({ mode: 'md' }),
     AppRoutingModule,
     CoreModule,
-    ApiModule.forRoot({ rootUrl: environment.devRootUrl }),
+    ApiModule.forRoot({ rootUrl: 'http://192.168.0.18:5000' }),
   ],
   providers: [
     API_INTERCEPTOR_PROVIDER,

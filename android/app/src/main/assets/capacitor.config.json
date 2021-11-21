@@ -2,6 +2,9 @@
 	"appId": "com.plannex.app",
 	"appName": "plannex",
 	"webDir": "www",
+	"server": {
+		"cleartext": true
+	},
 	"bundledWebRuntime": false,
 	"cordova": {
 		"preferences": {

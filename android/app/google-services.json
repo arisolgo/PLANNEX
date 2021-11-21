@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "670247757958",
+    "project_id": "push-notify-644af",
+    "storage_bucket": "push-notify-644af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670247757958:android:62f1c23cb10281227a0907",
+        "android_client_info": {
+          "package_name": "com.plannex.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670247757958-rbg7f48fgbodb5g1b74r2m7u8ro1fbmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzrrDEEZCJJMFaKElWaeaGc8paCKiaFeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670247757958-rbg7f48fgbodb5g1b74r2m7u8ro1fbmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,7 +8,7 @@ import { Client, ScheduledService } from '../models/models';
 })
 export class PostService {
   constructor(private http: HttpClient) {}
-  rootUrl = environment.devRootUrl;
+  rootUrl = 'http://192.168.0.18:5000';
 
   createScheduledService(scheduledService: ScheduledService) {
     return this.http.post(
