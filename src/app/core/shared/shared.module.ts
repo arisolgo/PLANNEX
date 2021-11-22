@@ -7,11 +7,15 @@ import { CategoryFilterComponent } from './components/category-filter/category-f
 import { PaymentSelectionComponent } from './components/payment-selection/payment-selection.component';
 import { DominicanCurrencyPipe } from '../pipes/dominican-currency.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MapsComponent } from './components/maps/maps.component';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 @NgModule({
   declarations: [
     CategoryFilterComponent,
     PaymentSelectionComponent,
+    MapsComponent,
     DominicanCurrencyPipe,
   ],
   imports: [
@@ -24,8 +28,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     CategoryFilterComponent,
     PaymentSelectionComponent,
+    MapsComponent,
     DominicanCurrencyPipe,
     ReactiveFormsModule,
   ],
+  providers: [Geolocation, NativeGeocoder],
 })
 export class SharedModule {}
