@@ -33,19 +33,12 @@ export class TabsPage implements OnInit {
   currentUser = this.authService.getCurrentUser();
   currentRole = 0;
   todayService: BehaviorSubject<ScheduledService> = new BehaviorSubject(null);
+  devicePushToken = '';
 
   ngOnInit() {
     this.setPushNotifications();
   }
 
-  onBackgroundActive(todayService) {
-    this.backgroundMode.on('activate').pipe(
-      map(() => {
-        this.startTrackPosition(todayService);
-        console.log(todayService);
-      })
-    );
-  }
   ionViewDidEnter() {
     this.getUserScheduledServices();
     let pushGeoLocOnBackground = this.todayService.pipe(
@@ -56,6 +49,15 @@ export class TabsPage implements OnInit {
     pushGeoLocOnBackground.subscribe((response) => {
       console.log('BACKGROUND MODE ?', response);
     });
+  }
+
+  onBackgroundActive(todayService) {
+    this.backgroundMode.on('activate').pipe(
+      map(() => {
+        this.startTrackPosition(todayService);
+        console.log(todayService);
+      })
+    );
   }
 
   async startTrackPosition(todayService: ScheduledService) {
@@ -102,6 +104,7 @@ export class TabsPage implements OnInit {
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
       alert('Push registration success, token: ' + token.value);
+      this.devicePushToken = token.value;
     });
 
     // Some issue with our setup and push will not work
