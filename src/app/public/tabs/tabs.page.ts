@@ -14,6 +14,9 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Geolocation } from '@capacitor/geolocation';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { BehaviorSubject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tabs',
@@ -24,16 +27,35 @@ export class TabsPage implements OnInit {
   constructor(
     private scheduledServices: ScheduledServiceService,
     private tabService: TabsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private backgroundMode: BackgroundMode
   ) {}
   currentUser = this.authService.getCurrentUser();
   currentRole = 0;
+  todayService: BehaviorSubject<ScheduledService> = new BehaviorSubject(null);
 
   ngOnInit() {
     this.setPushNotifications();
   }
+
+  onBackgroundActive(todayService) {
+    this.backgroundMode.on('activate').pipe(
+      map(() => {
+        this.startTrackPosition(todayService);
+        console.log(todayService);
+      })
+    );
+  }
   ionViewDidEnter() {
     this.getUserScheduledServices();
+    let pushGeoLocOnBackground = this.todayService.pipe(
+      switchMap(async (todayService) => {
+        this.onBackgroundActive(todayService);
+      })
+    );
+    pushGeoLocOnBackground.subscribe((response) => {
+      console.log('BACKGROUND MODE ?', response);
+    });
   }
 
   async startTrackPosition(todayService: ScheduledService) {
@@ -47,7 +69,8 @@ export class TabsPage implements OnInit {
           dateData.getFullYear() === now.getFullYear() &&
           dateData.getMonth() === now.getMonth() &&
           dateData.getDay() === now.getDay() &&
-          dateData.getHours() <= now.getHours()
+          dateData.getHours() <= now.getHours() &&
+          dateData.getMinutes() <= now.getMinutes()
         ) {
           this.stopTrackPosition(callBackId);
         }
@@ -141,6 +164,7 @@ export class TabsPage implements OnInit {
               if (element.status < 2) {
                 this.tabService.addUserEvent(newEvent);
               }
+
               let dateData = new Date(element.scheduledDate);
 
               let now = new Date();
@@ -149,10 +173,14 @@ export class TabsPage implements OnInit {
                 dateData.getFullYear() === now.getFullYear() &&
                 dateData.getMonth() === now.getMonth() &&
                 dateData.getDay() === now.getDay() &&
-                dateData.getHours() > now.getHours()
+                dateData.getHours() >= now.getHours() &&
+                dateData.getMinutes() >= now.getMinutes()
               ) {
+                console.log(dateData.getHours(), dateData.getMinutes());
+                console.log(now.getHours(), now.getMinutes());
                 hasServiceToday = true;
                 todayService = element;
+                this.todayService.next(element);
               }
             });
             if (hasServiceToday) {

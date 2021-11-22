@@ -19,6 +19,7 @@ import { ApiInterceptorService } from './core/services/api-interceptor.service';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { Capacitor } from '@capacitor/core';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 registerLocaleData(es);
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -49,6 +50,7 @@ if (Capacitor.isNativePlatform()) {
     API_INTERCEPTOR_PROVIDER,
     ApiInterceptorService,
     IonicStorageModule,
+    BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'es-ES' },
   ],
