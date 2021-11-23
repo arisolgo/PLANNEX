@@ -33,8 +33,9 @@ export class AppointmentConfirmationPage implements OnInit {
   currentProvider: Provider;
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
+  loggedUser = this.authService.setCurrentUser();
   scheduledService = new BehaviorSubject<number>(0);
-  currentUser = JSON.parse(this.authService.loggedUser.value.value);
+  currentUser = JSON.parse(this.authService.loggedUser.getValue());
   constructor(
     private router: Router,
     private navController: NavController,
@@ -55,7 +56,7 @@ export class AppointmentConfirmationPage implements OnInit {
     }
   }
   checkout() {
-    if (this.currentUser.Role == 1) {
+    if (true) {
       let postServices = [];
       this.selectedServices.forEach((element) => {
         postServices.push({ providerServiceId: element.id });
@@ -67,7 +68,7 @@ export class AppointmentConfirmationPage implements OnInit {
           scheduledDate: this.selectedTimeSlot.value,
           scheduledProviderServices: postServices,
           providerId: this.currentProvider.id,
-          clientId: this.currentUser.Id,
+          clientId: 6,
         })
         .subscribe(() => {
           this.uiService.presentToast(

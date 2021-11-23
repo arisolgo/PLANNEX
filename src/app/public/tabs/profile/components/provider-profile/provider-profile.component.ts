@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   IonRouterOutlet,
   ModalController,
   NavController,
 } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 import {
   Provider,
   ProviderAvailability,
@@ -26,6 +28,7 @@ import {
 } from 'src/app/core/services/api/services';
 import { CartService } from 'src/app/core/services/cart.service';
 import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
+import { EditAvailabilityComponent } from '../edit-availability/edit-availability.component';
 
 @Component({
   selector: 'app-provider-profile',
@@ -34,13 +37,20 @@ import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-c
 })
 export class ProviderProfileComponent implements OnInit {
   @Input() currentProvider: any = {};
+
+  availabilities;
   provider: Provider;
+
+  @Output() availabilityOutput = new BehaviorSubject<any>(null);
+  @Output() providerOutput = new BehaviorSubject<any>(null);
+
   weekday: string[] = [];
   rating: number;
-  providerDisponibilidad: ProviderAvailability[];
+  providerDisponibilidad: any[] = [];
   providerComments: any[] = [];
   providerServices: any[] = [];
   providerTypes: any[] = [];
+  jornadas: any[] = [];
   types: any[] = [];
   slideOpts = {
     initialSlide: 0,
@@ -68,20 +78,17 @@ export class ProviderProfileComponent implements OnInit {
   ) {}
   ngOnInit() {
     // this.cartCount = this.cartService.getCartItemCount();
+    console.log('CURRENT PROVIDER:', this.currentProvider);
+    this.providerOutput.next(this.currentProvider);
+
     this.setDays();
+    this.getRating(this.currentProvider.Id);
     this.getComments(this.currentProvider.Id);
     this.getServices(this.currentProvider.Id);
     this.getTipos(this.currentProvider.Id);
     this.getProviderAvailability(this.currentProvider.Id);
-    this.setRating(this.currentProvider.Id);
-  }
 
-  setRating(providerId: number) {
-    this.providerService
-      .putApiProveedoresSetRatingProveedorId(providerId)
-      .subscribe((response: Response) => {
-        this.rating = response.result.rating;
-      });
+    this.availabilities = this.providerDisponibilidad;
   }
 
   getComments(providerId: number) {
@@ -100,15 +107,17 @@ export class ProviderProfileComponent implements OnInit {
     this.providerTypeService
       .getApiProveedorTiposProveedorIdGetProveedorTipoByProveedorId(providerId)
       .subscribe((response: Response) => {
-        this.providerTypes = response.result;
-        console.log('Tipos', response.result);
+        this.setTipos(response.result);
       });
+  }
 
-    this.providerTypes.forEach((element) => {
+  setTipos(providerTypes) {
+    providerTypes.forEach((element) => {
       this.typeService
         .getApiTiposId(element.tipoId)
         .subscribe((response: Response) => {
           this.types.push(response.result);
+          console.log('TIPOS SET:', response.result);
         });
     });
   }
@@ -136,22 +145,56 @@ export class ProviderProfileComponent implements OnInit {
     });
   }
 
+  getRating(providerId) {
+    this.providerService
+      .getApiProveedoresId(providerId)
+      .subscribe((response: Response) => {
+        this.rating = response.result.rating;
+        console.log('GET RATING:', response.result);
+      });
+  }
+
   getLocation() {
     //TO-DO
   }
 
+  openEditAvailability() {
+    console.log('Abriendo Edit Availability');
+    this.openModal();
+  }
+
   setDays() {
-    this.weekday[0] = 'Sunday';
-    this.weekday[1] = 'Monday';
-    this.weekday[2] = 'Tuesday';
-    this.weekday[3] = 'Wednesday';
-    this.weekday[4] = 'Thursday';
-    this.weekday[5] = 'Friday';
-    this.weekday[6] = 'Saturday';
+    this.weekday[0] = 'Domingo';
+    this.weekday[1] = 'Lunes';
+    this.weekday[2] = 'Martes';
+    this.weekday[3] = 'Miércoles';
+    this.weekday[4] = 'Jueves';
+    this.weekday[5] = 'Viernes';
+    this.weekday[6] = 'Sábado';
   }
 
   getDays(day: number) {
     return this.weekday[day];
+  }
+
+  getJornadas() {
+    let diffJornadas: any[] = [];
+
+    this.providerDisponibilidad.forEach((element) => {
+      console.log('Jornada Length:', this.jornadas.length);
+      if (this.jornadas.length === 0) {
+        this.jornadas.push(element);
+      } else if (
+        this.jornadas[0].horaDesde.getHours() ===
+          element.horaDesde.getHours() &&
+        this.jornadas[0].horaHasta.getHours() === element.horaHasta.getHours()
+      ) {
+        this.jornadas.push(element);
+      } else {
+        diffJornadas.push(element);
+      }
+    });
+    console.log('JORNADA:', this.jornadas);
   }
 
   getProviderAvailability(providerId: number) {
@@ -170,6 +213,20 @@ export class ProviderProfileComponent implements OnInit {
           this.providerDisponibilidad.push(element);
         });
         console.log(this.providerDisponibilidad);
+        this.availabilityOutput.next(this.providerDisponibilidad);
       });
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: EditAvailabilityComponent,
+      componentProps: {
+        provider: this.currentProvider,
+        availabilities: this.availabilityOutput.getValue(),
+      },
+    });
+
+    await modal.present();
   }
 }

@@ -74,8 +74,8 @@ export interface Comment {
 }
 
 export interface ProviderAvailability {
-  id: number;
-  provideedorId: number;
+  id?: number;
+  proveedorId: number;
   dia: number;
   horaDesde: Date;
   horaHasta: Date;
