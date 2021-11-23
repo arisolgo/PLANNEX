@@ -12,6 +12,9 @@ import { PostService } from 'src/app/core/services/post.service';
 import { Storage } from '@ionic/storage';
 import { Response } from 'src/app/core/models/models';
 import { DatePipe } from '@angular/common';
+import { SchedulerLike } from 'rxjs';
+import { ScheduledServiceService } from 'src/app/core/services/api/services';
+import { present } from '@ionic/core/dist/types/utils/overlays';
 
 @Component({
   selector: 'app-edit-availability',
@@ -94,13 +97,6 @@ export class EditAvailabilityComponent implements OnInit {
       works: false,
     },
   ];
-  availabilityForm: FormGroup;
-  errorMessage = '';
-  validation_messages = {
-    lunesHoraDesde: [{ type: 'required', message: 'Hora Desde Requerida' }],
-    lunesHoraHasta: [{ type: 'required', message: 'Hora Hasta Requerida' }],
-  };
-  selectedRole: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -110,12 +106,11 @@ export class EditAvailabilityComponent implements OnInit {
     private putService: PutService,
     private postService: PostService,
     private datepipe: DatePipe,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private scheduledServicesService: ScheduledServiceService
   ) {}
 
   ngOnInit() {
-    console.log('PROVEEDOR:', this.provider);
-    console.log('DISPONIBILIDAD:', this.availabilities);
     this.setAvailabilitySchema();
   }
 
@@ -154,12 +149,17 @@ export class EditAvailabilityComponent implements OnInit {
   }
 
   update() {
-    console.log('AVAILABILITY SCHEMA:', this.availabilitySchema);
-
     this.availabilitySchema.forEach((element) => {
-      if (element.works) {
-        console.log('Proveedor PUT:', this.provider);
+      // this.scheduledServicesService.getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(this.provider.Id).subscribe((response:Response)=>{
+      //   response.result.forEach(service => {
+      //     if(new Date(service.scheduledDate).getDay()===element.dia){
+      //       this.uiService.presentAlert("Existe una cita agendada bajo esta disponibilidad, debe concluir la cita antes de actualizar su disponibildiad...","CITA AGENDADA EN ESTE DIA")
+      //       return;
+      //     }
+      //   });
+      // })
 
+      if (element.works) {
         let availability = {
           id: element.id,
           proveedorId: this.provider.Id,
@@ -169,14 +169,8 @@ export class EditAvailabilityComponent implements OnInit {
         };
         this.putService
           .updateAvailability(availability)
-          .subscribe((response: Response) => {
-            console.log('TRYING TO UPDATE', response.result);
-          });
+          .subscribe((response: Response) => {});
       } else if (!element.works && element.horaDesde && element.horaHasta) {
-        console.log('ELSE IF');
-
-        console.log('Proveedor POST:', this.provider);
-
         this.postService
           .createAvailability({
             proveedorId: this.provider.Id,
@@ -185,9 +179,7 @@ export class EditAvailabilityComponent implements OnInit {
             horaHasta: element.horaHasta,
           })
           .subscribe(
-            (response: Response) => {
-              console.log('TRYING TO POST', response.result);
-            },
+            (response: Response) => {},
             (error) => {
               console.log(error);
             }
