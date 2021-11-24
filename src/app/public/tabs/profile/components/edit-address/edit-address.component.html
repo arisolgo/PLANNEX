@@ -1,0 +1,20 @@
+<ion-content>
+    <h1>Dirección</h1>
+
+    <h4>Editar Dirección:</h4>
+    <ion-item>
+        <ion-label position="floating">Dirección 1</ion-label>
+        <ion-input (ionChange)="setDireccion1($event)" [(ngModel)]="address.direccion1"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Dirección 2</ion-label>
+        <ion-input (ionChange)="setDireccion2($event)" [(ngModel)]="address.direccion2"></ion-input>
+    </ion-item>
+
+    <div class="login-button-container">
+        <ion-button expand="full" shape="round" color="success" type="button" (click)="update()">
+            Save
+        </ion-button>
+    </div>
+</ion-content>

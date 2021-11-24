@@ -47,17 +47,17 @@ export interface Provider {
 }
 
 export interface ProviderReview {
-  id: number;
+  id?: number;
   proveedorId: number;
   clienteId: number;
-  comentarioId: number;
+  comentarioId?: number;
   serviceRating: number;
   reviewDate: Date;
   comentario: string;
 }
 
 export interface ProviderService {
-  id: number;
+  id?: number;
   price: number;
   proveedorId: number;
   serviceId: number;
@@ -74,8 +74,8 @@ export interface Comment {
 }
 
 export interface ProviderAvailability {
-  id: number;
-  provideedorId: number;
+  id?: number;
+  proveedorId: number;
   dia: number;
   horaDesde: Date;
   horaHasta: Date;
@@ -107,7 +107,7 @@ export interface ScheduledServiceRequired {
 }
 
 export interface ProviderTipo {
-  id: number;
+  id?: number;
   proveedorId: number;
   tipoId: number;
   creatorUserId: number;

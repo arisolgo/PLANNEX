@@ -16,6 +16,7 @@ class ClientesService extends __BaseService {
   static readonly getApiClientesIdPath = '/api/Clientes/{id}';
   static readonly putApiClientesIdPath = '/api/Clientes/{id}';
   static readonly deleteApiClientesIdPath = '/api/Clientes/{id}';
+  static readonly getApiClientesUserIdGetByUserIdPath = '/api/Clientes/{userId}/getByUserId';
 
   constructor(
     config: __Configuration,
@@ -48,15 +49,10 @@ class ClientesService extends __BaseService {
       __map(_r => _r.body as null)
     );
   }
-
-  /**
-   * @param password undefined
-   */
-  postApiClientesResponse(password?: string): __Observable<__StrictHttpResponse<null>> {
+  postApiClientesResponse(): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (password != null) __params = __params.set('password', password.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/Clientes`,
@@ -73,12 +69,8 @@ class ClientesService extends __BaseService {
         return _r as __StrictHttpResponse<null>;
       })
     );
-  }
-  /**
-   * @param password undefined
-   */
-  postApiClientes(password?: string): __Observable<null> {
-    return this.postApiClientesResponse(password).pipe(
+  }  postApiClientes(): __Observable<null> {
+    return this.postApiClientesResponse().pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -181,6 +173,40 @@ class ClientesService extends __BaseService {
    */
   deleteApiClientesId(id: number): __Observable<null> {
     return this.deleteApiClientesIdResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param userId undefined
+   */
+  getApiClientesUserIdGetByUserIdResponse(userId: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/Clientes/${encodeURIComponent(String(userId))}/getByUserId`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param userId undefined
+   */
+  getApiClientesUserIdGetByUserId(userId: number): __Observable<null> {
+    return this.getApiClientesUserIdGetByUserIdResponse(userId).pipe(
       __map(_r => _r.body as null)
     );
   }

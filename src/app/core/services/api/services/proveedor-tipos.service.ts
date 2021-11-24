@@ -204,21 +204,16 @@ class ProveedorTiposService extends __BaseService {
   }
 
   /**
-   * @param params The `ProveedorTiposService.DeleteApiProveedorTiposProveedorTipoIdParams` containing the following parameters:
-   *
-   * - `proveedorTipoId`:
-   *
-   * - `proveedorId`:
+   * @param proveedorTipoId undefined
    */
-  deleteApiProveedorTiposProveedorTipoIdResponse(params: ProveedorTiposService.DeleteApiProveedorTiposProveedorTipoIdParams): __Observable<__StrictHttpResponse<null>> {
+  deleteApiProveedorTiposProveedorTipoIdResponse(proveedorTipoId: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (params.proveedorId != null) __params = __params.set('proveedorId', params.proveedorId.toString());
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/ProveedorTipos/${encodeURIComponent(String(params.proveedorTipoId))}`,
+      this.rootUrl + `/api/ProveedorTipos/${encodeURIComponent(String(proveedorTipoId))}`,
       __body,
       {
         headers: __headers,
@@ -234,28 +229,16 @@ class ProveedorTiposService extends __BaseService {
     );
   }
   /**
-   * @param params The `ProveedorTiposService.DeleteApiProveedorTiposProveedorTipoIdParams` containing the following parameters:
-   *
-   * - `proveedorTipoId`:
-   *
-   * - `proveedorId`:
+   * @param proveedorTipoId undefined
    */
-  deleteApiProveedorTiposProveedorTipoId(params: ProveedorTiposService.DeleteApiProveedorTiposProveedorTipoIdParams): __Observable<null> {
-    return this.deleteApiProveedorTiposProveedorTipoIdResponse(params).pipe(
+  deleteApiProveedorTiposProveedorTipoId(proveedorTipoId: number): __Observable<null> {
+    return this.deleteApiProveedorTiposProveedorTipoIdResponse(proveedorTipoId).pipe(
       __map(_r => _r.body as null)
     );
   }
 }
 
 module ProveedorTiposService {
-
-  /**
-   * Parameters for deleteApiProveedorTiposProveedorTipoId
-   */
-  export interface DeleteApiProveedorTiposProveedorTipoIdParams {
-    proveedorTipoId: number;
-    proveedorId?: number;
-  }
 }
 
 export { ProveedorTiposService }

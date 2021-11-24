@@ -33,6 +33,7 @@ export class AppointmentConfirmationPage implements OnInit {
   currentProvider: Provider;
   selectedTimeSlot: TimeSlot;
   selectedPayment: number = 0;
+  loggedUser = this.authService.setCurrentUser();
   scheduledService = new BehaviorSubject<number>(0);
   getCurrentUser = this.authService.getCurrentUser();
   currentUser: any = {};
@@ -56,7 +57,7 @@ export class AppointmentConfirmationPage implements OnInit {
     }
   }
   checkout() {
-    if (this.currentUser.Role == 1) {
+    if (true) {
       let postServices = [];
       this.selectedServices.forEach((element) => {
         postServices.push({ providerServiceId: element.id });
@@ -70,7 +71,7 @@ export class AppointmentConfirmationPage implements OnInit {
           status: 1,
           scheduledProviderServices: postServices,
           providerId: this.currentProvider.id,
-          clientId: this.currentUser.Id,
+          clientId: 6,
         })
         .subscribe(() => {
           console.log(this.selectedTimeSlot.value);

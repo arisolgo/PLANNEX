@@ -1,0 +1,62 @@
+<ion-content>
+    <ion-button shape="round" color="black" type="button" (click)="close()">Close
+    </ion-button>
+    <h1>Reseña</h1>
+
+    <h4>¿Qué tal el servicio de {{ providerReview.providerName }}</h4>
+
+    <ion-row radio-group (ionChange)="setRating($event)">
+        <ion-col>
+            <ion-item>
+                <ion-label>A</ion-label>
+                <ion-radio mode="md" item-left value="0"></ion-radio>
+            </ion-item>
+        </ion-col>
+
+        <ion-col>
+            <ion-item>
+                <ion-label>1</ion-label>
+                <ion-radio mode="md" item-left value="1"></ion-radio>
+            </ion-item>
+        </ion-col>
+
+        <ion-col>
+            <ion-item>
+                <ion-label>2</ion-label>
+                <ion-radio mode="md" item-left value="2"></ion-radio>
+            </ion-item>
+        </ion-col>
+
+        <ion-col>
+            <ion-item>
+                <ion-label>3</ion-label>
+                <ion-radio mode="md" item-left value="3"></ion-radio>
+            </ion-item>
+        </ion-col>
+
+        <ion-col>
+            <ion-item>
+                <ion-label>4</ion-label>
+                <ion-radio mode="md" item-left value="4"></ion-radio>
+            </ion-item>
+        </ion-col>
+
+        <ion-col>
+            <ion-item>
+                <ion-label>5</ion-label>
+                <ion-radio mode="md" item-left value="5"></ion-radio>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+    <ion-item>
+        <ion-label position="floating">Comentario</ion-label>
+        <ion-input type="text" (ionChange)="setComentario($event)"></ion-input>
+    </ion-item>
+
+    <div class="login-button-container">
+        <ion-button expand="full" shape="round" color="success" type="button" (click)="createReview()">
+            Save
+        </ion-button>
+    </div>
+</ion-content>
