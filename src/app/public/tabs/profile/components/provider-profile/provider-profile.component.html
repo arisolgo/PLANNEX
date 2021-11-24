@@ -9,9 +9,11 @@
     </div>
 
     <div>
-        <ion-text>
-            <h4>Direccion</h4>
-        </ion-text>
+        <ion-item (click)="openEditAddress()">
+            Dirección
+            <ion-icon name="create"></ion-icon>
+        </ion-item>
+
         <p>
             <ion-text color="dark">
                 <h6>{{ currentProvider.Direccion1 }}</h6>

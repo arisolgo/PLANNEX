@@ -28,6 +28,7 @@ import {
 } from 'src/app/core/services/api/services';
 import { CartService } from 'src/app/core/services/cart.service';
 import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
+import { EditAddressComponent } from '../edit-address/edit-address.component';
 import { EditAvailabilityComponent } from '../edit-availability/edit-availability.component';
 import { EditServicesComponent } from '../edit-services/edit-services.component';
 
@@ -162,6 +163,8 @@ export class ProviderProfileComponent implements OnInit {
       .getApiProveedoresId(providerId)
       .subscribe((response: Response) => {
         this.rating = response.result.rating;
+        this.currentProvider.Direccion1 = response.result.direccion1;
+        this.currentProvider.Direccion2 = response.result.direccion2;
         console.log('GET RATING:', response.result);
       });
   }
@@ -174,6 +177,11 @@ export class ProviderProfileComponent implements OnInit {
     this.servicioService.getApiServices().subscribe((response: Response) => {
       this.services.next(response.result);
     });
+  }
+
+  openEditAddress() {
+    console.log('Abriendo Edit Availability');
+    this.openAddressModal();
   }
 
   openEditAvailability() {
@@ -261,6 +269,18 @@ export class ProviderProfileComponent implements OnInit {
         provider: this.currentProvider,
         providerServices: this.providerServicesOutput.getValue(),
         services: this.services.getValue().result,
+      },
+    });
+
+    await modal.present();
+  }
+
+  async openAddressModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: EditAddressComponent,
+      componentProps: {
+        provider: this.currentProvider,
       },
     });
 

@@ -33,9 +33,9 @@ export class PutService {
     );
   }
 
-  updateProvider(provider: Provider) {
+  updateProvider(provider) {
     return this.http.put(
-      this.rootUrl + '/api/Proveedores/' + provider.id,
+      this.rootUrl + '/api/Proveedores/' + provider.Id,
       provider
     );
   }

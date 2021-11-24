@@ -14,6 +14,7 @@ import { EditProfileComponent } from '../components/edit-profile/edit-profile.co
 import { ProviderProfileComponent } from '../components/provider-profile/provider-profile.component';
 import { EditAvailabilityComponent } from '../components/edit-availability/edit-availability.component';
 import { EditServicesComponent } from '../components/edit-services/edit-services.component';
+import { EditAddressComponent } from '../components/edit-address/edit-address.component';
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, ProfilePageRoutingModule],
   declarations: [
@@ -23,6 +24,7 @@ import { EditServicesComponent } from '../components/edit-services/edit-services
     ProviderProfileComponent,
     EditAvailabilityComponent,
     EditServicesComponent,
+    EditAddressComponent,
   ],
   providers: [DatePipe],
 })
