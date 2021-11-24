@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import {
   Client,
   ProviderAvailability,
+  ProviderService,
   ScheduledService,
 } from '../models/models';
 
@@ -25,6 +26,13 @@ export class PostService {
       this.rootUrl +
         '/api/ProveedorDisponibilidades/CreateProveedorDisponibilidad',
       providerAvailability
+    );
+  }
+
+  createProviderService(providerService: ProviderService) {
+    return this.http.post(
+      this.rootUrl + '/api/ProviderServicios/CreateProviderService',
+      providerService
     );
   }
 }

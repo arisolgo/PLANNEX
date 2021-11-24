@@ -6,6 +6,7 @@ import {
   ScheduledService,
   Provider,
   ProviderAvailability,
+  ProviderService,
 } from '../models/models';
 import { Capacitor } from '@capacitor/core';
 import { ProviderServiciosService } from './api/services';
@@ -43,11 +44,18 @@ export class PutService {
     return this.http.put(this.rootUrl + '/api/Clientes/' + client.id, client);
   }
 
-  updateAvailability(providerAvailability) {
+  updateAvailability(providerAvailability: ProviderAvailability) {
     return this.http.put(
       this.rootUrl +
         '/api/ProveedorDisponibilidades/updateProveedorDisponibilidad',
       providerAvailability
+    );
+  }
+
+  updateProviderService(providerService: ProviderService) {
+    return this.http.put(
+      this.rootUrl + '/api/ProviderServicios/updateProviderService',
+      providerService
     );
   }
 }

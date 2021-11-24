@@ -57,7 +57,7 @@ export interface ProviderReview {
 }
 
 export interface ProviderService {
-  id: number;
+  id?: number;
   price: number;
   proveedorId: number;
   serviceId: number;

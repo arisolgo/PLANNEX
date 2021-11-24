@@ -29,6 +29,7 @@ import {
 import { CartService } from 'src/app/core/services/cart.service';
 import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
 import { EditAvailabilityComponent } from '../edit-availability/edit-availability.component';
+import { EditServicesComponent } from '../edit-services/edit-services.component';
 
 @Component({
   selector: 'app-provider-profile',
@@ -42,7 +43,9 @@ export class ProviderProfileComponent implements OnInit {
   provider: Provider;
 
   @Output() availabilityOutput = new BehaviorSubject<any>(null);
+  @Output() providerServicesOutput = new BehaviorSubject<any>(null);
   @Output() providerOutput = new BehaviorSubject<any>(null);
+  @Output() services = new BehaviorSubject<any>(null);
 
   weekday: string[] = [];
   rating: number;
@@ -87,6 +90,7 @@ export class ProviderProfileComponent implements OnInit {
     this.getServices(this.currentProvider.Id);
     this.getTipos(this.currentProvider.Id);
     this.getProviderAvailability(this.currentProvider.Id);
+    this.getRegisteredServices();
 
     this.availabilities = this.providerDisponibilidad;
   }
@@ -122,6 +126,13 @@ export class ProviderProfileComponent implements OnInit {
     });
   }
 
+  getRegisteredServices() {
+    this.servicioService.getApiServices().subscribe((response: Response) => {
+      this.services.next(response);
+      console.log('SERVICIOS:', response);
+    });
+  }
+
   getServices(providerId: number) {
     console.log('PROVIDER ID:', providerId);
     this.providerServiciosService
@@ -141,6 +152,7 @@ export class ProviderProfileComponent implements OnInit {
         .subscribe((response: Response) => {
           element.serviceName = response.result.description;
           this.providerServices.push(element);
+          this.providerServicesOutput.next(this.providerServices);
         });
     });
   }
@@ -158,9 +170,20 @@ export class ProviderProfileComponent implements OnInit {
     //TO-DO
   }
 
+  getAllServices() {
+    this.servicioService.getApiServices().subscribe((response: Response) => {
+      this.services.next(response.result);
+    });
+  }
+
   openEditAvailability() {
     console.log('Abriendo Edit Availability');
     this.openModal();
+  }
+
+  openEditServices() {
+    console.log('Abriendo Edit Services');
+    this.openServicesModal();
   }
 
   setDays() {
@@ -224,6 +247,20 @@ export class ProviderProfileComponent implements OnInit {
       componentProps: {
         provider: this.currentProvider,
         availabilities: this.availabilityOutput.getValue(),
+      },
+    });
+
+    await modal.present();
+  }
+
+  async openServicesModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: EditServicesComponent,
+      componentProps: {
+        provider: this.currentProvider,
+        providerServices: this.providerServicesOutput.getValue(),
+        services: this.services.getValue().result,
       },
     });
 

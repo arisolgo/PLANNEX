@@ -57,12 +57,13 @@
         </div> -->
         <ion-item (click)="openEditAvailability()">
             Horario
-            <ion-icon name="arrow-forward"></ion-icon>
+            <ion-icon name="create"></ion-icon>
         </ion-item>
 
-        <ion-text>
-            <h4>Servicios</h4>
-        </ion-text>
+        <ion-item (click)="openEditServices()">
+            Servicios
+            <ion-icon name="create"></ion-icon>
+        </ion-item>
 
         <div class="services-list">
             <div class="service-list-item" *ngFor="let service of providerServices">
