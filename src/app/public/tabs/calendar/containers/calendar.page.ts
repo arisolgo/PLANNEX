@@ -269,7 +269,7 @@ export class CalendarPage {
                 allDay: false,
                 scheduledServiceId: element.id,
               };
-              if (element.status < 2) {
+              if (element.status == 1) {
                 this.tabsService.addUserEvent(newEvent);
               }
             });
@@ -301,7 +301,7 @@ export class CalendarPage {
                 allDay: false,
                 scheduledServiceId: element.id,
               };
-              if (element.status < 2) {
+              if (element.status == 1) {
                 this.tabsService.addUserEvent(newEvent);
               }
             });

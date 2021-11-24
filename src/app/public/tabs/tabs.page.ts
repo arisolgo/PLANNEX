@@ -103,7 +103,6 @@ export class TabsPage implements OnInit {
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
-      alert('Push registration success, token: ' + token.value);
       this.devicePushToken = token.value;
     });
 

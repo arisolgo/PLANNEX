@@ -67,6 +67,7 @@ export class AppointmentConfirmationPage implements OnInit {
         .createScheduledService({
           registerTime: new Date(),
           scheduledDate: newTimeSlot,
+          status: 1,
           scheduledProviderServices: postServices,
           providerId: this.currentProvider.id,
           clientId: this.currentUser.Id,

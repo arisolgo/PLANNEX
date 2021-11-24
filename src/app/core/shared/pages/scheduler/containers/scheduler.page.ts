@@ -176,7 +176,11 @@ export class SchedulerPage implements OnInit {
       )
     ).subscribe((response: Response[]) => {
       this.providerAvailabilities.next(response[1].result);
-      this.providerScheduledServices.next(response[0].result);
+      this.providerScheduledServices.next(
+        response[0].result.filter((element) => {
+          element.status == 1;
+        })
+      );
       this.getDayAvailability(date);
     });
   }
