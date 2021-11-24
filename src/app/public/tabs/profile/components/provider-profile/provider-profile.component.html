@@ -21,9 +21,10 @@
             </ion-text>
         </p>
 
-        <ion-text>
-            <h4>Categorias</h4>
-        </ion-text>
+        <ion-item (click)="openEditCategories()">
+            Categorias
+            <ion-icon name="create"></ion-icon>
+        </ion-item>
 
         <div class="type-list">
             <div class="typr-list-item" *ngFor="let type of types">

@@ -5,6 +5,7 @@ import {
   Client,
   ProviderAvailability,
   ProviderService,
+  ProviderTipo,
   ScheduledService,
 } from '../models/models';
 
@@ -33,6 +34,12 @@ export class PostService {
     return this.http.post(
       this.rootUrl + '/api/ProviderServicios/CreateProviderService',
       providerService
+    );
+  }
+  createProviderType(providerType: ProviderTipo) {
+    return this.http.post(
+      this.rootUrl + '/api/ProveedorTipos/CreateProveedorTipo',
+      providerType
     );
   }
 }

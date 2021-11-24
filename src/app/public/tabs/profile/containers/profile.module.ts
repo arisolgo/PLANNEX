@@ -15,6 +15,7 @@ import { ProviderProfileComponent } from '../components/provider-profile/provide
 import { EditAvailabilityComponent } from '../components/edit-availability/edit-availability.component';
 import { EditServicesComponent } from '../components/edit-services/edit-services.component';
 import { EditAddressComponent } from '../components/edit-address/edit-address.component';
+import { EditCategoriesComponent } from '../components/edit-categories/edit-categories.component';
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, ProfilePageRoutingModule],
   declarations: [
@@ -25,6 +26,7 @@ import { EditAddressComponent } from '../components/edit-address/edit-address.co
     EditAvailabilityComponent,
     EditServicesComponent,
     EditAddressComponent,
+    EditCategoriesComponent,
   ],
   providers: [DatePipe],
 })

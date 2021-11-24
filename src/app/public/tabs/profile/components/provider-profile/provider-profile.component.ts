@@ -30,6 +30,7 @@ import { CartService } from 'src/app/core/services/cart.service';
 import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
 import { EditAddressComponent } from '../edit-address/edit-address.component';
 import { EditAvailabilityComponent } from '../edit-availability/edit-availability.component';
+import { EditCategoriesComponent } from '../edit-categories/edit-categories.component';
 import { EditServicesComponent } from '../edit-services/edit-services.component';
 
 @Component({
@@ -47,6 +48,8 @@ export class ProviderProfileComponent implements OnInit {
   @Output() providerServicesOutput = new BehaviorSubject<any>(null);
   @Output() providerOutput = new BehaviorSubject<any>(null);
   @Output() services = new BehaviorSubject<any>(null);
+  @Output() providerTypesOutput = new BehaviorSubject<any>(null);
+  @Output() tipos = new BehaviorSubject<any>(null);
 
   weekday: string[] = [];
   rating: number;
@@ -81,7 +84,6 @@ export class ProviderProfileComponent implements OnInit {
     private typeService: TiposService
   ) {}
   ngOnInit() {
-    // this.cartCount = this.cartService.getCartItemCount();
     console.log('CURRENT PROVIDER:', this.currentProvider);
     this.providerOutput.next(this.currentProvider);
 
@@ -92,6 +94,7 @@ export class ProviderProfileComponent implements OnInit {
     this.getTipos(this.currentProvider.Id);
     this.getProviderAvailability(this.currentProvider.Id);
     this.getRegisteredServices();
+    this.getRegisteredCategories();
 
     this.availabilities = this.providerDisponibilidad;
   }
@@ -122,7 +125,10 @@ export class ProviderProfileComponent implements OnInit {
         .getApiTiposId(element.tipoId)
         .subscribe((response: Response) => {
           this.types.push(response.result);
-          console.log('TIPOS SET:', response.result);
+          element.typeName = response.result.nombre;
+          this.providerTypes.push(element);
+          this.providerTypesOutput.next(this.providerTypes);
+          console.log('TIPOS SET:', element);
         });
     });
   }
@@ -131,6 +137,13 @@ export class ProviderProfileComponent implements OnInit {
     this.servicioService.getApiServices().subscribe((response: Response) => {
       this.services.next(response);
       console.log('SERVICIOS:', response);
+    });
+  }
+
+  getRegisteredCategories() {
+    this.typeService.getApiTipos().subscribe((response: Response) => {
+      this.tipos.next(response);
+      console.log('TIPOS:', response);
     });
   }
 
@@ -177,6 +190,10 @@ export class ProviderProfileComponent implements OnInit {
     this.servicioService.getApiServices().subscribe((response: Response) => {
       this.services.next(response.result);
     });
+  }
+
+  openEditCategories() {
+    this.openCategoriesModal();
   }
 
   openEditAddress() {
@@ -284,6 +301,20 @@ export class ProviderProfileComponent implements OnInit {
       },
     });
 
+    await modal.present();
+  }
+
+  async openCategoriesModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: EditCategoriesComponent,
+      componentProps: {
+        provider: this.currentProvider,
+        providerTypes: this.providerTypesOutput.getValue(),
+        tipos: this.tipos.getValue().result,
+      },
+    });
+    console.log('TYPE TEST', this.providerTypesOutput.getValue());
     await modal.present();
   }
 }

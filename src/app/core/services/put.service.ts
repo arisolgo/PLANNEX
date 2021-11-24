@@ -7,6 +7,7 @@ import {
   Provider,
   ProviderAvailability,
   ProviderService,
+  ProviderTipo,
 } from '../models/models';
 import { Capacitor } from '@capacitor/core';
 import { ProviderServiciosService } from './api/services';
@@ -56,6 +57,20 @@ export class PutService {
     return this.http.put(
       this.rootUrl + '/api/ProviderServicios/updateProviderService',
       providerService
+    );
+  }
+
+  updateProviderType(providerType: ProviderTipo) {
+    return this.http.put(
+      this.rootUrl + '/api/ProveedorTipos/updateProveedorTipo',
+      providerType
+    );
+  }
+
+  deleteProviderType(providerTypeId) {
+    return this.http.delete(
+      this.rootUrl + '/api/ProveedorTipos/',
+      providerTypeId
     );
   }
 }

@@ -107,7 +107,7 @@ export interface ScheduledServiceRequired {
 }
 
 export interface ProviderTipo {
-  id: number;
+  id?: number;
   proveedorId: number;
   tipoId: number;
   creatorUserId: number;
