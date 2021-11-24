@@ -17,6 +17,10 @@ import { Geolocation } from '@capacitor/geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { PostService } from 'src/app/core/services/post.service';
+import { UiService } from 'src/app/core/services/ui.service';
+import { PutService } from 'src/app/core/services/put.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -28,13 +32,17 @@ export class TabsPage implements OnInit {
     private scheduledServices: ScheduledServiceService,
     private tabService: TabsService,
     private authService: AuthService,
-    private backgroundMode: BackgroundMode
+    private backgroundMode: BackgroundMode,
+    private postService: PostService,
+    private uiService: UiService,
+    private putService: PutService,
+    private alertCtrl: AlertController
   ) {}
   currentUser = this.authService.getCurrentUser();
   currentRole = 0;
   todayService: BehaviorSubject<ScheduledService> = new BehaviorSubject(null);
   devicePushToken = '';
-
+  lateAdvise = false;
   ngOnInit() {
     this.setPushNotifications();
   }
@@ -55,7 +63,6 @@ export class TabsPage implements OnInit {
     this.backgroundMode.on('activate').pipe(
       map(() => {
         this.startTrackPosition(todayService);
-        console.log(todayService);
       })
     );
   }
@@ -65,17 +72,31 @@ export class TabsPage implements OnInit {
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 5 },
       (event) => {
         console.log('evento', event);
-        let dateData = new Date(todayService.scheduledEndDate);
-        let now = new Date();
-        if (
-          dateData.getFullYear() === now.getFullYear() &&
-          dateData.getMonth() === now.getMonth() &&
-          dateData.getDay() === now.getDay() &&
-          dateData.getHours() <= now.getHours() &&
-          dateData.getMinutes() <= now.getMinutes()
-        ) {
-          this.stopTrackPosition(callBackId);
-        }
+        console.log(todayService);
+        console.log(this.devicePushToken);
+
+        this.postService
+          .compareDistance(
+            this.devicePushToken,
+            todayService,
+            event.coords.latitude,
+            event.coords.longitude
+          )
+          .subscribe(async (response: Response) => {
+            if (response.result) {
+              this.stopTrackPosition(callBackId);
+            }
+            let dateData = new Date(todayService.scheduledEndDate);
+            let now = new Date();
+            if (
+              dateData.getFullYear() === now.getFullYear() &&
+              dateData.getMonth() === now.getMonth() &&
+              dateData.getDay() === now.getDay() &&
+              dateData.getHours() <= now.getHours()
+            ) {
+              await this.stopTrackPosition(callBackId);
+            }
+          });
       }
     );
   }
@@ -104,6 +125,7 @@ export class TabsPage implements OnInit {
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
       this.devicePushToken = token.value;
+      console.log(token.value);
     });
 
     // Some issue with our setup and push will not work
@@ -115,7 +137,23 @@ export class TabsPage implements OnInit {
     PushNotifications.addListener(
       'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        alert('Push received: ' + JSON.stringify(notification));
+        //alert('Push received: ' + JSON.stringify(notification));
+        if (!this.lateAdvise) {
+          if (notification.body.includes('un poco alejado')) {
+            this.lateAdvise = true;
+            this.uiService.presentAlert(
+              notification.body,
+              'Retardado?',
+              'Ya casi tienes que estar recibiendo tu servicio de hoy.',
+              {
+                text: 'Cancelar',
+                handler: () => {
+                  this.openCancelAlert();
+                },
+              }
+            );
+          }
+        }
       }
     );
 
@@ -163,29 +201,27 @@ export class TabsPage implements OnInit {
                 allDay: false,
                 scheduledServiceId: element.id,
               };
-              if (element.status < 2) {
+              if (element.status == 1) {
                 this.tabService.addUserEvent(newEvent);
-              }
+                let dateData = new Date(element.scheduledDate);
+                let now = new Date();
 
-              let dateData = new Date(element.scheduledDate);
-
-              let now = new Date();
-
-              if (
-                dateData.getFullYear() === now.getFullYear() &&
-                dateData.getMonth() === now.getMonth() &&
-                dateData.getDay() === now.getDay() &&
-                dateData.getHours() >= now.getHours() &&
-                dateData.getMinutes() >= now.getMinutes()
-              ) {
-                console.log(dateData.getHours(), dateData.getMinutes());
-                console.log(now.getHours(), now.getMinutes());
-                hasServiceToday = true;
-                todayService = element;
-                this.todayService.next(element);
+                if (
+                  dateData.getFullYear() === now.getFullYear() &&
+                  dateData.getMonth() === now.getMonth() &&
+                  dateData.getDay() === now.getDay() &&
+                  dateData.getHours() >= now.getHours()
+                ) {
+                  console.log(dateData.getHours(), dateData.getMinutes());
+                  console.log(now.getHours(), now.getMinutes());
+                  hasServiceToday = true;
+                  todayService = element;
+                  this.todayService.next(element);
+                }
               }
             });
             if (hasServiceToday) {
+              console.log('Me llame');
               this.startTrackPosition(todayService);
             }
           });
@@ -215,12 +251,36 @@ export class TabsPage implements OnInit {
                 allDay: false,
                 scheduledServiceId: element.id,
               };
-              if (element.status < 2) {
+              if (element.status == 1) {
                 this.tabService.addUserEvent(newEvent);
               }
             });
           });
       }
     });
+  }
+
+  cancelOrder(scheduledService) {
+    scheduledService.status = 3;
+    this.putService.updateScheduledService(scheduledService).subscribe(() => {
+      this.uiService.presentToast('Orden Cancelada.', 1000, 'middle');
+    });
+  }
+
+  async openCancelAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Cancelar Orden',
+      message: 'Está seguro de que quiere cancelar esta orden de servicios?',
+      buttons: [
+        {
+          text: 'SI',
+          handler: () => {
+            this.cancelOrder(this.todayService.value);
+          },
+        },
+        'NO',
+      ],
+    });
+    alert.present();
   }
 }
