@@ -47,10 +47,10 @@ export interface Provider {
 }
 
 export interface ProviderReview {
-  id: number;
+  id?: number;
   proveedorId: number;
   clienteId: number;
-  comentarioId: number;
+  comentarioId?: number;
   serviceRating: number;
   reviewDate: Date;
   comentario: string;

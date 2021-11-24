@@ -32,6 +32,7 @@
     "cordova-android": "9.1.0",
     "creditcardpayments": "^1.0.3",
     "ion2-calendar": "https://github.com/shaneparsons/ion2-calendar#76ae1e241183500a377647b363c931a03aa50bca",
+    "ionic-rating-component": "^1.2.1",
     "ionic2-calendar": "^0.6.9",
     "moment": "^2.29.1",
     "ng2-search-filter": "^0.5.1",

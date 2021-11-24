@@ -20,6 +20,8 @@ import { TabsService } from './services/tabs.service';
 import { Storage } from '@capacitor/storage';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { ProviderReviewComponent } from './provider-review/provider-review.component';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -34,10 +36,15 @@ export class TabsPage implements OnInit {
     private tabService: TabsService,
     private scheduledProviderService: ScheduledProviderServiceService,
     private providerService: ProveedoresService,
-    private authService: AuthService
+    private authService: AuthService,
+    private routerOutlet: IonRouterOutlet,
+    private modalController: ModalController
   ) {}
   currentUser = this.authService.getCurrentUser();
   currentRole = 0;
+  scheduledServicesForReview: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
 
   ngOnInit() {
     this.getUserScheduledServices();
@@ -57,6 +64,7 @@ export class TabsPage implements OnInit {
           )
           .subscribe((response: Response) => {
             response.result.forEach((element: ScheduledService) => {
+              console.log(element);
               let servicesNames = '';
               let providerName = '';
               let counter = 0;
@@ -80,6 +88,9 @@ export class TabsPage implements OnInit {
               console.log('PROVIDER NAME', providerName);
 
               this.tabService.addUserEvent(newEvent);
+              if (element.status == 2) {
+                this.openReviewModal(element, providerName);
+              }
             });
           });
       } else if (this.currentRole == 2) {
@@ -113,5 +124,19 @@ export class TabsPage implements OnInit {
           });
       }
     });
+  }
+
+  async openReviewModal(scheduledService, providerName) {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: ProviderReviewComponent,
+      componentProps: {
+        client: this.currentUser,
+        scheduledService: scheduledService,
+        providerName: providerName,
+      },
+    });
+
+    await modal.present();
   }
 }

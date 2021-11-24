@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import {
   Client,
   ProviderAvailability,
+  ProviderReview,
   ProviderService,
   ProviderTipo,
   ScheduledService,
@@ -40,6 +41,13 @@ export class PostService {
     return this.http.post(
       this.rootUrl + '/api/ProveedorTipos/CreateProveedorTipo',
       providerType
+    );
+  }
+
+  createProviderReview(providerReview: ProviderReview) {
+    return this.http.post(
+      this.rootUrl + '/api/ProveedorReviews',
+      providerReview
     );
   }
 }
