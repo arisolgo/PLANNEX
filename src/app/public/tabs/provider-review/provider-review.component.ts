@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { zip } from 'rxjs';
+import { ProviderReview } from 'src/app/core/models/models';
 import { ProveedoresService } from 'src/app/core/services/api/services';
 import { PostService } from 'src/app/core/services/post.service';
+import { PutService } from 'src/app/core/services/put.service';
 
 @Component({
   selector: 'app-provider-review',
@@ -9,22 +12,21 @@ import { PostService } from 'src/app/core/services/post.service';
   styleUrls: ['./provider-review.component.scss'],
 })
 export class ProviderReviewComponent implements OnInit {
-  @Input('client') client;
-  @Input('scheduledService') scheduledService;
-  @Input('providerName') providerName;
+  client;
+  scheduledService;
+  providerName;
   @ViewChild('rating') rating: any;
   constructor(
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet,
     private proveedorService: ProveedoresService,
-    private postService: PostService
+    private postService: PostService,
+    private putService: PutService
   ) {}
 
-  providerReview = {
+  providerReview: ProviderReview = {
     proveedorId: 0,
     clienteId: 0,
     serviceRating: 0,
-    reviewDate: new Date(),
     comentario: '',
   };
 
@@ -33,9 +35,13 @@ export class ProviderReviewComponent implements OnInit {
   }
 
   setClientProvider() {
+    console.log(this.client);
+    console.log(this.scheduledService);
+    console.log(this.providerName);
     this.providerReview.clienteId = this.client.Id;
     this.providerReview.proveedorId = this.providerReview.proveedorId;
-    this.providerReview = this.providerName;
+
+    console.log(this.providerReview);
   }
 
   setComentario(event) {
@@ -47,10 +53,19 @@ export class ProviderReviewComponent implements OnInit {
   }
 
   createReview() {
-    this.postService.createProviderReview(this.providerReview);
+    this.scheduledService.rating = this.providerReview.serviceRating;
+    zip(
+      this.postService.createProviderReview(this.providerReview),
+      this.putService.updateScheduledService(this.scheduledService)
+    ).subscribe(() => {
+      console.log('Calificado');
+    });
   }
 
   close() {
+    console.log(this.providerReview);
+    this.providerReview.serviceRating = 4;
+    this.createReview();
     this.modalController.dismiss();
   }
 }

@@ -5,6 +5,7 @@ import {
   NativeGeocoderResult,
   NativeGeocoderOptions,
 } from '@ionic-native/native-geocoder/ngx';
+import { ModalController } from '@ionic/angular';
 
 declare var google;
 
@@ -19,12 +20,15 @@ export class MapsComponent implements OnInit {
   address: string;
   latitude: number;
   longitude: number;
+  newProvider;
   constructor(
     private geolocation: Geolocation,
-    private nativeGeocoder: NativeGeocoder
+    private nativeGeocoder: NativeGeocoder,
+    private modalController: ModalController
   ) {}
 
   ngOnInit(): void {
+    if (this.newProvider) console.log(this.newProvider);
     this.loadMap();
   }
   loadMap() {
@@ -68,6 +72,8 @@ export class MapsComponent implements OnInit {
 
   getAddressFromCoords(lattitude, longitude) {
     console.log('getAddressFromCoords ' + lattitude + ' ' + longitude);
+    this.newProvider.latitud = lattitude;
+    this.newProvider.longitud = longitude;
     let options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5,
@@ -90,5 +96,9 @@ export class MapsComponent implements OnInit {
       .catch((error: any) => {
         this.address = 'Address Not Available!';
       });
+  }
+
+  close() {
+    this.modalController.dismiss(true);
   }
 }

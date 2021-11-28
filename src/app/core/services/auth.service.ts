@@ -13,6 +13,8 @@ import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Capacitor } from '@capacitor/core';
+import { UiService } from './ui.service';
+import { TabsService } from 'src/app/public/tabs/services/tabs.service';
 
 const TOKEN_KEY = 'authToken';
 const USER_KEY = 'currentUser';
@@ -29,7 +31,9 @@ export class AuthService {
   rootUrl = '';
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private uiService: UiService,
+    private tabService: TabsService
   ) {
     if (Capacitor.isNativePlatform()) {
       // Platform is mobile
@@ -42,7 +46,6 @@ export class AuthService {
   }
 
   async loadToken() {
-    // await this.setCurrentUser();
     const token = await Storage.get({ key: TOKEN_KEY });
     if (token && token.value) {
       this.token = token.value;
@@ -73,8 +76,15 @@ export class AuthService {
   // }
   login(user: User): Observable<any> {
     return this.http.post(this.rootUrl + '/api/User/Login', user).pipe(
-      tap((response) => {
-        this.isAuthenticated.next(true);
+      tap(async (response) => {
+        if (response.result == 'emailnotconfirmed') {
+          this.uiService.presentAlert(
+            'Aún no se ha confirmado el correo',
+            'Correo sin verficar'
+          );
+          return false;
+        }
+
         Storage.set({
           key: TOKEN_KEY,
           value: JSON.parse(response.result).token,
@@ -83,6 +93,8 @@ export class AuthService {
           key: USER_KEY,
           value: JSON.stringify(JSON.parse(response.result).accountObj),
         });
+        await this.setCurrentUser();
+        this.isAuthenticated.next(true);
         this.user = this.getUser(response.result);
         this.loadToken();
       })
@@ -99,10 +111,15 @@ export class AuthService {
     return Storage.get({ key: USER_KEY });
   }
 
-  logout() {
+  getLoggedUser() {
+    return this.user;
+  }
+
+  async logout() {
     this.isAuthenticated.next(false);
-    let deleteUserSession = Storage.remove({ key: USER_KEY });
-    let deleteTokenSession = Storage.remove({ key: TOKEN_KEY });
+    //this.tabService.resetUserEvents();
+    const deleteUserSession = await Storage.remove({ key: USER_KEY });
+    const deleteTokenSession = await Storage.remove({ key: TOKEN_KEY });
     return Promise.all([deleteUserSession, deleteTokenSession]);
   }
 

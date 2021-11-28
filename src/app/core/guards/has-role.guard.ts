@@ -20,7 +20,6 @@ export class HasRoleGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('Estas tocandome');
     const getUser = this.authService.getCurrentUser().then((user) => {
       let currentUser = JSON.parse(user.value);
       if (!currentUser) {
@@ -28,6 +27,7 @@ export class HasRoleGuard implements CanActivate {
         return false;
       }
       const isAuthorized = currentUser.Role == route.data.role;
+      console.log(currentUser.Role);
       console.log(isAuthorized);
       if (!isAuthorized) {
         this.navCtrl.navigateForward('/tabs/calendar');

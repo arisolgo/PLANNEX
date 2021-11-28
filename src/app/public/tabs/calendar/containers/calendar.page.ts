@@ -127,11 +127,12 @@ export class CalendarPage {
     // this.tabsService.getUserScheduledServices(this.eventSource);
     // this.getScheduledServices();
 
-    this.eventSource = this.tabsService.userEvents.value;
+    this.loadEvents();
   }
 
-  ionViewDidLoad() {
-    this.eventSource = this.tabsService.userEvents.value;
+  ionViewDidEnter() {
+    this.loadEvents();
+    this.getScheduledServices();
     this.myCal.update();
   }
 
@@ -205,10 +206,10 @@ export class CalendarPage {
 
   loadEvents(): void {
     this.eventSource = [];
-    this.eventSource = this.tabsService.userEvents.value;
-    this.myCal.loadEvents();
-
-    console.log(this.eventSource);
+    this.tabsService.userEvents.subscribe((result) => {
+      this.eventSource = result;
+      this.myCal.loadEvents();
+    });
   }
 
   getScheduledServices() {}

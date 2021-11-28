@@ -56,14 +56,21 @@ export class EditServicesComponent implements OnInit {
 
   setServicesToAdd() {
     let registered = false;
-    this.services.forEach((service) => {
-      this.providerServices.forEach((providerService) => {
-        if (service.id === providerService.serviceId) {
-          console.log('SERVICE:', service, 'PROVIDER SERVICE', providerService);
-          this.servicesAdded.push(service);
-        }
+    if (this.providerServices) {
+      this.services.forEach((service) => {
+        this.providerServices.forEach((providerService) => {
+          if (service.id === providerService.serviceId) {
+            console.log(
+              'SERVICE:',
+              service,
+              'PROVIDER SERVICE',
+              providerService
+            );
+            this.servicesAdded.push(service);
+          }
+        });
       });
-    });
+    }
 
     if (this.servicesAdded.length > 0) {
       this.services.forEach((service) => {
@@ -71,6 +78,8 @@ export class EditServicesComponent implements OnInit {
           this.servicesToAdd.push(service);
         }
       });
+    } else {
+      this.servicesToAdd = this.services;
     }
   }
 
@@ -158,10 +167,10 @@ export class EditServicesComponent implements OnInit {
         );
     }
 
-    this.close();
+    this.close(true);
   }
 
-  close() {
-    this.modalController.dismiss();
+  close(success?) {
+    this.modalController.dismiss(true);
   }
 }

@@ -5,12 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { IonRadioGroup, NavController } from '@ionic/angular';
+import { IonRadioGroup, ModalController, NavController } from '@ionic/angular';
 // import { AuthenticateService } from '../services/authenticate.service';
 import { Storage } from '@ionic/storage';
 import { Response } from 'src/app/core/models/models';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UiService } from 'src/app/core/services/ui.service';
+import { MapsComponent } from 'src/app/core/shared/components/maps/maps.component';
 
 @Component({
   selector: 'app-register',
@@ -50,7 +51,8 @@ export class RegisterPage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController,
     private storage: Storage,
-    private uiService: UiService
+    private uiService: UiService,
+    private modalCtrl: ModalController
   ) {
     this.registerForm = this.formBuilder.group({
       nombre: new FormControl('', Validators.compose([Validators.required])),
@@ -138,25 +140,25 @@ export class RegisterPage implements OnInit {
           celular: userData.celular.toString(),
           sexo: userData.sexo,
           status: 1,
+          emailConfirmed: 1,
           role: this.selectedRole,
         })
         .subscribe(
           (response: Response) => {
-            console.log(response.result);
-            this.navCtrl.navigateBack('/login');
+            this.pickUpLocation(response.result);
           },
           (errorResponse) => {
             console.log(errorResponse);
-            if (
-              errorResponse.error.errorMessages[0].includes(
-                'System.ArgumentException: Ya existe una cuenta con correo'
-              )
-            ) {
-              this.uiService.presentAlert(
-                'Ya existe un usuario con correo ' + userData.email,
-                'Cuenta Duplicada'
-              );
-            }
+            // if (
+            //   errorResponse.error.errorMessages[0].includes(
+            //     'System.ArgumentException: Ya existe una cuenta con correo'
+            //   )
+            // ) {
+            //   this.uiService.presentAlert(
+            //     'Ya existe un usuario con correo ' + userData.email,
+            //     'Cuenta Duplicada'
+            //   );
+            // }
           }
         );
     }
@@ -165,5 +167,22 @@ export class RegisterPage implements OnInit {
   setRole(event) {
     this.selectedRole = event.detail.value;
     console.log(this.selectedRole);
+  }
+
+  async pickUpLocation(newUser) {
+    const modal = await this.modalCtrl.create({
+      component: MapsComponent,
+      componentProps: {
+        newProvider: newUser,
+      },
+    });
+
+    await modal.present();
+
+    modal.onWillDismiss().then((modal) => {
+      if (modal.data) {
+        this.navCtrl.navigateBack('/login');
+      }
+    });
   }
 }

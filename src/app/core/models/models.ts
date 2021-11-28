@@ -43,6 +43,7 @@ export interface Provider {
   profilePicture?: string;
   role: number;
   rating?: number;
+  emailConfirmed?: number;
   providerReviews?: ProviderReview[];
 }
 
@@ -50,9 +51,8 @@ export interface ProviderReview {
   id?: number;
   proveedorId: number;
   clienteId: number;
-  comentarioId?: number;
   serviceRating: number;
-  reviewDate: Date;
+  reviewDate?: Date;
   comentario: string;
 }
 

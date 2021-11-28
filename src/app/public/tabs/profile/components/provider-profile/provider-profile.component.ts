@@ -84,6 +84,7 @@ export class ProviderProfileComponent implements OnInit {
     private typeService: TiposService
   ) {}
   ngOnInit() {
+    this.providerServices = [];
     console.log('CURRENT PROVIDER:', this.currentProvider);
     this.providerOutput.next(this.currentProvider);
 
@@ -160,12 +161,15 @@ export class ProviderProfileComponent implements OnInit {
   }
 
   setServices(providerServices: ProviderService[]) {
+    console.log(this.providerServices);
     providerServices.forEach((element: ProviderService) => {
       this.servicioService
         .getApiServicesId(element.serviceId)
         .subscribe((response: Response) => {
           element.serviceName = response.result.description;
+
           this.providerServices.push(element);
+
           this.providerServicesOutput.next(this.providerServices);
         });
     });
@@ -290,6 +294,13 @@ export class ProviderProfileComponent implements OnInit {
     });
 
     await modal.present();
+
+    modal.onWillDismiss().then((modal) => {
+      if (modal.data) {
+        this.providerServices = [];
+        this.getServices(this.currentProvider.Id);
+      }
+    });
   }
 
   async openAddressModal() {

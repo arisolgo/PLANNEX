@@ -1,11 +1,11 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button *ngIf="currentRole == 1" tab="home">
+    <ion-tab-button *ngIf="(currentRole | async) == 1" tab="home">
       <ion-icon name="home"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button *ngIf="currentRole == 1" tab="map">
+    <ion-tab-button *ngIf="(currentRole | async) == 1" tab="map">
       <ion-icon name="search"></ion-icon>
       <ion-label>Búsqueda</ion-label>
     </ion-tab-button>

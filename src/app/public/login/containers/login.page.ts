@@ -10,6 +10,7 @@ import { Response } from 'src/app/core/models/models';
 import { UserService } from 'src/app/core/services/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Storage } from '@capacitor/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -62,7 +64,7 @@ export class LoginPage implements OnInit {
           // );
           console.log(response);
 
-          this.navCtrl.navigateForward('/tabs/home');
+          this.router.navigateByUrl('/tabs');
         },
         (error) => {
           console.error(error);

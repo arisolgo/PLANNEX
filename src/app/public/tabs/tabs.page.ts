@@ -23,7 +23,8 @@ import { PutService } from 'src/app/core/services/put.service';
 import { AlertController } from '@ionic/angular';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ProviderReviewComponent } from './provider-review/provider-review.component';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-tabs',
@@ -40,11 +41,10 @@ export class TabsPage implements OnInit {
     private uiService: UiService,
     private putService: PutService,
     private alertCtrl: AlertController,
-    private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private modalController: ModalController // private routerOutlet: IonRouterOutlet
   ) {}
   currentUser = this.authService.getCurrentUser();
-  currentRole = 0;
+  currentRole: BehaviorSubject<number> = new BehaviorSubject(0);
   todayService: BehaviorSubject<ScheduledService> = new BehaviorSubject(null);
   devicePushToken = '';
   lateAdvise = false;
@@ -55,7 +55,9 @@ export class TabsPage implements OnInit {
     this.setPushNotifications();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
+    this.currentUser = this.authService.getCurrentUser();
+    console.log('TABS IONVIEWWILLENTER');
     this.getUserScheduledServices();
     let pushGeoLocOnBackground = this.todayService.pipe(
       switchMap(async (todayService) => {
@@ -176,11 +178,12 @@ export class TabsPage implements OnInit {
 
   getUserScheduledServices() {
     this.tabService.resetUserEvents();
+    console.log(this.currentUser);
     this.currentUser.then((user) => {
       let userObj = JSON.parse(user.value);
-      this.currentRole = userObj.Role;
 
-      if (this.currentRole == 1) {
+      this.currentRole.next(userObj.Role);
+      if (userObj.Role == 1) {
         this.scheduledServices
           .getApiScheduledServiceClientIdGetScheduledServicesByClientId(
             userObj.Id
@@ -227,7 +230,7 @@ export class TabsPage implements OnInit {
                   todayService = element;
                   this.todayService.next(element);
                 }
-              } else if (element.status == 2) {
+              } else if (element.status == 2 && element.rating == 0) {
                 this.openReviewModal(element, providerName);
               }
             });
@@ -236,7 +239,7 @@ export class TabsPage implements OnInit {
               this.startTrackPosition(todayService);
             }
           });
-      } else if (this.currentRole == 2) {
+      } else if (userObj.Role == 2) {
         this.scheduledServices
           .getApiScheduledServiceProviderIdGetScheduledServicesByProviderId(
             userObj.Id
@@ -296,8 +299,9 @@ export class TabsPage implements OnInit {
   }
 
   async openReviewModal(scheduledService, providerName) {
+    console.log(scheduledService);
     const modal = await this.modalController.create({
-      presentingElement: this.routerOutlet.nativeEl,
+      // presentingElement: this.routerOutlet.nativeEl,
       component: ProviderReviewComponent,
       componentProps: {
         client: this.currentUser,
