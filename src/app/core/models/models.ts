@@ -54,6 +54,7 @@ export interface ProviderReview {
   serviceRating: number;
   reviewDate?: Date;
   comentario: string;
+  scheduledServiceId: number;
 }
 
 export interface ProviderService {

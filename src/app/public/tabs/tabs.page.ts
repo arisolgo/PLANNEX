@@ -160,20 +160,24 @@ export class TabsPage implements OnInit {
       (notification: PushNotificationSchema) => {
         //alert('Push received: ' + JSON.stringify(notification));
         if (!this.lateAdvise) {
-          if (notification.body.includes('un poco alejado')) {
-            this.lateAdvise = true;
-            this.uiService.presentAlert(
-              notification.body,
-              'Retrasado?',
-              'Ya casi tienes que estar recibiendo tu servicio de hoy.',
-              {
-                text: 'Cancelar',
-                handler: () => {
-                  this.openCancelAlert();
-                },
+          this.currentRole.subscribe((result) => {
+            if (result == 1) {
+              if (notification.body.includes('un poco alejado')) {
+                this.lateAdvise = true;
+                this.uiService.presentAlert(
+                  notification.body,
+                  'Retrasado?',
+                  'Ya casi tienes que estar recibiendo tu servicio de hoy.',
+                  {
+                    text: 'Cancelar',
+                    handler: () => {
+                      this.openCancelAlert();
+                    },
+                  }
+                );
               }
-            );
-          }
+            }
+          });
         }
       }
     );
@@ -200,7 +204,6 @@ export class TabsPage implements OnInit {
             userObj.Id
           )
           .subscribe((response: Response) => {
-            console.log('ALELUTA', response);
             let hasServiceToday = false;
             let todayService: ScheduledService;
             response.result.forEach((element: ScheduledService) => {

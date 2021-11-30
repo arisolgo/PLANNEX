@@ -28,6 +28,7 @@ export class ProviderReviewComponent implements OnInit {
     clienteId: 0,
     serviceRating: 0,
     comentario: '',
+    scheduledServiceId: 0,
   };
 
   ngOnInit() {
@@ -38,8 +39,8 @@ export class ProviderReviewComponent implements OnInit {
     console.log(this.client);
     console.log(this.scheduledService);
     console.log(this.providerName);
-    this.providerReview.clienteId = this.client.Id;
-    this.providerReview.proveedorId = this.providerReview.proveedorId;
+    this.providerReview.clienteId = this.scheduledService.clientId;
+    this.providerReview.proveedorId = this.scheduledService.providerId;
 
     console.log(this.providerReview);
   }
@@ -48,19 +49,24 @@ export class ProviderReviewComponent implements OnInit {
     this.providerReview.comentario = event.detail.value;
   }
 
-  setRating(event) {
-    this.providerReview.serviceRating = event.detail.value;
-  }
-
   createReview() {
+    this.providerReview.scheduledServiceId = this.scheduledService.id;
+    console.log('antes de enviar', this.providerReview);
     this.postService.createProviderReview(this.providerReview).subscribe(() => {
       console.log('Calificado');
     });
   }
 
-  close() {
-    console.log(this.providerReview);
+  close(skip?: boolean) {
+    if (skip) {
+      this.providerReview.serviceRating = 4;
+      this.providerReview.comentario = 'Que malo! Jesu!';
+    }
     this.createReview();
     this.modalController.dismiss();
+  }
+
+  setRating(event) {
+    this.providerReview.serviceRating = event.detail.value;
   }
 }

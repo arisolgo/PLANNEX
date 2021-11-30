@@ -51,7 +51,10 @@ export class EditAppointmentComponent implements OnInit {
   }
 
   completeOrder() {
-    if (this.scheduledService.scheduledDate.getTime() > new Date().getTime()) {
+    if (
+      new Date(this.scheduledService.scheduledDate).getTime() >
+      new Date().getTime()
+    ) {
       this.uiService.presentAlert(
         'Para completar una orden debe esperar a la fecha y hora de agendado.',
         'Aún no puedes completar este servicio',

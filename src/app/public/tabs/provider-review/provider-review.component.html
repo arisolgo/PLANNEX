@@ -1,5 +1,5 @@
-<ion-content>
-  <ion-button shape="round" color="black" type="button" (click)="close()"
+<!-- <ion-content>
+  <ion-button shape="round" color="black" type="button" (click)="close(true)"
     >Close
   </ion-button>
   <h1>Reseña</h1>
@@ -64,6 +64,92 @@
       (click)="createReview()"
     >
       Save
+    </ion-button>
+  </div>
+</ion-content> -->
+<div class="cart-header">
+  <ion-button (click)="close(true)" slot="end">
+    <ion-icon fill="clear" slot="icon-only" name="close-outline"></ion-icon>
+  </ion-button>
+</div>
+
+<ion-content>
+  <h3 class="content-title">Califica tu servicio con {{ providerName }}:</h3>
+  <ion-list>
+    <ion-radio-group #paymentRadioGroup (ionChange)="setRating($event)">
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>1</p>
+            <div class="selection-radio">
+              <ion-radio value="1" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>2</p>
+            <div class="selection-radio">
+              <ion-radio value="2" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>3</p>
+            <div class="selection-radio">
+              <ion-radio value="3" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>4</p>
+            <div class="selection-radio">
+              <ion-radio value="4" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+
+      <ion-item>
+        <ion-card>
+          <ion-card-content>
+            <p>5</p>
+            <div class="selection-radio">
+              <ion-radio value="5" slot="end" color="success"></ion-radio>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-radio-group>
+    <ion-item>
+      <ion-label position="floating">Comentario</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="providerReview.comentario"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="selection-btn-container">
+    <ion-button
+      expand="block"
+      [disabled]="providerReview.serviceRating == 0"
+      fill="solid"
+      (click)="close()"
+      shape="round"
+    >
+      Calificar
     </ion-button>
   </div>
 </ion-content>
