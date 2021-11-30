@@ -71,7 +71,7 @@ export class AppointmentConfirmationPage implements OnInit {
           status: 1,
           scheduledProviderServices: postServices,
           providerId: this.currentProvider.id,
-          clientId: 6,
+          clientId: this.currentUser.Id,
         })
         .subscribe(() => {
           console.log(this.selectedTimeSlot.value);
@@ -80,7 +80,7 @@ export class AppointmentConfirmationPage implements OnInit {
             3000,
             'top'
           );
-          this.navController.navigateRoot(['/tabs/home']);
+          this.navController.navigateRoot(['/tabs']);
         });
     }
   }
@@ -142,7 +142,7 @@ export class AppointmentConfirmationPage implements OnInit {
                 3000,
                 'top'
               );
-              this.navController.navigateRoot(['/home']);
+              this.navController.navigateRoot(['/tabs']);
             },
           });
         }

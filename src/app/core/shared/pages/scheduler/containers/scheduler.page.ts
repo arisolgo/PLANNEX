@@ -141,7 +141,12 @@ export class SchedulerPage implements OnInit {
       .minute(endTime.minutes);
 
     while (now.diff(deadLine) < 0) {
-      if (now >= moment(now).hour(startTime.hours)) {
+      let nowT = new Date();
+      let nowTime = moment(nowT.toISOString()).format('HH:mm:ss a');
+      var startT = moment(nowTime, 'HH:mm:ss a');
+      var endT = moment(now, 'HH:mm:ss a');
+      let dur = moment.duration(endT.diff(startT));
+      if (now >= moment(now).hour(startTime.hours) && dur.minutes() > 10) {
         this.availableSpaces.push({ value: now.toDate(), selected: false });
       }
       let duration = 0;
@@ -150,19 +155,27 @@ export class SchedulerPage implements OnInit {
       });
       now.add(duration, 'minutes');
     }
+
     this.setServicesSpaces();
   }
 
   setServicesSpaces() {
-    this.providerScheduledServices.value.forEach((service) => {
-      for (let i = 0; i < this.availableSpaces.length; i++) {
-        if (
-          new Date(service.scheduledDate) <= this.availableSpaces[i].value &&
-          this.availableSpaces[i].value <= new Date(service.scheduledEndDate)
-        ) {
-          this.availableSpaces.splice(i - 1, 2);
+    this.providerScheduledServices.subscribe((result) => {
+      result.forEach((service) => {
+        console.log('SERVICIO', service);
+        for (let i = 0; i < this.availableSpaces.length; i++) {
+          console.log('TIMESLOT', this.availableSpaces[i]);
+
+          if (
+            new Date(service.scheduledDate) <= this.availableSpaces[i].value &&
+            this.availableSpaces[i].value <=
+              new Date(service.scheduledEndDate) &&
+            service.status < 3
+          ) {
+            this.availableSpaces.splice(i - 1, 2);
+          }
         }
-      }
+      });
     });
   }
 
@@ -176,11 +189,14 @@ export class SchedulerPage implements OnInit {
       )
     ).subscribe((response: Response[]) => {
       this.providerAvailabilities.next(response[1].result);
-      this.providerScheduledServices.next(
-        response[0].result.filter((element) => {
-          element.status == 1;
-        })
-      );
+      let filterScheduledServices = [];
+      response[0].result.forEach((element) => {
+        // if (element.status !== 3) {
+        filterScheduledServices.push(element);
+        // }
+      });
+      console.log('ScheduledServices timeslots', filterScheduledServices);
+      this.providerScheduledServices.next(filterScheduledServices);
       this.getDayAvailability(date);
     });
   }

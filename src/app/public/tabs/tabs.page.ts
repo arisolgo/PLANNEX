@@ -25,6 +25,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 import { ProviderReviewComponent } from './provider-review/provider-review.component';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@capacitor/storage';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tabs',
@@ -96,13 +97,23 @@ export class TabsPage implements OnInit {
             if (response.result) {
               this.stopTrackPosition(callBackId);
             }
-            let dateData = new Date(todayService.scheduledEndDate);
+            let dateData = new Date(todayService.scheduledDate);
             let now = new Date();
+            let scheduledTime = moment(dateData.toISOString()).format(
+              'HH:mm:ss a'
+            );
+            let nowTime = moment(now.toISOString()).format('HH:mm:ss a');
+            var startTime = moment(nowTime, 'HH:mm:ss a');
+            var endTime = moment(scheduledTime, 'HH:mm:ss a');
+            let duration = moment.duration(endTime.diff(startTime));
+            console.log(duration.minutes());
+
             if (
               dateData.getFullYear() === now.getFullYear() &&
               dateData.getMonth() === now.getMonth() &&
               dateData.getDay() === now.getDay() &&
-              dateData.getHours() <= now.getHours()
+              dateData.getHours() <= now.getHours() &&
+              duration.minutes() <= 0
             ) {
               await this.stopTrackPosition(callBackId);
             }
@@ -153,7 +164,7 @@ export class TabsPage implements OnInit {
             this.lateAdvise = true;
             this.uiService.presentAlert(
               notification.body,
-              'Retardado?',
+              'Retrasado?',
               'Ya casi tienes que estar recibiendo tu servicio de hoy.',
               {
                 text: 'Cancelar',
@@ -189,6 +200,7 @@ export class TabsPage implements OnInit {
             userObj.Id
           )
           .subscribe((response: Response) => {
+            console.log('ALELUTA', response);
             let hasServiceToday = false;
             let todayService: ScheduledService;
             response.result.forEach((element: ScheduledService) => {
@@ -217,12 +229,20 @@ export class TabsPage implements OnInit {
                 this.tabService.addUserEvent(newEvent);
                 let dateData = new Date(element.scheduledDate);
                 let now = new Date();
+                let scheduledTime = moment(dateData.toISOString()).format(
+                  'HH:mm:ss a'
+                );
+                let nowTime = moment(now.toISOString()).format('HH:mm:ss a');
+                var startTime = moment(nowTime, 'HH:mm:ss a');
+                var endTime = moment(scheduledTime, 'HH:mm:ss a');
+                let duration = moment.duration(endTime.diff(startTime));
 
                 if (
                   dateData.getFullYear() === now.getFullYear() &&
                   dateData.getMonth() === now.getMonth() &&
                   dateData.getDay() === now.getDay() &&
-                  dateData.getHours() >= now.getHours()
+                  dateData.getHours() >= now.getHours() &&
+                  duration.minutes() > 0
                 ) {
                   console.log(dateData.getHours(), dateData.getMinutes());
                   console.log(now.getHours(), now.getMinutes());

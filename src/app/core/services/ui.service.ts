@@ -16,15 +16,21 @@ export class UiService {
     subHeader?: string,
     button?: AlertButton
   ) {
-    const alert = await this.alertController.create({
-      header: header,
-      subHeader: subHeader,
-      message: message,
-      buttons: ['OK', button],
-    });
+    const alert = button
+      ? await this.alertController.create({
+          header: header,
+          subHeader: subHeader,
+          message: message,
+          buttons: ['OK', button],
+        })
+      : await this.alertController.create({
+          header: header,
+          subHeader: subHeader,
+          message: message,
+          buttons: ['OK'],
+        });
     await alert.present();
   }
-
   async presentToast(message: string, duration: number, position) {
     const toast = await this.toastController.create({
       message: message,

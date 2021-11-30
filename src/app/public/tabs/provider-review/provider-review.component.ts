@@ -53,18 +53,13 @@ export class ProviderReviewComponent implements OnInit {
   }
 
   createReview() {
-    this.scheduledService.rating = this.providerReview.serviceRating;
-    zip(
-      this.postService.createProviderReview(this.providerReview),
-      this.putService.updateScheduledService(this.scheduledService)
-    ).subscribe(() => {
+    this.postService.createProviderReview(this.providerReview).subscribe(() => {
       console.log('Calificado');
     });
   }
 
   close() {
     console.log(this.providerReview);
-    this.providerReview.serviceRating = 4;
     this.createReview();
     this.modalController.dismiss();
   }

@@ -133,7 +133,7 @@ export class CalendarPage {
   ionViewDidEnter() {
     this.loadEvents();
     this.getScheduledServices();
-    this.myCal.update();
+    //this.myCal.update();
   }
 
   getEventSource() {}
