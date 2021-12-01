@@ -43,13 +43,6 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'listing',
-    loadChildren: () =>
-      import('./public/listing/containers/listing.module').then(
-        (m) => m.ListingPageModule
-      ),
-  },
-  {
     path: 'business-detail',
     loadChildren: () =>
       import('./public/business-detail/containers/business-detail.module').then(

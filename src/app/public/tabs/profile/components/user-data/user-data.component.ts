@@ -80,7 +80,7 @@ export class UserDataComponent implements OnInit {
         this.setUser();
         this.userList[0].name = result.data.name;
         this.userList[0].last_name = result.data.last_name;
-        this.userList[0].phone = result.data.celular;
+        this.userList[0].phone = result.data.phone;
       }
     });
   }

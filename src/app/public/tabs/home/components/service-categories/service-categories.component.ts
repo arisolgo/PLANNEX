@@ -7,14 +7,13 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./service-categories.component.scss'],
 })
 export class ServiceCategoriesComponent implements OnInit {
-
   @Input() tipos = [];
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController) {}
 
   ngOnInit() {}
 
-  showProvider(tipo){
-    this.navCtrl.navigateForward('/listing', {state: tipo});
+  showProvider(tipo) {
+    console.log(tipo);
+    this.navCtrl.navigateForward(`/tabs/listing/${tipo.id}`);
   }
-
 }

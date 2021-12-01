@@ -28,6 +28,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'listing/:tipoId',
+        loadChildren: () =>
+          import('../tabs/listing/containers/listing.module').then(
+            (m) => m.ListingPageModule
+          ),
+      },
+      {
         path: 'calendar',
         loadChildren: () =>
           import('../tabs/calendar/containers/calendar.module').then(

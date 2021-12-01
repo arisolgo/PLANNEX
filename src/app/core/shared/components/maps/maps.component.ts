@@ -99,6 +99,6 @@ export class MapsComponent implements OnInit {
   }
 
   close() {
-    this.modalController.dismiss(true);
+    this.modalController.dismiss(this.newProvider);
   }
 }

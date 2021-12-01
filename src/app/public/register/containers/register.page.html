@@ -27,6 +27,20 @@
           <ion-radio value="2"></ion-radio>
         </ion-item>
       </ion-radio-group>
+      <ion-item *ngIf="selectedRole==2">
+        <ion-label>Categorías</ion-label>
+        <ion-select
+          multiple="true"
+          [(ngModel)]="chosenTypes"
+          [ngModelOptions]="{standalone: true}"
+          cancelText="Cancelar"
+          okText="Seleccionar"
+        >
+          <ion-select-option *ngFor="let type of tipos" [value]="type.id"
+            >{{type.nombre}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
       <div class="input-container">
         <ion-item>
           <ion-label position="floating">Nombres</ion-label>
@@ -198,7 +212,7 @@
             expand="full"
             shape="round"
             color="success"
-            [disabled]="!registerForm.valid || selectedRole ==0"
+            [disabled]="!registerForm.valid || selectedRole ==0 || chosenTypes.length == 0"
             type="submit"
           >
             Registrarme

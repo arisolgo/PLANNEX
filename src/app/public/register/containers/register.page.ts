@@ -8,8 +8,12 @@ import {
 import { IonRadioGroup, ModalController, NavController } from '@ionic/angular';
 // import { AuthenticateService } from '../services/authenticate.service';
 import { Storage } from '@ionic/storage';
+import { forkJoin } from 'rxjs';
 import { Response } from 'src/app/core/models/models';
+import { TiposService } from 'src/app/core/services/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { PostService } from 'src/app/core/services/post.service';
+import { PutService } from 'src/app/core/services/put.service';
 import { UiService } from 'src/app/core/services/ui.service';
 import { MapsComponent } from 'src/app/core/shared/components/maps/maps.component';
 
@@ -46,13 +50,18 @@ export class RegisterPage implements OnInit {
     { id: 3, name: 'Perú' },
   ];
   selectedRole = 0;
+  tipos = [];
+  chosenTypes = [];
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private navCtrl: NavController,
     private storage: Storage,
     private uiService: UiService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private tipoService: TiposService,
+    private postService: PostService,
+    private putService: PutService
   ) {
     this.registerForm = this.formBuilder.group({
       nombre: new FormControl('', Validators.compose([Validators.required])),
@@ -82,7 +91,11 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.tipoService.getApiTipos().subscribe((result: Response) => {
+      this.tipos = result.result;
+    });
+  }
 
   register(userData) {
     if (this.selectedRole == 1) {
@@ -135,7 +148,7 @@ export class RegisterPage implements OnInit {
           ciudad: userData.ciudad,
           pais: userData.pais,
           latitud: 35.65464,
-          longitud: 212.545,
+          longitud: -32.545,
           telefono: userData.telefono.toString(),
           celular: userData.celular.toString(),
           sexo: userData.sexo,
@@ -145,20 +158,30 @@ export class RegisterPage implements OnInit {
         })
         .subscribe(
           (response: Response) => {
+            this.chosenTypes.forEach((element) => {
+              this.postService
+                .createProviderType({
+                  proveedorId: response.result.id,
+                  tipoId: element,
+                  creatorUserId: response.result.id,
+                })
+                .subscribe(() => {
+                  console.log('Proveedor tipo creado');
+                });
+            });
             this.pickUpLocation(response.result);
           },
           (errorResponse) => {
-            console.log(errorResponse);
-            // if (
-            //   errorResponse.error.errorMessages[0].includes(
-            //     'System.ArgumentException: Ya existe una cuenta con correo'
-            //   )
-            // ) {
-            //   this.uiService.presentAlert(
-            //     'Ya existe un usuario con correo ' + userData.email,
-            //     'Cuenta Duplicada'
-            //   );
-            // }
+            if (
+              errorResponse.error.errorMessages[0].includes(
+                'System.ArgumentException: Ya existe una cuenta con correo'
+              )
+            ) {
+              this.uiService.presentAlert(
+                'Ya existe un usuario con correo ' + userData.email,
+                'Cuenta Duplicada'
+              );
+            }
           }
         );
     }
@@ -181,7 +204,9 @@ export class RegisterPage implements OnInit {
 
     modal.onWillDismiss().then((modal) => {
       if (modal.data) {
-        this.navCtrl.navigateBack('/login');
+        this.putService.updateProvider(modal.data).subscribe(() => {
+          this.navCtrl.navigateBack('/login');
+        });
       }
     });
   }
