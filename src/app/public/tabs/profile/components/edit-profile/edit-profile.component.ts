@@ -57,7 +57,7 @@ export class EditProfileComponent implements OnInit {
     if (skip) {
       this.update();
     }
-    this.modalController.dismiss();
+    this.modalController.dismiss(this.userList[0]);
   }
 
   update() {

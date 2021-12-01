@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ModalController, NavController } from '@ionic/angular';
+import {
+  IonRouterOutlet,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { TabsService } from '../../../services/tabs.service';
@@ -10,6 +14,7 @@ import {
   ScheduledServiceService,
 } from 'src/app/core/services/api/services';
 import { Response } from 'src/app/core/models/models';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-user-data',
@@ -24,10 +29,13 @@ export class UserDataComponent implements OnInit {
     private router: Router,
     private tabService: TabsService,
     private scheduledServices: ScheduledServiceService,
-    private clientService: ClientesService
+    private clientService: ClientesService,
+    private routerOutlet: IonRouterOutlet
   ) {}
 
   @Input() currentClient: any = {};
+  currentUser: any;
+  getUser = this.authService.getCurrentUser();
   userList: any[] = [
     {
       name: '',
@@ -45,6 +53,35 @@ export class UserDataComponent implements OnInit {
   logout() {
     this.authService.logout().then(() => {
       this.router.navigateByUrl('/login');
+    });
+  }
+
+  async setUser() {
+    this.getUser = this.authService.getCurrentUser();
+    await this.getUser.then((user) => {
+      this.currentUser = JSON.parse(user.value);
+      console.log(this.currentUser);
+    });
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      presentingElement: this.routerOutlet.nativeEl,
+      component: EditProfileComponent,
+      componentProps: {
+        currentClient: this.currentUser,
+      },
+    });
+
+    await modal.present();
+
+    modal.onWillDismiss().then((result) => {
+      if (result.data) {
+        this.setUser();
+        this.userList[0].name = result.data.name;
+        this.userList[0].last_name = result.data.last_name;
+        this.userList[0].phone = result.data.celular;
+      }
     });
   }
 
@@ -80,10 +117,8 @@ export class UserDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setClientInfo();
-    console.log('CURRENT CLIENT:', this.currentClient);
-  }
-  ionWillEnter() {
+    this.setUser();
+    console.log(this.currentClient);
     this.setClientInfo();
   }
 }

@@ -21,23 +21,15 @@ export class ProfilePage {
   getUser = this.authService.getCurrentUser();
   currentUser: any;
 
-  async openModal() {
-    const modal = await this.modalController.create({
-      presentingElement: this.routerOutlet.nativeEl,
-      component: EditProfileComponent,
-      componentProps: {
-        currentClient: this.currentUser,
-      },
-    });
-
-    await modal.present();
+  async ionViewWillEnter() {
+    this.setUser();
   }
 
-  async ionViewWillEnter() {
+  async setUser() {
     this.getUser = this.authService.getCurrentUser();
     await this.getUser.then((user) => {
       this.currentUser = JSON.parse(user.value);
-      console.log('THIS USER', this.currentUser);
+      console.log(this.currentUser);
     });
   }
   logout() {

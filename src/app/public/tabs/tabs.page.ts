@@ -58,7 +58,6 @@ export class TabsPage implements OnInit {
 
   ionViewWillEnter() {
     this.currentUser = this.authService.getCurrentUser();
-    console.log('TABS IONVIEWWILLENTER');
     this.getUserScheduledServices();
     let pushGeoLocOnBackground = this.todayService.pipe(
       switchMap(async (todayService) => {
@@ -207,7 +206,6 @@ export class TabsPage implements OnInit {
             let hasServiceToday = false;
             let todayService: ScheduledService;
             response.result.forEach((element: ScheduledService) => {
-              console.log(element);
               let servicesNames = '';
               let providerName = '';
               let counter = 0;
