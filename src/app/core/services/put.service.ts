@@ -41,8 +41,8 @@ export class PutService {
     );
   }
 
-  updateClient(client: Client) {
-    return this.http.put(this.rootUrl + '/api/Clientes/' + client.id, client);
+  updateClient(client) {
+    return this.http.put(this.rootUrl + '/api/Clientes/' + client.Id, client);
   }
 
   updateAvailability(providerAvailability: ProviderAvailability) {

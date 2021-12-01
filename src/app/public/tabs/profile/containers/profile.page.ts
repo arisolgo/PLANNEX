@@ -20,10 +20,14 @@ export class ProfilePage {
   ) {}
   getUser = this.authService.getCurrentUser();
   currentUser: any;
+
   async openModal() {
     const modal = await this.modalController.create({
       presentingElement: this.routerOutlet.nativeEl,
       component: EditProfileComponent,
+      componentProps: {
+        currentClient: this.currentUser,
+      },
     });
 
     await modal.present();

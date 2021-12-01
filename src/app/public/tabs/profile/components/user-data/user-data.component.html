@@ -1,98 +1,77 @@
 <ion-content>
-  <ion-grid class="main-header">
-    <div align="center">
-      <ion-avatar>
-        <img src="{{ userList[0].profile_pic }}" />
-      </ion-avatar>
-      <ion-label>{{ userList[0].name }} {{ userList[0].last_name }}</ion-label>
-    </div>
-  </ion-grid>
+    <ion-grid class="main-header">
+        <div align="center">
+            <ion-avatar>
+                <img src="{{ userList[0].profile_pic }}" />
+            </ion-avatar>
+            <ion-label>{{ userList[0].name }} {{ userList[0].last_name }}</ion-label>
+        </div>
+    </ion-grid>
 
-  <ion-row class="ion-padding-horizontal">
-    <ion-col size="6">
-      <ion-item lines="none" class="ion-text-center">
-        <ion-icon name="cut" color="primary"></ion-icon>
-        <ion-label>
-          {{ userList[0].citas_realizadas }}
-          <p>Citas realizadas</p>
-        </ion-label>
-      </ion-item>
-    </ion-col>
-    <ion-col size="6">
-      <ion-item lines="none" class="ion-text-center">
-        <ion-icon name="trophy" color="primary"></ion-icon>
-        <ion-label>
-          {{ userList[0].citas_premiadas }}
-          <p>Citas premiadas</p>
-        </ion-label>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+    <ion-row class="ion-padding-horizontal">
+        <ion-col size="6">
+            <ion-item lines="none" class="ion-text-center">
+                <ion-icon name="cut" color="primary"></ion-icon>
+                <ion-label>
+                    {{ userList[0].citas_realizadas }}
+                    <p>Citas realizadas</p>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+        <ion-col size="6">
+            <ion-item lines="none" class="ion-text-center">
+                <ion-icon name="trophy" color="primary"></ion-icon>
+                <ion-label>
+                    {{ userList[0].citas_premiadas }}
+                    <p>Citas premiadas</p>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+    </ion-row>
 
-  <ion-list lines="full" *ngIf="userList[0].role === 'client'">
-    <ion-item>
-      <ion-label>
-        <ion-text>Nombre</ion-text>
-        <p>
-          <ion-text color="dark">{{ userList[0].name }}</ion-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <ion-text>Apellidos</ion-text>
-        <p>
-          <ion-text color="dark">{{ userList[0].last_name }}</ion-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <ion-text>Teléfono</ion-text>
-        <p>
-          <ion-text color="dark">{{ userList[0].phone }}</ion-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <ion-text>Email</ion-text>
-        <p>
-          <ion-text color="dark">{{ userList[0].mail }}</ion-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
+    <ion-list lines="full" *ngIf="userList[0].role === 'client'">
+        <ion-item>
+            <ion-label>
+                <ion-text>Nombres</ion-text>
+                <p>
+                    <ion-text color="dark">{{ userList[0].name }}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Apellidos</ion-text>
+                <p>
+                    <ion-text color="dark">{{ userList[0].last_name }}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Teléfono</ion-text>
+                <p>
+                    <ion-text color="dark">{{ userList[0].phone }}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <ion-text>Email</ion-text>
+                <p>
+                    <ion-text color="dark">{{ userList[0].mail }}</ion-text>
+                </p>
+            </ion-label>
+        </ion-item>
+        <!-- <ion-item>
       <ion-label>
         <ion-text>Fecha de Nacimiento</ion-text>
         <p>
           <ion-text color="dark">{{ userList[0].birthday }}</ion-text>
         </p>
       </ion-label>
-    </ion-item>
-    <ion-button (click)="logout()" expand="block" fill="clear" shape="round">
-      Cerrar Sesion
-    </ion-button>
-  </ion-list>
-
-  <div *ngIf="userList[0].role === 'provider'">
-    <ion-list lines="full">
-      <ion-item>
-        <ion-label>
-          <ion-text>Rating</ion-text>
-          <p>
-            <ion-text color="dark">{{ userList[0].rating }}</ion-text>
-          </p>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-text>Reviews</ion-text>
-          <p>
-            <ion-text color="dark">{{ userList[0].reviews }}</ion-text>
-          </p>
-        </ion-label>
-      </ion-item>
+    </ion-item> -->
+        <ion-button (click)="logout()" expand="block" fill="clear" shape="round">
+            Cerrar Sesion
+        </ion-button>
     </ion-list>
-  </div>
 </ion-content>
