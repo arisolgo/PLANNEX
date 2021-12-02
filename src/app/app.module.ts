@@ -30,7 +30,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
 let rootUrl = '';
 if (Capacitor.isNativePlatform()) {
   // Platform is mobile
-  rootUrl = 'http://192.168.0.18:5000';
+  rootUrl = 'http://plannex-001-site1.itempurl.com';
 } else {
   // Platform is not mobile
   rootUrl = environment.devRootUrl;

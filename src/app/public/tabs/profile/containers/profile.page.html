@@ -2,8 +2,10 @@
   <ion-toolbar>
     <ion-title> Mi Cuenta </ion-title>
     <ion-buttons slot="end">
-      <!-- <ion-button *ngIf="currentUser?.Role == 1" fill="clear" (click)="openModal()">EDIT</ion-button>
-            <ion-button *ngIf="currentUser?.Role == 2" fill="clear" (click)="logout()">Cerrar Sesion</ion-button> -->
+      <!-- <!-- <ion-button *ngIf="currentUser?.Role == 1" fill="clear" (click)="openModal()">EDIT</ion-button> -->
+      <ion-button *ngIf="currentUser?.Role == 2" fill="clear" (click)="logout()"
+        >Cerrar Sesion</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

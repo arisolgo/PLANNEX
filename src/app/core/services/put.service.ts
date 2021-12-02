@@ -20,7 +20,7 @@ export class PutService {
   constructor(private http: HttpClient) {
     if (Capacitor.isNativePlatform()) {
       // Platform is mobile
-      this.rootUrl = 'http://192.168.0.18:5000';
+      this.rootUrl = 'http://plannex-001-site1.itempurl.com';
     } else {
       // Platform is not mobile
       this.rootUrl = environment.devRootUrl;
@@ -34,7 +34,7 @@ export class PutService {
     );
   }
 
-  updateProvider(provider) {
+  updateProvider(provider: Provider) {
     return this.http.put(
       this.rootUrl + '/api/Proveedores/' + provider.id,
       provider

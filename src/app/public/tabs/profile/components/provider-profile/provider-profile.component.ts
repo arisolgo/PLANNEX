@@ -27,7 +27,6 @@ import {
   TiposService,
 } from 'src/app/core/services/api/services';
 import { CartService } from 'src/app/core/services/cart.service';
-import { ShoppingCartComponent } from 'src/app/core/shared/components/shopping-cart/shopping-cart.component';
 import { EditAddressComponent } from '../edit-address/edit-address.component';
 import { EditAvailabilityComponent } from '../edit-availability/edit-availability.component';
 import { EditCategoriesComponent } from '../edit-categories/edit-categories.component';
@@ -280,6 +279,13 @@ export class ProviderProfileComponent implements OnInit {
     });
 
     await modal.present();
+
+    modal.onDidDismiss().then((modal) => {
+      if (modal.data) {
+        this.providerDisponibilidad = [];
+        this.getProviderAvailability(this.currentProvider.Id);
+      }
+    });
   }
 
   async openServicesModal() {
@@ -295,7 +301,7 @@ export class ProviderProfileComponent implements OnInit {
 
     await modal.present();
 
-    modal.onWillDismiss().then((modal) => {
+    modal.onDidDismiss().then((modal) => {
       if (modal.data) {
         this.providerServices = [];
         this.getServices(this.currentProvider.Id);

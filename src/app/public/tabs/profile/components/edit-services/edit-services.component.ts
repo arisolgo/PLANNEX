@@ -11,7 +11,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./edit-services.component.scss'],
 })
 export class EditServicesComponent implements OnInit {
-  @Input('provider') provider;
+  provider;
   @Input('providerServices') providerServices;
   @Input('services') services;
 
@@ -110,6 +110,7 @@ export class EditServicesComponent implements OnInit {
 
   setServicePrice(event) {
     this.serviceSelected.servicePrice = event.detail.value;
+    console.log(this.serviceSelected.servicePrice);
   }
 
   setServiceDuration(event) {
@@ -118,6 +119,7 @@ export class EditServicesComponent implements OnInit {
 
   setServiceToUpdatePrice(event) {
     this.serviceToUpdateSelected.servicePrice = event.detail.value;
+    console.log(this.serviceSelected.servicePrice);
   }
 
   setServiceToUpdateDuration(event) {

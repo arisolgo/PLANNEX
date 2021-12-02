@@ -8,7 +8,7 @@ import { PutService } from 'src/app/core/services/put.service';
   styleUrls: ['./edit-address.component.scss'],
 })
 export class EditAddressComponent implements OnInit {
-  @Input('provider') provider;
+  provider;
 
   address = {
     direccion1: '',

@@ -37,7 +37,7 @@ export class AuthService {
   ) {
     if (Capacitor.isNativePlatform()) {
       // Platform is mobile
-      this.rootUrl = 'http://192.168.0.18:5000';
+      this.rootUrl = 'http://plannex-001-site1.itempurl.com';
     } else {
       // Platform is not mobile
       this.rootUrl = environment.devRootUrl;
