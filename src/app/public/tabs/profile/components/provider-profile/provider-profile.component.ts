@@ -228,38 +228,20 @@ export class ProviderProfileComponent implements OnInit {
     return this.weekday[day];
   }
 
-  getJornadas() {
-    let diffJornadas: any[] = [];
-
-    this.providerDisponibilidad.forEach((element) => {
-      console.log('Jornada Length:', this.jornadas.length);
-      if (this.jornadas.length === 0) {
-        this.jornadas.push(element);
-      } else if (
-        this.jornadas[0].horaDesde.getHours() ===
-          element.horaDesde.getHours() &&
-        this.jornadas[0].horaHasta.getHours() === element.horaHasta.getHours()
-      ) {
-        this.jornadas.push(element);
-      } else {
-        diffJornadas.push(element);
-      }
-    });
-    console.log('JORNADA:', this.jornadas);
-  }
-
   getProviderAvailability(providerId: number) {
     this.providerAvailabilityService
       .getApiProveedorDisponibilidadesProveedorIdGetDisponibilidadByProveedorId(
         providerId
       )
       .subscribe((response: Response) => {
+        console.log('providerId', providerId);
+        console.log('availability backend:', response.result);
         response.result.forEach((element) => {
           let dayString = this.getDays(element.dia);
-          let dateStart = new Date(element.horaDesde);
-          let dateEnd = new Date(element.horaHasta);
-          element.horaDesde = dateStart;
-          element.horaHasta = dateEnd;
+          // let dateStart = element.horaDesde;
+          // let dateEnd = element.horaHasta;
+          // element.horaDesde = dateStart;
+          // element.horaHasta = dateEnd;
           element.dayString = dayString;
           this.providerDisponibilidad.push(element);
         });
@@ -274,18 +256,18 @@ export class ProviderProfileComponent implements OnInit {
       component: EditAvailabilityComponent,
       componentProps: {
         provider: this.currentProvider,
-        availabilities: this.availabilityOutput.getValue(),
+        availabilities: this.availabilityOutput.value,
       },
     });
 
     await modal.present();
 
-    modal.onDidDismiss().then((modal) => {
-      if (modal.data) {
-        this.providerDisponibilidad = [];
-        this.getProviderAvailability(this.currentProvider.Id);
-      }
-    });
+    // modal.onDidDismiss().then((modal) => {
+    //   if (modal.data) {
+    //     this.providerDisponibilidad = [];
+    //     this.getProviderAvailability(this.currentProvider.Id);
+    //   }
+    // });
   }
 
   async openServicesModal() {

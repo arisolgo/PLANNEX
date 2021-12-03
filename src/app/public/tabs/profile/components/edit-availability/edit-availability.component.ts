@@ -139,12 +139,16 @@ export class EditAvailabilityComponent implements OnInit {
   setStart(event, day) {
     console.log('MONDAY START:', event.detail.value);
     this.availabilitySchema[day].horaDesde = event.detail.value;
+    // this.availabilitySchema[day].horaDesde.setHours(
+    //   this.availabilitySchema[day].horaDesde.getHours() - 4
+    // );
     console.log('SCHEMA:', this.availabilitySchema);
   }
 
   setEnd(event, day) {
     console.log('MONDAY START:', event.detail.value);
     this.availabilitySchema[day].horaHasta = event.detail.value;
+
     console.log('SCHEMA:', this.availabilitySchema);
   }
 
@@ -160,14 +164,20 @@ export class EditAvailabilityComponent implements OnInit {
       // })
 
       if (element.works) {
+        let start = new Date(element.horaDesde);
+        let end = new Date(element.horaHasta);
+
+        start.setHours(start.getHours() - 4);
+        end.setHours(end.getHours() - 4);
         let availability = {
           id: element.id,
           proveedorId: this.provider.Id,
           dia: element.dia,
-          horaDesde: new Date(element.horaDesde),
-          horaHasta: new Date(element.horaHasta),
+          horaDesde: start,
+          horaHasta: end,
         };
-        console.log(availability);
+        debugger;
+        console.log('HOUR:', availability);
         this.putService
           .updateAvailability(availability)
           .subscribe((response: Response) => {});
@@ -187,7 +197,7 @@ export class EditAvailabilityComponent implements OnInit {
           );
       }
     });
-
+    debugger;
     this.close();
   }
 
