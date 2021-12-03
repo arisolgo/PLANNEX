@@ -4,7 +4,7 @@
 	"webDir": "www",
 	"server": {
 		"cleartext": true,
-		"url": "http://192.168.0.18:8100"
+		"url": "http://192.168.43.41:8100"
 	},
 	"bundledWebRuntime": false,
 	"cordova": {
