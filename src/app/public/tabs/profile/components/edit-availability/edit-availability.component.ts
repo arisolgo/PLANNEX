@@ -167,6 +167,7 @@ export class EditAvailabilityComponent implements OnInit {
           horaDesde: new Date(element.horaDesde),
           horaHasta: new Date(element.horaHasta),
         };
+        console.log(availability);
         this.putService
           .updateAvailability(availability)
           .subscribe((response: Response) => {});

@@ -26,6 +26,8 @@ import { ProviderReviewComponent } from './provider-review/provider-review.compo
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@capacitor/storage';
 import * as moment from 'moment';
+import { App } from '@capacitor/app';
+import { BackgroundTask } from '@robingenz/capacitor-background-task';
 
 @Component({
   selector: 'app-tabs',
@@ -78,47 +80,59 @@ export class TabsPage implements OnInit {
   }
 
   async startTrackPosition(todayService: ScheduledService) {
-    const callBackId = await Geolocation.watchPosition(
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 5 },
-      (event) => {
-        console.log('evento', event);
-        console.log(todayService);
-        console.log(this.devicePushToken);
-
-        this.postService
-          .compareDistance(
-            this.devicePushToken,
-            todayService,
-            event.coords.latitude,
-            event.coords.longitude
-          )
-          .subscribe(async (response: Response) => {
-            if (response.result) {
-              this.stopTrackPosition(callBackId);
-            }
-            let dateData = new Date(todayService.scheduledDate);
-            let now = new Date();
-            let scheduledTime = moment(dateData.toISOString()).format(
-              'HH:mm:ss a'
-            );
-            let nowTime = moment(now.toISOString()).format('HH:mm:ss a');
-            var startTime = moment(nowTime, 'HH:mm:ss a');
-            var endTime = moment(scheduledTime, 'HH:mm:ss a');
-            let duration = moment.duration(endTime.diff(startTime));
-            console.log(duration.minutes());
-
-            if (
-              dateData.getFullYear() === now.getFullYear() &&
-              dateData.getMonth() === now.getMonth() &&
-              dateData.getDay() === now.getDay() &&
-              dateData.getHours() <= now.getHours() &&
-              duration.minutes() <= 0
-            ) {
-              await this.stopTrackPosition(callBackId);
-            }
-          });
+    App.addListener('appStateChange', async ({ isActive }) => {
+      if (isActive) {
+        return;
       }
-    );
+      // The app state has been changed to inactive.
+      // Start the background task by calling `beforeExit`.
+      const taskId = await BackgroundTask.beforeExit(async () => {
+        // Run your code...
+        const callBackId = await Geolocation.watchPosition(
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 5 },
+          (event) => {
+            console.log('evento', event);
+            console.log(todayService);
+            console.log(this.devicePushToken);
+
+            this.postService
+              .compareDistance(
+                this.devicePushToken,
+                todayService,
+                event.coords.latitude,
+                event.coords.longitude
+              )
+              .subscribe(async (response: Response) => {
+                if (response.result) {
+                  this.stopTrackPosition(callBackId);
+                }
+                let dateData = new Date(todayService.scheduledDate);
+                let now = new Date();
+                let scheduledTime = moment(dateData.toISOString()).format(
+                  'HH:mm:ss a'
+                );
+                let nowTime = moment(now.toISOString()).format('HH:mm:ss a');
+                var startTime = moment(nowTime, 'HH:mm:ss a');
+                var endTime = moment(scheduledTime, 'HH:mm:ss a');
+                let duration = moment.duration(endTime.diff(startTime));
+                console.log(duration.minutes());
+
+                if (
+                  dateData.getFullYear() === now.getFullYear() &&
+                  dateData.getMonth() === now.getMonth() &&
+                  dateData.getDay() === now.getDay() &&
+                  dateData.getHours() <= now.getHours() &&
+                  duration.minutes() <= 0
+                ) {
+                  await this.stopTrackPosition(callBackId);
+                  BackgroundTask.finish({ taskId });
+                }
+              });
+          }
+        );
+        // Finish the background task as soon as everything is done.
+      });
+    });
   }
 
   async stopTrackPosition(callBackId) {

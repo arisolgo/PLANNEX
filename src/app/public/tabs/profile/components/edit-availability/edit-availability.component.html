@@ -1,21 +1,51 @@
 <ion-content>
+  <ion-text>
     <h1>Disponibilidad</h1>
-    <div class="availability-form-container" *ngFor="let availability of availabilitySchema">
-        <h4>{{ availability.name }}</h4>
-        <ion-item>
+  </ion-text>
+  <div
+    class="availability-form-container"
+    *ngFor="let availability of availabilitySchema"
+  >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ availability.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
             <ion-label>Desde:</ion-label>
-            <ion-datetime display-format="h:mm A" picker-format="h:mm A" (ionChange)="setStart($event, availability.dia)" [(ngModel)]="availabilitySchema[availability.dia].horaDesdeF"></ion-datetime>
-        </ion-item>
+            <ion-datetime
+              minuteValues="0,30"
+              display-format="h:mm A"
+              picker-format="h:mm A"
+              (ionChange)="setStart($event, availability.dia)"
+              [(ngModel)]="availabilitySchema[availability.dia].horaDesdeF"
+            ></ion-datetime>
+          </ion-item>
 
-        <ion-item>
+          <ion-item>
             <ion-label>Hasta:</ion-label>
-            <ion-datetime display-format="h:mm A" picker-format="h:mm A" (ionChange)="setEnd($event, availability.dia)" [(ngModel)]="availabilitySchema[availability.dia].horaHastaF"></ion-datetime>
-        </ion-item>
-    </div>
-
-    <div class="login-button-container">
-        <ion-button expand="full" shape="round" color="success" type="button" (click)="update()">
-            Save
-        </ion-button>
-    </div>
+            <ion-datetime
+              minuteValues="0,30"
+              display-format="h:mm A"
+              picker-format="h:mm A"
+              (ionChange)="setEnd($event, availability.dia)"
+              [(ngModel)]="availabilitySchema[availability.dia].horaHastaF"
+            ></ion-datetime>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div class="login-button-container">
+    <ion-button
+      expand="full"
+      shape="round"
+      color="success"
+      type="button"
+      (click)="update()"
+    >
+      Save
+    </ion-button>
+  </div>
 </ion-content>

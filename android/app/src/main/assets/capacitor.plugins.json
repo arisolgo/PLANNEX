@@ -26,5 +26,9 @@
 	{
 		"pkg": "@capacitor/storage",
 		"classpath": "com.capacitorjs.plugins.storage.StoragePlugin"
+	},
+	{
+		"pkg": "@robingenz/capacitor-background-task",
+		"classpath": "dev.robingenz.capacitor.backgroundtask.BackgroundTaskPlugin"
 	}
 ]

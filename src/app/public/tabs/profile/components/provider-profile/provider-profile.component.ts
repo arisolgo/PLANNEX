@@ -318,6 +318,13 @@ export class ProviderProfileComponent implements OnInit {
       },
     });
 
+    modal.onWillDismiss().then((modal) => {
+      if (modal.data) {
+        this.currentProvider.Direccion1 = modal.data.direccion1;
+        this.currentProvider.Direccion2 = modal.data.direccion2;
+      }
+    });
+
     await modal.present();
   }
 
@@ -333,5 +340,9 @@ export class ProviderProfileComponent implements OnInit {
     });
     console.log('TYPE TEST', this.providerTypesOutput.getValue());
     await modal.present();
+
+    modal.onDidDismiss().then(() => {
+      this.getRegisteredCategories();
+    });
   }
 }

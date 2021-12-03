@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Provider, Response } from 'src/app/core/models/models';
+import { ProveedoresService } from 'src/app/core/services/api/services';
 import { PutService } from 'src/app/core/services/put.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { PutService } from 'src/app/core/services/put.service';
 })
 export class EditAddressComponent implements OnInit {
   provider;
-
+  currentProvider: Provider;
   address = {
     direccion1: '',
     direccion2: '',
@@ -17,10 +19,13 @@ export class EditAddressComponent implements OnInit {
 
   constructor(
     private putService: PutService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private providerService: ProveedoresService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
+    this.getCurrentProvider();
     console.log('PROVIDER', this.provider);
     this.setDirecciones();
     console.log('Address', this.address);
@@ -38,20 +43,30 @@ export class EditAddressComponent implements OnInit {
     this.address.direccion2 = event.detail.value;
   }
 
+  getCurrentProvider() {
+    this.providerService
+      .getApiProveedoresId(this.provider.Id)
+      .subscribe((result: Response) => {
+        this.currentProvider = result.result;
+      });
+  }
+
   update() {
-    this.provider.Direccion1 = this.address.direccion1;
-    this.provider.Direccion2 = this.address.direccion2;
-    console.log('PROVIDER', this.provider);
-    this.putService.updateProvider(this.provider).subscribe(
+    this.currentProvider.direccion1 = this.address.direccion1;
+    this.currentProvider.direccion2 = this.address.direccion2;
+    this.putService.updateProvider(this.currentProvider).subscribe(
       (response: Response) => {},
       (error) => {
         console.log(error);
       }
     );
-    this.close();
+    this.close(this.currentProvider);
   }
 
-  close() {
-    this.modalController.dismiss();
+  close(params?) {
+    if (params) this.modalController.dismiss(params);
+    else {
+      this.modalController.dismiss();
+    }
   }
 }
