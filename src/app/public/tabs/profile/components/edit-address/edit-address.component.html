@@ -1,7 +1,15 @@
-<ion-content>
-    <h1>Dirección</h1>
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Editar Dirección</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="close()">
+                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-    <h4>Editar Dirección:</h4>
+<ion-content>
     <ion-item>
         <ion-label position="floating">Dirección 1</ion-label>
         <ion-input (ionChange)="setDireccion1($event)" [(ngModel)]="address.direccion1"></ion-input>

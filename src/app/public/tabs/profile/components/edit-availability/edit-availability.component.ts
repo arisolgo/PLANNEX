@@ -176,8 +176,7 @@ export class EditAvailabilityComponent implements OnInit {
           horaDesde: start,
           horaHasta: end,
         };
-        debugger;
-        console.log('HOUR:', availability);
+
         this.putService
           .updateAvailability(availability)
           .subscribe((response: Response) => {});
@@ -197,7 +196,7 @@ export class EditAvailabilityComponent implements OnInit {
           );
       }
     });
-    debugger;
+
     this.close();
   }
 

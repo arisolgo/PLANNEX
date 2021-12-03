@@ -1,6 +1,16 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Editar Categorias:</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="close()">
+                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content>
     <div *ngIf="categoriesAdded.length > 0">
-        <h1>Update Categories</h1>
         <ion-radio-group (ionChange)="setCategoriesToDelete($event)" class="category-select" name="categoryD">
             <h4>Categorías Registradas</h4>
             <p>Seleccione para Eliminar.</p>
