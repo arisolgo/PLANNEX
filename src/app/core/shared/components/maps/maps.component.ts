@@ -72,8 +72,11 @@ export class MapsComponent implements OnInit {
 
   getAddressFromCoords(lattitude, longitude) {
     console.log('getAddressFromCoords ' + lattitude + ' ' + longitude);
-    this.newProvider.latitud = lattitude;
-    this.newProvider.longitud = longitude;
+    if (this.newProvider) {
+      this.newProvider.latitud = lattitude;
+      this.newProvider.longitud = longitude;
+    }
+
     let options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5,

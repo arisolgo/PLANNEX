@@ -262,12 +262,12 @@ export class ProviderProfileComponent implements OnInit {
 
     await modal.present();
 
-    // modal.onDidDismiss().then((modal) => {
-    //   if (modal.data) {
-    //     this.providerDisponibilidad = [];
-    //     this.getProviderAvailability(this.currentProvider.Id);
-    //   }
-    // });
+    modal.onDidDismiss().then((modal) => {
+      if (modal.data) {
+        this.providerDisponibilidad = [];
+        this.getProviderAvailability(this.currentProvider.Id);
+      }
+    });
   }
 
   async openServicesModal() {

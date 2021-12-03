@@ -5,12 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Response } from 'src/app/core/models/models';
 import { UserService } from 'src/app/core/services/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Storage } from '@capacitor/storage';
 import { Router } from '@angular/router';
+import { MapsComponent } from 'src/app/core/shared/components/maps/maps.component';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalCtrl: ModalController
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -75,5 +77,20 @@ export class LoginPage implements OnInit {
 
   goToRegister() {
     this.navCtrl.navigateForward('/register');
+  }
+
+  async pickUpLocation() {
+    const modal = await this.modalCtrl.create({
+      component: MapsComponent,
+      // componentProps: {
+      //   newProvider: newUser,
+      // },
+    });
+
+    await modal.present();
+
+    modal.onWillDismiss().then((modal) => {
+      console.log('Tu papa');
+    });
   }
 }

@@ -99,15 +99,9 @@ export class EditAvailabilityComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder,
-    private navCtrl: NavController,
-    private storage: Storage,
-    private uiService: UiService,
     private putService: PutService,
     private postService: PostService,
-    private datepipe: DatePipe,
-    private modalController: ModalController,
-    private scheduledServicesService: ScheduledServiceService
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -176,7 +170,6 @@ export class EditAvailabilityComponent implements OnInit {
           horaDesde: start,
           horaHasta: end,
         };
-        debugger;
         console.log('HOUR:', availability);
         this.putService
           .updateAvailability(availability)
@@ -197,11 +190,12 @@ export class EditAvailabilityComponent implements OnInit {
           );
       }
     });
-    debugger;
-    this.close();
+    this.close(true);
   }
 
-  close() {
-    this.modalController.dismiss();
+  close(success?) {
+    if (success) {
+      this.modalController.dismiss(success);
+    } else this.modalController.dismiss();
   }
 }

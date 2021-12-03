@@ -7,8 +7,11 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private geolocation: Geolocation) {
-    // this.backgroundMode.enable();
+  constructor(
+    private geolocation: Geolocation,
+    private backgroundMode: BackgroundMode
+  ) {
+    this.backgroundMode.enable();
     this.geolocation.getCurrentPosition().then(() => {});
   }
 }

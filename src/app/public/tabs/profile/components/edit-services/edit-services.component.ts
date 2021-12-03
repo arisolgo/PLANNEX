@@ -173,6 +173,10 @@ export class EditServicesComponent implements OnInit {
   }
 
   close(success?) {
-    this.modalController.dismiss(true);
+    if (success) {
+      this.modalController.dismiss(success);
+    } else {
+      this.modalController.dismiss();
+    }
   }
 }
