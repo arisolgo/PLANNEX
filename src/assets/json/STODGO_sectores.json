@@ -1,0 +1,286 @@
+[
+  {
+    "sector": "24 de abril",
+    "Población": "53,870"
+  },
+  {
+    "sector": "30 de mayo",
+    "Población": "5,904"
+  },
+  {
+    "sector": "Altos de Arroyo Hondo",
+    "Población": "19,617"
+  },
+  {
+    "sector": "Arroyo Manzano",
+    "Población": "5,894"
+  },
+  {
+    "sector": "Atala",
+    "Población": "3,711"
+  },
+  {
+    "sector": "Bella Vista",
+    "Población": "15,593"
+  },
+  {
+    "sector": "Buenos Aires",
+    "Población": "25,770"
+  },
+  {
+    "sector": "El Cacique",
+    "Población": "7,671"
+  },
+  {
+    "sector": "Centro de los Héroes",
+    "Población": "62"
+  },
+  {
+    "sector": "Centro Olímpico",
+    "Población": "99"
+  },
+  {
+    "sector": "Cerros de Arroyo Hondo",
+    "Población": "3,258"
+  },
+  {
+    "sector": "Ciudad Colonial",
+    "Población": "8,472"
+  },
+  {
+    "sector": "Ciudad Nueva",
+    "Población": "12,540"
+  },
+  {
+    "sector": "Ciudad Universitaria",
+    "Población": "8,016"
+  },
+  {
+    "sector": "Cristo Rey",
+    "Población": "257,038"
+  },
+  {
+    "sector": "Domingo Savio",
+    "Población": "184,863"
+  },
+  {
+    "sector": "El Millón",
+    "Población": "9,137"
+  },
+  {
+    "sector": "Ensanche Capotillo",
+    "Población": "134,708"
+  },
+  {
+    "sector": "Ensanche Espaillat",
+    "Población": "16,803"
+  },
+  {
+    "sector": "Ensanche La Fe",
+    "Población": "19,094"
+  },
+  {
+    "sector": "Ensanche Luperón",
+    "Población": "23,710"
+  },
+  {
+    "sector": "Ensanche Naco",
+    "Población": "11,102"
+  },
+  {
+    "sector": "Ensanche Quisqueya",
+    "Población": "24,850"
+  },
+  {
+    "sector": "Gazcue",
+    "Población": "12,562"
+  },
+  {
+    "sector": "General Antonio Duverge",
+    "Población": "4,382"
+  },
+  {
+    "sector": "Gualey",
+    "Población": "91,147"
+  },
+  {
+    "sector": "Honduras del Norte",
+    "Población": "9,771"
+  },
+  {
+    "sector": "Honduras del Oeste",
+    "Población": "8,884"
+  },
+  {
+    "sector": "Jardín Botánico",
+    "Población": "271"
+  },
+  {
+    "sector": "Jardín Zoológico",
+    "Población": "19"
+  },
+  {
+    "sector": "Jardines del Sur",
+    "Población": "8,777"
+  },
+  {
+    "sector": "Julieta Morales",
+    "Población": "14,843"
+  },
+  {
+    "sector": "La Agustina",
+    "Población": "20,308"
+  },
+  {
+    "sector": "La Castellana",
+    "Población": "10,421"
+  },
+  {
+    "sector": "La Esperilla",
+    "Población": "6,807"
+  },
+  {
+    "sector": "La Hondonada",
+    "Población": "14,575"
+  },
+  {
+    "sector": "La Isabela",
+    "Población": "6,865"
+  },
+  {
+    "sector": "La Julia",
+    "Población": "12,575"
+  },
+  {
+    "sector": "Las Praderas",
+    "Población": "29,765"
+  },
+  {
+    "sector": "La Zurza",
+    "Población": "42,896"
+  },
+  {
+    "sector": "Los Cacicazgos",
+    "Población": "15,725"
+  },
+  {
+    "sector": "Los Jardines",
+    "Población": "97,568"
+  },
+  {
+    "sector": "Los Peralejos",
+    "Población": "35,684"
+  },
+  {
+    "sector": "Los Prados",
+    "Población": "20,457"
+  },
+  {
+    "sector": "Los Restauradores",
+    "Población": "78,945"
+  },
+  {
+    "sector": "Los Ríos",
+    "Población": "27,563"
+  },
+  {
+    "sector": "María Auxiliadora",
+    "Población": "20,456"
+  },
+  {
+    "sector": "Mata Hambre",
+    "Población": "20,456"
+  },
+  {
+    "sector": "Mejoramiento Social",
+    "Población": "19,753"
+  },
+  {
+    "sector": "Mirador Norte",
+    "Población": "20,465"
+  },
+  {
+    "sector": "Mirador Sur",
+    "Población": "20,211"
+  },
+  {
+    "sector": "Miraflores",
+    "Población": "76,862"
+  },
+  {
+    "sector": "Miramar",
+    "Población": "59,876"
+  },
+  {
+    "sector": "Nuestra Señora de la Paz",
+    "Población": "98,961"
+  },
+  {
+    "sector": "Nuevo Arroyo Hondo",
+    "Población": "123,501"
+  },
+  {
+    "sector": "Palma Real",
+    "Población": "101,543"
+  },
+  {
+    "sector": "Paraíso",
+    "Población": "75,862"
+  },
+  {
+    "sector": "Paseo de los Indios",
+    "Población": "28,951"
+  },
+  {
+    "sector": "Piantini",
+    "Población": "59,753"
+  },
+  {
+    "sector": "Los Próceres",
+    "Población": "56,513"
+  },
+  {
+    "sector": "Renacimiento",
+    "Población": "20,145"
+  },
+  {
+    "sector": "San Carlos",
+    "Población": "13,456"
+  },
+  {
+    "sector": "San Diego",
+    "Población": "9,864"
+  },
+  {
+    "sector": "San Geronimo",
+    "Población": "8,634"
+  },
+  {
+    "sector": "San Juan Bosco",
+    "Población": "14,352"
+  },
+  {
+    "sector": "Simón Bolívar",
+    "Población": "88,463"
+  },
+  {
+    "sector": "Viejo Arroyo Hondo",
+    "Población": "38,964"
+  },
+  {
+    "sector": "Villas Agrícolas",
+    "Población": "48,621"
+  },
+  {
+    "sector": "Villa Consuelo",
+    "Población": "40,621"
+  },
+  {
+    "sector": "Villa Francisca",
+    "Población": "50,185"
+  },
+  {
+    "sector": "Villa Juana",
+    "Población": "60,323"
+  }
+]

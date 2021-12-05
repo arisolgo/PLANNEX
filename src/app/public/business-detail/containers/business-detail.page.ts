@@ -20,6 +20,8 @@ import {
 } from 'src/app/core/services/api/services';
 import { ProviderServiciosService } from 'src/app/core/services/api/services';
 import { CartService } from 'src/app/core/services/cart.service';
+import { PutService } from 'src/app/core/services/put.service';
+import { MapsComponent } from 'src/app/core/shared/components/maps/maps.component';
 import { PaymentSelectionComponent } from 'src/app/core/shared/components/payment-selection/payment-selection.component';
 
 @Component({
@@ -47,7 +49,8 @@ export class BusinessDetailPage implements OnInit {
     private providerServiciosService: ProviderServiciosService,
     private servicioService: ServicesService,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private putService: PutService
   ) {
     if (router.getCurrentNavigation().extras.state) {
       this.provider_aux = this.router.getCurrentNavigation().extras.state;
@@ -116,6 +119,17 @@ export class BusinessDetailPage implements OnInit {
     const modal = await this.modalController.create({
       presentingElement: this.routerOutlet.nativeEl,
       component: PaymentSelectionComponent,
+    });
+
+    await modal.present();
+  }
+
+  async pickUpLocation() {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: {
+        newProvider: this.provider_aux,
+      },
     });
 
     await modal.present();

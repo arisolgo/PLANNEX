@@ -78,19 +78,4 @@ export class LoginPage implements OnInit {
   goToRegister() {
     this.navCtrl.navigateForward('/register');
   }
-
-  async pickUpLocation() {
-    const modal = await this.modalCtrl.create({
-      component: MapsComponent,
-      // componentProps: {
-      //   newProvider: newUser,
-      // },
-    });
-
-    await modal.present();
-
-    modal.onWillDismiss().then((modal) => {
-      console.log('Tu papa');
-    });
-  }
 }

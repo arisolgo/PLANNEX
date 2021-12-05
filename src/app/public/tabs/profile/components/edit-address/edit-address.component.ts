@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Provider, Response } from 'src/app/core/models/models';
 import { ProveedoresService } from 'src/app/core/services/api/services';
 import { PutService } from 'src/app/core/services/put.service';
+import * as sectores from '../../../../../../assets/json/STODGO_sectores.json';
 
 @Component({
   selector: 'app-edit-address',
@@ -15,16 +17,31 @@ export class EditAddressComponent implements OnInit {
   address = {
     direccion1: '',
     direccion2: '',
+    ciudad: '',
+    pais: '',
   };
+  currentSectors = [];
 
   constructor(
     private putService: PutService,
     private modalController: ModalController,
-    private providerService: ProveedoresService
+    private providerService: ProveedoresService,
+    private httpClient: HttpClient
   ) {}
+
+  loadSectors() {
+    return new Promise(() => {
+      this.httpClient
+        .get('../../../../assets/json/STODGO_sectores.json')
+        .subscribe((result: any) => {
+          this.currentSectors = result;
+        });
+    });
+  }
 
   ngOnInit() {}
   ionViewWillEnter() {
+    this.loadSectors();
     this.getCurrentProvider();
     console.log('PROVIDER', this.provider);
     this.setDirecciones();
@@ -34,6 +51,8 @@ export class EditAddressComponent implements OnInit {
   setDirecciones() {
     this.address.direccion1 = this.provider.Direccion1;
     this.address.direccion2 = this.provider.Direccion2;
+    this.address.ciudad = this.provider.Ciudad;
+    this.address.pais = this.provider.Pais;
   }
 
   setDireccion1(event) {
@@ -41,6 +60,9 @@ export class EditAddressComponent implements OnInit {
   }
   setDireccion2(event) {
     this.address.direccion2 = event.detail.value;
+  }
+  setCiudad(event) {
+    this.address.ciudad = event.detail.value;
   }
 
   getCurrentProvider() {
@@ -68,5 +90,8 @@ export class EditAddressComponent implements OnInit {
     else {
       this.modalController.dismiss();
     }
+  }
+  onClick() {
+    console.log(this.address);
   }
 }

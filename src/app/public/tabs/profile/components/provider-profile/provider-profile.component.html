@@ -1,51 +1,57 @@
 <ion-content fullscreen>
-    <div class="company-logo">
-        <ion-label class="business-name-title">{{ currentProvider.Nombres }} {{ currentProvider.Apellidos }}</ion-label>
-        <ion-avatar class="center">
-            <img [src]="currentProvider.ProfilePicture" />
-        </ion-avatar>
-        <h2 class="subtitle">{{ rating }}</h2>
-        <ion-icon name="star"></ion-icon>
+  <div class="company-logo">
+    <ion-button class="location-btn" shape="round" (click)="pickUpLocation()">
+      Ubicación
+    </ion-button>
+    <ion-label class="business-name-title"
+      >{{ currentProvider.Nombres }} {{ currentProvider.Apellidos }}</ion-label
+    >
+    <ion-avatar class="center">
+      <img [src]="currentProvider.ProfilePicture" />
+    </ion-avatar>
+    <ion-text color="warning">
+      <p>{{ currentProvider.Rating }} <ion-icon name="star"></ion-icon></p>
+    </ion-text>
+  </div>
+
+  <div>
+    <ion-item (click)="openEditAddress()">
+      Dirección
+      <ion-icon name="create"></ion-icon>
+    </ion-item>
+
+    <p>
+      <ion-text color="dark">
+        <h6>{{ currentProvider.Direccion1 }}</h6>
+        <h6>{{ currentProvider.Direccion2 }}</h6>
+      </ion-text>
+    </p>
+
+    <ion-item (click)="openEditCategories()">
+      Categorias
+      <ion-icon name="create"></ion-icon>
+    </ion-item>
+
+    <div class="type-list">
+      <div class="typr-list-item" *ngFor="let type of types">
+        <!-- <ion-card (click)="goToSchedule(service)"> -->
+        <ion-card>
+          <ion-card-content>
+            <div class="working-hours-info">
+              <h6 class="working-hours-title">{{ type.nombre }}</h6>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
     </div>
 
-    <div>
-        <ion-item (click)="openEditAddress()">
-            Dirección
-            <ion-icon name="create"></ion-icon>
-        </ion-item>
-
-        <p>
-            <ion-text color="dark">
-                <h6>{{ currentProvider.Direccion1 }}</h6>
-                <h6>{{ currentProvider.Direccion2 }}</h6>
-            </ion-text>
-        </p>
-
-        <ion-item (click)="openEditCategories()">
-            Categorias
-            <ion-icon name="create"></ion-icon>
-        </ion-item>
-
-        <div class="type-list">
-            <div class="typr-list-item" *ngFor="let type of types">
-                <!-- <ion-card (click)="goToSchedule(service)"> -->
-                <ion-card>
-                    <ion-card-content>
-                        <div class="working-hours-info">
-                            <h6 class="working-hours-title">{{ type.nombre }}</h6>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
-            </div>
-        </div>
-
-        <!-- <ion-text>
+    <!-- <ion-text>
             <h4>Horario</h4>
         </ion-text> -->
 
-        <!-- <div class="working-hours-list">
+    <!-- <div class="working-hours-list">
             <div class="working-hours-list-item" *ngFor="let availability of providerDisponibilidad">
-               
+
                 <ion-card>
                     <ion-card-content>
                         <div class="working-hours-info">
@@ -58,47 +64,47 @@
                 </ion-card>
             </div>
         </div> -->
-        <ion-item (click)="openEditAvailability()">
-            Horario
-            <ion-icon name="create"></ion-icon>
-        </ion-item>
+    <ion-item (click)="openEditAvailability()">
+      Horario
+      <ion-icon name="create"></ion-icon>
+    </ion-item>
 
-        <ion-item (click)="openEditServices()">
-            Servicios
-            <ion-icon name="create"></ion-icon>
-        </ion-item>
+    <ion-item (click)="openEditServices()">
+      Servicios
+      <ion-icon name="create"></ion-icon>
+    </ion-item>
 
-        <div class="services-list">
-            <div class="service-list-item" *ngFor="let service of providerServices">
-                <!-- <ion-card (click)="goToSchedule(service)"> -->
-                <ion-card>
-                    <ion-card-content>
-                        <div class="service-info">
-                            <h6 class="service-title">{{ service.serviceName }}</h6>
-                            <h6 class="service-price">RD${{ service.price }}.00</h6>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
+    <div class="services-list">
+      <div class="service-list-item" *ngFor="let service of providerServices">
+        <!-- <ion-card (click)="goToSchedule(service)"> -->
+        <ion-card>
+          <ion-card-content>
+            <div class="service-info">
+              <h6 class="service-title">{{ service.serviceName }}</h6>
+              <h6 class="service-price">RD${{ service.price }}.00</h6>
             </div>
-        </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
     </div>
+  </div>
 
-    <ion-text>
-        <h4>Comentarios Recibidos:</h4>
-    </ion-text>
+  <ion-text>
+    <h4>Comentarios Recibidos:</h4>
+  </ion-text>
 
-    <div class="reviews-list">
-        <div class="reviews-list-item" *ngFor="let comment of providerComments">
-            <!-- <ion-card (click)="goToSchedule(service)"> -->
-            <ion-card>
-                <ion-card-content>
-                    <div class="working-hours-info">
-                        <h6 class="working-hours-title">
-                            <i> " {{ comment.comentario }}." </i>
-                        </h6>
-                    </div>
-                </ion-card-content>
-            </ion-card>
-        </div>
+  <div class="reviews-list">
+    <div class="reviews-list-item" *ngFor="let comment of providerComments">
+      <!-- <ion-card (click)="goToSchedule(service)"> -->
+      <ion-card>
+        <ion-card-content>
+          <div class="working-hours-info">
+            <h6 class="working-hours-title">
+              <i> " {{ comment.comentario }}." </i>
+            </h6>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
+  </div>
 </ion-content>

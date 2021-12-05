@@ -1,28 +1,63 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>Editar Dirección</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="close()">
-                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Editar Dirección</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-item>
-        <ion-label position="floating">Dirección 1</ion-label>
-        <ion-input (ionChange)="setDireccion1($event)" [(ngModel)]="address.direccion1"></ion-input>
-    </ion-item>
+  <ion-item>
+    <ion-label>Pais</ion-label>
+    <ion-select placeholder="Seleccione País" [(ngModel)]="address.pais">
+      <ion-select-option [value]="1"> República Dominicana </ion-select-option>
+    </ion-select>
+  </ion-item>
 
-    <ion-item>
-        <ion-label position="floating">Dirección 2</ion-label>
-        <ion-input (ionChange)="setDireccion2($event)" [(ngModel)]="address.direccion2"></ion-input>
-    </ion-item>
+  <ion-item>
+    <ion-label>Ciudad</ion-label>
+    <ion-select placeholder="Seleccione Ciudad" [(ngModel)]="address.ciudad">
+      <ion-select-option value="Santo Domingo">
+        Santo Domingo
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 
-    <div class="login-button-container">
-        <ion-button expand="full" shape="round" color="success" type="button" (click)="update()">
-            Save
-        </ion-button>
-    </div>
+  <ion-item>
+    <ion-label>Sector</ion-label>
+    <ion-select
+      placeholder="Seleccione Sector"
+      [(ngModel)]="address.direccion2"
+    >
+      <ion-select-option
+        *ngFor="let sector of currentSectors"
+        [value]="sector.sector"
+      >
+        {{ sector.sector }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Dirección </ion-label>
+    <ion-input
+      (ionChange)="setDireccion1($event)"
+      [(ngModel)]="address.direccion1"
+    ></ion-input>
+  </ion-item>
+
+  <div class="login-button-container">
+    <ion-button
+      expand="full"
+      shape="round"
+      color="success"
+      type="button"
+      (click)="update()"
+    >
+      Save
+    </ion-button>
+  </div>
 </ion-content>

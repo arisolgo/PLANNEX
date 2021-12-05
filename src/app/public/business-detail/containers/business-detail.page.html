@@ -10,19 +10,23 @@
 
 <ion-content fullscreen>
   <div class="company-logo">
+    <ion-button class="location-btn" shape="round" (click)="pickUpLocation()">
+      Ubicación
+    </ion-button>
     <ion-label class="business-name-title"
       >{{provider_aux.nombres}} {{provider_aux.apellidos}}</ion-label
     >
     <ion-avatar class="center">
       <img [src]="provider_aux.profilePicture" />
     </ion-avatar>
-    <h2 class="subtitle">{{provider_aux.rating}}</h2>
-    <ion-icon name="star"></ion-icon>
+    <ion-text color="warning">
+      <p>{{provider_aux.rating}} <ion-icon name="star"></ion-icon></p>
+    </ion-text>
   </div>
 
   <div>
     <ion-text>
-        <h4>Servicios</h4>
+      <h4>Servicios</h4>
     </ion-text>
 
     <ion-text>

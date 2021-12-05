@@ -69,7 +69,7 @@
           </ng-container>
         </div>
         <ion-item>
-          <ion-label position="floating">Direccion1</ion-label>
+          <ion-label position="floating">Dirección</ion-label>
           <ion-input formControlName="direccion1"></ion-input>
         </ion-item>
         <div class="validation-error">
@@ -84,24 +84,10 @@
           </ng-container>
         </div>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Direccion2</ion-label>
           <ion-input formControlName="direccion2"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Ciudad</ion-label>
-          <ion-input formControlName="ciudad"></ion-input>
-        </ion-item>
-        <div class="validation-error">
-          <ng-container *ngFor="let validation of validation_messages.ciudad">
-            <div
-              *ngIf="registerForm.get('ciudad').hasError(validation.type) && (registerForm.get('ciudad').dirty) "
-            >
-              {{validation.message}}
-            </div>
-          </ng-container>
-        </div>
+        </ion-item> -->
 
         <ion-item>
           <ion-label>Pais</ion-label>
@@ -118,6 +104,49 @@
           <ng-container *ngFor="let validation of validation_messages.pais">
             <div
               *ngIf="registerForm.get('pais').hasError(validation.type) && (registerForm.get('pais').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-label>Ciudad</ion-label>
+          <ion-select formControlName="ciudad" placeholder="Seleccione Ciudad">
+            <ion-select-option value="Santo Domingo">
+              Santo Domingo
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.ciudad">
+            <div
+              *ngIf="registerForm.get('ciudad').hasError(validation.type) && (registerForm.get('ciudad').dirty) "
+            >
+              {{validation.message}}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label>Sector</ion-label>
+          <ion-select
+            formControlName="direccion2"
+            placeholder="Seleccione Sector"
+          >
+            <ion-select-option
+              *ngFor="let sector of currentSectors"
+              [value]="sector.sector"
+            >
+              {{sector.sector}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="validation-error">
+          <ng-container
+            *ngFor="let validation of validation_messages.direccion2"
+          >
+            <div
+              *ngIf="registerForm.get('direccion2').hasError(validation.type) && (registerForm.get('direccion2').dirty) "
             >
               {{validation.message}}
             </div>

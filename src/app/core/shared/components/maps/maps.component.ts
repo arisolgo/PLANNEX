@@ -20,7 +20,9 @@ export class MapsComponent implements OnInit {
   address: string;
   latitude: number;
   longitude: number;
+
   newProvider;
+  isNew: boolean = false;
   constructor(
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
@@ -28,7 +30,9 @@ export class MapsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.newProvider) console.log(this.newProvider);
+    console.log(this.newProvider);
+    this.isNew =
+      this.newProvider.latitud == 0 && this.newProvider.longitud == 0;
     this.loadMap();
   }
   loadMap() {
@@ -38,36 +42,61 @@ export class MapsComponent implements OnInit {
         this.latitude = resp.coords.latitude;
         this.longitude = resp.coords.longitude;
 
-        let latLng = new google.maps.LatLng(
-          resp.coords.latitude,
-          resp.coords.longitude
-        );
+        let latLng = this.isNew
+          ? new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude)
+          : new google.maps.LatLng(
+              this.newProvider.latitud,
+              this.newProvider.longitud
+            );
+
         let mapOptions = {
           center: latLng,
-          zoom: 15,
+          zoom: 17,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
         };
-
-        this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
+        if (this.isNew)
+          this.getAddressFromCoords(
+            resp.coords.latitude,
+            resp.coords.longitude
+          );
 
         this.map = new google.maps.Map(
           this.mapElement.nativeElement,
           mapOptions
         );
 
-        this.map.addListener('dragend', () => {
-          this.latitude = this.map.center.lat();
-          this.longitude = this.map.center.lng();
-
+        if (!this.isNew) {
+          this.addProviderLocMarker();
           this.getAddressFromCoords(
-            this.map.center.lat(),
-            this.map.center.lng()
+            this.newProvider.latitud,
+            this.newProvider.longitud
           );
-        });
+        } else {
+          this.map.addListener('dragend', () => {
+            this.latitude = this.map.center.lat();
+            this.longitude = this.map.center.lng();
+
+            this.getAddressFromCoords(
+              this.map.center.lat(),
+              this.map.center.lng()
+            );
+          });
+        }
       })
       .catch((error) => {
         console.log('Error getting location', error);
       });
+  }
+
+  addProviderLocMarker() {
+    return new google.maps.Marker({
+      position: {
+        lat: this.newProvider.latitud,
+        lng: this.newProvider.longitud,
+      },
+      map: this.map,
+      title: this.newProvider.nombres,
+    });
   }
 
   getAddressFromCoords(lattitude, longitude) {
@@ -97,11 +126,15 @@ export class MapsComponent implements OnInit {
         this.address = this.address.slice(0, -2);
       })
       .catch((error: any) => {
-        this.address = 'Address Not Available!';
+        this.address = 'Dirección no disponible';
       });
   }
 
-  close() {
-    this.modalController.dismiss(this.newProvider);
+  close(success?) {
+    if (success) {
+      this.modalController.dismiss(this.newProvider);
+    } else {
+      this.modalController.dismiss();
+    }
   }
 }

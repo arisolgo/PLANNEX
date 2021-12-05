@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -8,7 +9,7 @@ import {
 import { IonRadioGroup, ModalController, NavController } from '@ionic/angular';
 // import { AuthenticateService } from '../services/authenticate.service';
 import { Storage } from '@ionic/storage';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Response } from 'src/app/core/models/models';
 import { TiposService } from 'src/app/core/services/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -16,7 +17,7 @@ import { PostService } from 'src/app/core/services/post.service';
 import { PutService } from 'src/app/core/services/put.service';
 import { UiService } from 'src/app/core/services/ui.service';
 import { MapsComponent } from 'src/app/core/shared/components/maps/maps.component';
-
+import * as sectores from '../../../../assets/json/STODGO_sectores.json';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -29,7 +30,7 @@ export class RegisterPage implements OnInit {
     nombre: [{ type: 'required', message: 'El nombre es requerido.' }],
     apellido: [{ type: 'required', message: 'El apellido es requerido.' }],
     direccion1: [{ type: 'required', message: 'La dirección es requerida.' }],
-    direccion2: [''],
+    direccion2: [{ type: 'required', message: 'El sector es requerido' }],
     ciudad: [{ type: 'required', message: 'Ciudad es requerida.' }],
     pais: [{ type: 'required', message: 'País es requerido.' }],
     telefono: [{ type: 'required', message: 'Teléfono es requerido.' }],
@@ -44,14 +45,11 @@ export class RegisterPage implements OnInit {
       { type: 'minlength', message: 'Minimo 5 caracteres.' },
     ],
   };
-  countries = [
-    { id: 1, name: 'República Dominicana' },
-    { id: 2, name: 'Colombia' },
-    { id: 3, name: 'Perú' },
-  ];
+  countries = [{ id: 1, name: 'República Dominicana' }];
   selectedRole = 0;
   tipos = [];
   chosenTypes = [];
+  currentSectors = [];
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -61,7 +59,8 @@ export class RegisterPage implements OnInit {
     private modalCtrl: ModalController,
     private tipoService: TiposService,
     private postService: PostService,
-    private putService: PutService
+    private putService: PutService,
+    private httpClient: HttpClient
   ) {
     this.registerForm = this.formBuilder.group({
       nombre: new FormControl('', Validators.compose([Validators.required])),
@@ -70,7 +69,10 @@ export class RegisterPage implements OnInit {
         '',
         Validators.compose([Validators.required])
       ),
-      direccion2: new FormControl(''),
+      direccion2: new FormControl(
+        '',
+        Validators.compose([Validators.required])
+      ),
       ciudad: new FormControl('', Validators.compose([Validators.required])),
       pais: new FormControl('', Validators.compose([Validators.required])),
       telefono: new FormControl('', Validators.compose([Validators.required])),
@@ -89,6 +91,20 @@ export class RegisterPage implements OnInit {
         Validators.compose([Validators.required, Validators.minLength(5)])
       ),
     });
+  }
+
+  loadSectors() {
+    return new Promise(() => {
+      this.httpClient
+        .get('../../../../assets/json/STODGO_sectores.json')
+        .subscribe((result: any) => {
+          this.currentSectors = result;
+        });
+    });
+  }
+
+  ionViewWillEnter() {
+    this.loadSectors();
   }
 
   ngOnInit() {
@@ -147,8 +163,8 @@ export class RegisterPage implements OnInit {
           direccion2: userData.direccion2,
           ciudad: userData.ciudad,
           pais: userData.pais,
-          latitud: 35.65464,
-          longitud: -32.545,
+          latitud: 0,
+          longitud: 0,
           telefono: userData.telefono.toString(),
           celular: userData.celular.toString(),
           sexo: userData.sexo,

@@ -27,6 +27,7 @@ import {
   TiposService,
 } from 'src/app/core/services/api/services';
 import { CartService } from 'src/app/core/services/cart.service';
+import { MapsComponent } from 'src/app/core/shared/components/maps/maps.component';
 import { EditAddressComponent } from '../edit-address/edit-address.component';
 import { EditAvailabilityComponent } from '../edit-availability/edit-availability.component';
 import { EditCategoriesComponent } from '../edit-categories/edit-categories.component';
@@ -326,5 +327,28 @@ export class ProviderProfileComponent implements OnInit {
     modal.onDidDismiss().then(() => {
       this.getRegisteredCategories();
     });
+  }
+
+  async pickUpLocation() {
+    var key,
+      keys = Object.keys(this.currentProvider);
+    var n = keys.length;
+    var formattedProvider = {};
+    while (n--) {
+      key = keys[n];
+      if (!this.currentProvider.Longitud || !this.currentProvider.Latitud) {
+        this.currentProvider.Longitud = 0;
+        this.currentProvider.Latitud = 0;
+      }
+      formattedProvider[key.toLowerCase()] = this.currentProvider[key];
+    }
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: {
+        newProvider: formattedProvider,
+      },
+    });
+
+    await modal.present();
   }
 }
