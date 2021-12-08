@@ -5,10 +5,13 @@
 </ion-header>
 
 <ion-content>
+  <ion-title style="margin-top: 10px"
+    >Bienvenido {{userName | async}}!</ion-title
+  >
   <app-service-categories [tipos]="serviceCategories"> </app-service-categories>
   <app-offers-carousel [offers]="offers"> </app-offers-carousel>
   <ion-text>
-    <h3>Proveedores</h3>
+    <h3>Proveedores Destacados</h3>
   </ion-text>
   <app-providers-carousel [providers]="providers"></app-providers-carousel>
 </ion-content>

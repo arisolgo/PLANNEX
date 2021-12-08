@@ -1,16 +1,26 @@
 <ion-content fullscreen>
   <div class="company-logo">
-    <ion-button class="location-btn" shape="round" (click)="pickUpLocation()">
-      Ubicación
-    </ion-button>
+    <div class="loc-btn-container">
+      <ion-button class="location-btn" shape="round" (click)="pickUpLocation()">
+        Ubicación
+      </ion-button>
+    </div>
+
+    <div class="provider-image-container">
+      <ion-avatar>
+        <img [src]="currentProvider.ProfilePicture" />
+      </ion-avatar>
+    </div>
     <ion-label class="business-name-title"
       >{{ currentProvider.Nombres }} {{ currentProvider.Apellidos }}</ion-label
     >
-    <ion-avatar class="center">
-      <img [src]="currentProvider.ProfilePicture" />
-    </ion-avatar>
     <ion-text color="warning">
-      <p>{{ currentProvider.Rating }} <ion-icon name="star"></ion-icon></p>
+      <p *ngIf="currentProvider.Rating > 0">
+        {{ currentProvider.Rating }} <ion-icon name="star"></ion-icon>
+      </p>
+      <p *ngIf="currentProvider.Rating == 0">
+        - <ion-icon name="star"></ion-icon>
+      </p>
     </ion-text>
   </div>
 

@@ -21,4 +21,8 @@ export class ProvidersCarouselComponent implements OnInit {
   goToDetailPage(business) {
     this.navCtrl.navigateForward('/business-detail', { state: business });
   }
+
+  goToListing() {
+    this.navCtrl.navigateForward('tabs/listing/#');
+  }
 }

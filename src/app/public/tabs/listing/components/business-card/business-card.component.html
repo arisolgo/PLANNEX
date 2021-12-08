@@ -1,15 +1,26 @@
-<div class="card" (click)="clicked.emit()">
-    <ion-img [src]="item.profilePicture"></ion-img>
+<ion-card class="card" (click)="clicked.emit()">
+  <div
+    class="provider-image-container"
+    style="display: flex; justify-content: center; margin-top: 15px"
+  >
+    <ion-avatar>
+      <img [src]="item.profilePicture" />
+    </ion-avatar>
+  </div>
+  <ion-card-header>
+    <ion-card-subtitle
+      >{{ item.direccion1 }}, {{ item.direccion2 }}</ion-card-subtitle
+    >
+    <ion-card-title> {{ item.nombres }} {{ item.apellidos }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content class="card-content">
+    <h3 class="title">
+      <h2 class="subtitle">
+        {{ item.rating }}
+        <ion-icon name="star"></ion-icon>
+      </h2>
+    </h3>
 
-    <div class="card-content">
-        <h3 class="title">
-            {{ item.nombres }} {{ item.apellidos }}
-            <h2 class="subtitle">
-                {{ item.rating }}
-                <ion-icon name="star"></ion-icon>
-            </h2>
-        </h3>
-
-        <h2 class="subtitle1">{{ item.direccion1 }}, {{ item.direccion2 }}</h2>
-    </div>
-</div>
+    <h2 class="subtitle1"></h2>
+  </ion-card-content>
+</ion-card>

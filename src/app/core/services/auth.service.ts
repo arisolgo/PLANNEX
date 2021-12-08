@@ -37,7 +37,7 @@ export class AuthService {
   ) {
     if (Capacitor.isNativePlatform()) {
       // Platform is mobile
-      this.rootUrl = 'http://192.168.0.18:5000';
+      this.rootUrl = 'http://192.168.0.110:5000';
     } else {
       // Platform is not mobile
       this.rootUrl = environment.devRootUrl;

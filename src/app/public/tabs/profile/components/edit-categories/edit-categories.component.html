@@ -1,45 +1,63 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>Editar Categorias:</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="close()">
-                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Editar Categorias:</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div *ngIf="categoriesAdded.length > 0">
-        <ion-radio-group (ionChange)="setCategoriesToDelete($event)" class="category-select" name="categoryD">
-            <h4>Categorías Registradas</h4>
-            <p>Seleccione para Eliminar.</p>
-            <div class="categories-form-container">
-                <ion-item *ngFor="let category of categoriesAdded">
-                    <ion-label>{{ category.nombre }}</ion-label>
-                    <ion-radio [value]="category.id"></ion-radio>
-                </ion-item>
-            </div>
-        </ion-radio-group>
-    </div>
+  <div *ngIf="categoriesAdded.length > 0">
+    <ion-radio-group
+      (ionChange)="setCategoriesToDelete($event)"
+      class="category-select"
+      name="categoryD"
+    >
+      <ion-title>Categorías Registradas</ion-title>
+      <ion-text>
+        <p>Seleccione para Eliminar.</p>
+      </ion-text>
+      <div class="categories-form-container">
+        <ion-item *ngFor="let category of categoriesAdded">
+          <ion-label>{{ category.nombre }}</ion-label>
+          <ion-radio [value]="category.id"></ion-radio>
+        </ion-item>
+      </div>
+    </ion-radio-group>
+  </div>
 
-    <div *ngIf="categoriesToAdd.length > 0">
-        <h1>Add Categories</h1>
-        <ion-radio-group (ionChange)="setCategoriesToAdd($event)" class="category-select" name="category">
-            <h4>Categorías No Registradas</h4>
-            <p>Seleccione para Agregar.</p>
-            <div class="categories-form-container">
-                <ion-item *ngFor="let category of categoriesToAdd">
-                    <ion-label>{{ category.nombre }}</ion-label>
-                    <ion-radio [value]="category.id"></ion-radio>
-                </ion-item>
-            </div>
-        </ion-radio-group>
-    </div>
+  <div *ngIf="categoriesToAdd.length > 0">
+    <ion-text>
+      <p>Agregar Categorias.</p>
+    </ion-text>
+    <ion-radio-group
+      (ionChange)="setCategoriesToAdd($event)"
+      class="category-select"
+      name="category"
+    >
+      <h4>Categorías No Registradas</h4>
+      <p>Seleccione para Agregar.</p>
+      <div class="categories-form-container">
+        <ion-item *ngFor="let category of categoriesToAdd">
+          <ion-label>{{ category.nombre }}</ion-label>
+          <ion-radio [value]="category.id"></ion-radio>
+        </ion-item>
+      </div>
+    </ion-radio-group>
+  </div>
 
-    <div class="login-button-container">
-        <ion-button expand="full" shape="round" color="success" type="button" (click)="update()">
-            Save
-        </ion-button>
-    </div>
+  <div class="login-button-container">
+    <ion-button
+      expand="full"
+      shape="round"
+      color="success"
+      type="button"
+      (click)="update()"
+    >
+      Save
+    </ion-button>
+  </div>
 </ion-content>

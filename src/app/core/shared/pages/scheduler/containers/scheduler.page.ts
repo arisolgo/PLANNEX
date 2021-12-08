@@ -99,6 +99,14 @@ export class SchedulerPage implements OnInit {
     // this.resetEvent();
   }
 
+  getAmmount() {
+    let ammount = 0;
+    this.currentServices.forEach((element) => {
+      ammount += element.price;
+    });
+    return ammount;
+  }
+
   getDayAvailability(date: Date) {
     this.availableSpaces = [];
     let todayAvailability: ProviderAvailability;

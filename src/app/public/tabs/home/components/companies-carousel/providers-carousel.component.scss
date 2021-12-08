@@ -1,0 +1,26 @@
+.provider-slide-item {
+  width: 100%;
+  min-height: 188px;
+}
+.provider-slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.provider-image-container {
+  ion-avatar,
+  img {
+    width: 80px;
+    height: 80px;
+    ion-icon {
+      font-size: 80px;
+    }
+  }
+}
+
+.provider-data {
+  ion-text {
+    display: flex;
+    justify-content: center;
+  }
+}

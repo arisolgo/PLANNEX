@@ -1,62 +1,87 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>Editar Servicios:</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="close()">
-                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Editar Servicios:</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div *ngIf="servicesAdded.length > 0">
-        <h1>Update Services</h1>
-        <ion-radio-group (ionChange)="setUpdatedService($event)" class="service-select" name="service">
-            <h4>Servicios Registrados</h4>
-            <div class="services-form-container">
-                <ion-item *ngFor="let service of servicesAdded">
-                    <ion-label>{{ service.description }}</ion-label>
-                    <ion-radio [value]="service.id"></ion-radio>
-                </ion-item>
-            </div>
-        </ion-radio-group>
-
-        <ion-item>
-            <ion-label position="floating">Precio</ion-label>
-            <ion-input (ionChange)="setServiceToUpdatePrice($event)" [(ngModel)]="serviceToUpdateSelected.servicePrice"></ion-input>
+  <div *ngIf="servicesAdded.length > 0">
+    <ion-radio-group
+      (ionChange)="setUpdatedService($event)"
+      class="service-select"
+      name="service"
+    >
+      <h4>Servicios Registrados</h4>
+      <div class="services-form-container">
+        <ion-item *ngFor="let service of servicesAdded">
+          <ion-label>{{ service.description }}</ion-label>
+          <ion-radio [value]="service.id"></ion-radio>
         </ion-item>
+      </div>
+    </ion-radio-group>
 
-        <ion-item>
-            <ion-label position="floating">Duración (minutos)</ion-label>
-            <ion-input (ionChange)="setServiceToUpdateDuration($event)" [(ngModel)]="serviceToUpdateSelected.duration"></ion-input>
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input
+        (ionChange)="setServiceToUpdatePrice($event)"
+        [(ngModel)]="serviceToUpdateSelected.servicePrice"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Duración (minutos)</ion-label>
+      <ion-input
+        (ionChange)="setServiceToUpdateDuration($event)"
+        [(ngModel)]="serviceToUpdateSelected.duration"
+      ></ion-input>
+    </ion-item>
+  </div>
+
+  <div *ngIf="servicesToAdd.length > 0">
+    <ion-radio-group
+      (ionChange)="setService($event)"
+      class="service-select"
+      name="service"
+    >
+      <h4>Servicios No Registrados</h4>
+      <div class="services-form-container">
+        <ion-item *ngFor="let service of servicesToAdd">
+          <ion-label>{{ service.description }}</ion-label>
+          <ion-radio [value]="service.id"></ion-radio>
         </ion-item>
-    </div>
+      </div>
+    </ion-radio-group>
 
-    <div *ngIf="servicesToAdd.length > 0">
-        <ion-radio-group (ionChange)="setService($event)" class="service-select" name="service">
-            <h4>Servicios No Registrados</h4>
-            <div class="services-form-container">
-                <ion-item *ngFor="let service of servicesToAdd">
-                    <ion-label>{{ service.description }}</ion-label>
-                    <ion-radio [value]="service.id"></ion-radio>
-                </ion-item>
-            </div>
-        </ion-radio-group>
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input
+        (ionChange)="setServicePrice($event)"
+        [(ngModel)]="serviceSelected.servicePrice"
+      ></ion-input>
+    </ion-item>
 
-        <ion-item>
-            <ion-label position="floating">Precio</ion-label>
-            <ion-input (ionChange)="setServicePrice($event)" [(ngModel)]="serviceSelected.servicePrice"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-label position="floating">Duración (minutos)</ion-label>
+      <ion-input
+        (ionChange)="setServiceDuration($event)"
+        [(ngModel)]="serviceSelected.duration"
+      ></ion-input>
+    </ion-item>
+  </div>
 
-        <ion-item>
-            <ion-label position="floating">Duración (minutos)</ion-label>
-            <ion-input (ionChange)="setServiceDuration($event)" [(ngModel)]="serviceSelected.duration"></ion-input>
-        </ion-item>
-    </div>
-
-    <div class="login-button-container">
-        <ion-button expand="full" shape="round" color="success" type="button" (click)="updateSave()">
-            Save
-        </ion-button>
-    </div>
+  <div class="login-button-container">
+    <ion-button
+      expand="full"
+      shape="round"
+      color="success"
+      type="button"
+      (click)="updateSave()"
+    >
+      Guardar
+    </ion-button>
+  </div>
 </ion-content>
